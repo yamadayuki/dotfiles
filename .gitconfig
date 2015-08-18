@@ -1,0 +1,33 @@
+[user]
+	name = Yuki Yamada
+	email = yamadayuuki0818@gmail.com
+[color]
+	ui = auto
+[alias]
+  acc = commit -am "Corrected"
+  br = branch
+  cm = commit
+  co = checkout
+  dmb = !git branch --merged | grep -v \\* | xargs -I % git branch -d %
+  empty = commit --allow-empty
+  fp = !git fetch -p && git dmb
+  pom = pull origin master
+  pp = !git pull -p && git dmb
+  rebase = rebase -i
+  rh = reset HEAD~1
+	sh = show
+	st = status
+  tr = log --graph --pretty='format:%C(yellow)%h%Creset %s %Cgreen(%an)%Creset %Cred%d%Creset'
+  wip = commit -m "WIP"
+[core]
+	editor = vim
+	excludesfile = /Users/yamadayuuki/.gitignore_global
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[merge "mergepbx"]
+  name = XCode project files merger
+  driver = mergepbx %O %A %B

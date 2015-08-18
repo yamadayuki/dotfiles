@@ -1,0 +1,185 @@
+# Path to your oh-my-zsh installation.
+export ZSH=$HOME/.oh-my-zsh
+
+# Set name of the theme to load.
+# Look in ~/.oh-my-zsh/themes/
+# Optionally, if you set this to "random", it'll load a random theme each
+# time that oh-my-zsh is loaded.
+ZSH_THEME="gianu"
+
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
+
+# Uncomment the following line to disable bi-weekly auto-update checks.
+# DISABLE_AUTO_UPDATE="true"
+
+# Uncomment the following line to change how often to auto-update (in days).
+# export UPDATE_ZSH_DAYS=13
+
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
+
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
+
+# Uncomment the following line to display red dots whilst waiting for completion.
+# COMPLETION_WAITING_DOTS="true"
+
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# HIST_STAMPS="mm/dd/yyyy"
+
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(git)
+
+# User configuration
+
+export PATH=$HOME/bin:/usr/local/bin:$PATH
+# export MANPATH="/usr/local/man:$MANPATH"
+
+source $ZSH/oh-my-zsh.sh
+
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
+
+# Preferred editor for local and remote sessions
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='mvim'
+# fi
+
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
+
+# ssh
+# export SSH_KEY_PATH="~/.ssh/dsa_id"
+
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+#
+
+#############################################################
+
+function peco-select-history() {
+  local tac
+  if which tac > /dev/null;
+  then
+    tac="tac"
+  else
+    tac="tail -r"
+  fi
+  BUFFER=$(\history -n 1 | \
+    eval $tac | \
+    peco --query "$LBUFFER")
+  CURSOR=$#BUFFER
+  zle clear-screen
+}
+zle -N peco-select-history
+bindkey '^r' peco-select-history
+
+#############################################################
+
+# ssh melo-backend
+alias sshb="ssh ec2-user@ec2-54-92-88-38.ap-northeast-1.compute.amazonaws.com"
+
+# ssh melo-web
+alias sshw="ssh ubuntu@ec2-54-64-206-230.ap-northeast-1.compute.amazonaws.com"
+
+# ssh melo-deploy
+alias sshd="ssh ec2-user@ec2-54-64-38-171.ap-northeast-1.compute.amazonaws.com"
+
+# change color file and directory
+alias ls='ls -G'
+
+# git add . && git commit -m "WIP"
+alias wip='git add . && git commit -m "WIP"'
+
+# bundle exec
+alias be='bundle exec'
+
+# postgresql server start / stop
+alias pgstart='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start'
+alias pgstop='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log stop'
+
+# git alias
+alias g='git'
+
+# gitsh alias
+alias gsh='gitsh'
+
+# zeus alias
+alias z='zeus'
+
+# brew update -> upgrade -> cleanup
+alias brewup='brew upgrade; brew upgrade; brew cleanup'
+
+###########################################################################
+
+export LANG=ja_JP.UTF-8
+
+autoload -Uz colors
+colors
+
+autoload -Uz compinit
+compinit
+
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+zstyle ':completion:*' ignore-parents parent pwd ..
+
+setopt print_eight_bit
+setopt auto_cd
+
+###########################################################################
+
+# Setting PATH for Python 3.4
+# The orginal version is saved in .bash_profile.pysave
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+
+# git by Homebrew
+export PATH="/usr/local/Cellar/git/2.1.0/bin:$PATH"
+
+alias subl="/Applications/'Sublime Text.app'/Contents/SharedSupport/bin/subl"
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
+export PATH="/usr/local/bin:$PATH"
+
+export PKG_CONFIG_PATH=/usr/local/Cellar/imagemagick/6.9.1-1/include/ImageMagick-6/magick
+export PATH="$HOME/.nodebrew/current/bin:$PATH"
+
+# pyenv config
+eval "$(pyenv init -)"
+
+# pip
+export PATH="$HOME/.pyenv/versions/3.4.2/lib/python3.4/site-packages:$PATH"
+
+# mysql by Homebrew
+export PATH="/usr/local/Cellar/mysql/5.6.22/bin:$PATH"
+
+export PATH="$HOME/.gobrew/bin:$PATH"
+eval "$(gobrew init -)"
+
+[[ -s "$HOME/.qfc/bin/qfc.sh" ]] && source "$HOME/.qfc/bin/qfc.sh"

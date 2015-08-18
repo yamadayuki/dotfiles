@@ -1,0 +1,45 @@
+if has('vim_starting')
+  set nocompatible
+  if !isdirectory(expand("~/.vim/bundle/neobundle.vim/"))
+    echo "install neobundle..."
+    :call system("git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim")
+  endif
+  set runtimepath+=~/.vim/bundle/neobundle.vim/
+endif
+call neobundle#begin(expand('~/.vim/bundle'))
+let g:neobundle_default_git_protocol='https'
+
+NeoBundleFetch 'Shougo/neobundle.vim'
+
+NeoBundle 'Shougo/neobundle.vim'
+NeoBundle 'Shougo/vimproc'
+NeoBundle 'Shougo/neocomplcache'
+NeoBundle 'Shougo/neosnippet'
+NeoBundle 'Shougo/neosnippet-snippets'
+NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'tpope/vim-rails'
+NeoBundle 'bronson/vim-trailing-whitespace'
+NeoBundle 'tpope/vim-endwise'
+NeoBundle 'bling/vim-airline'
+NeoBundle 'scrooloose/syntastic.git'
+
+" syntax
+NeoBundle 'derekwyatt/vim-scala'
+NeoBundle 'elixir-lang/vim-elixir'
+NeoBundle 'rhysd/vim-crystal'
+NeoBundle 'vim-ruby/vim-ruby.git'
+NeoBundle 'pangloss/vim-javascript'
+NeoBundle 'mxw/vim-jsx'
+NeoBundle 'elzr/vim-json'
+NeoBundle 'kchmck/vim-coffee-script'
+NeoBundle 'mtscout6/vim-cjsx'
+
+" color
+NeoBundle 'tomasr/molokai'
+
+NeoBundleCheck
+call neobundle#end()
+filetype plugin indent on
+set t_Co=256
+syntax on
+colorscheme molokai
