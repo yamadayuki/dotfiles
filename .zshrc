@@ -101,15 +101,6 @@ bindkey '^r' peco-select-history
 
 #############################################################
 
-# ssh melo-backend
-alias sshb="ssh ec2-user@ec2-54-92-88-38.ap-northeast-1.compute.amazonaws.com"
-
-# ssh melo-web
-alias sshw="ssh ubuntu@ec2-54-64-206-230.ap-northeast-1.compute.amazonaws.com"
-
-# ssh melo-deploy
-alias sshd="ssh ec2-user@ec2-54-64-38-171.ap-northeast-1.compute.amazonaws.com"
-
 # change color file and directory
 alias ls='ls -G'
 
@@ -126,14 +117,8 @@ alias pgstop='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/serve
 # git alias
 alias g='git'
 
-# gitsh alias
-alias gsh='gitsh'
-
 # zeus alias
 alias z='zeus'
-
-# brew update -> upgrade -> cleanup
-alias brewup='brew upgrade; brew upgrade; brew cleanup'
 
 ###########################################################################
 
@@ -158,11 +143,6 @@ setopt auto_cd
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 
-# git by Homebrew
-export PATH="/usr/local/Cellar/git/2.1.0/bin:$PATH"
-
-alias subl="/Applications/'Sublime Text.app'/Contents/SharedSupport/bin/subl"
-
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
@@ -172,12 +152,6 @@ export PATH="$HOME/.nodebrew/current/bin:$PATH"
 
 # pyenv config
 eval "$(pyenv init -)"
-
-# pip
-export PATH="$HOME/.pyenv/versions/3.4.2/lib/python3.4/site-packages:$PATH"
-
-# mysql by Homebrew
-export PATH="/usr/local/Cellar/mysql/5.6.22/bin:$PATH"
 
 export PATH="$HOME/.gobrew/bin:$PATH"
 eval "$(gobrew init -)"
