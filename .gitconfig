@@ -5,6 +5,7 @@
 	ui = auto
 [alias]
   acc = commit -am "Corrected"
+  amend = commit -a --amend --no-edit
   br = branch
   cm = commit
   co = checkout
@@ -15,8 +16,8 @@
   pp = !git pull -p && git dmb
   rebase = rebase -i
   rh = reset HEAD~1
-	sh = show
-	st = status
+  sh = show
+  st = status
   tr = log --graph --pretty='format:%C(yellow)%h%Creset %s %Cgreen(%an)%Creset %Cred%d%Creset'
   wip = commit -m "WIP"
 [core]

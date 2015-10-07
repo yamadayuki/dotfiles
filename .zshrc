@@ -110,6 +110,9 @@ alias wip='git add . && git commit -m "WIP"'
 # bundle exec
 alias be='bundle exec'
 
+# bundle exec rspec
+alias bec='bundle exec rspec'
+
 # postgresql server start / stop
 alias pgstart='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start'
 alias pgstop='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log stop'
@@ -147,8 +150,10 @@ eval "$(rbenv init -)"
 export PATH="/usr/local/heroku/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
 
+export PATH="/usr/local/ghc-7.10.2/bin:$PATH"
+export PATH="$HOME/.cabal/bin:$PATH"
+
 export PKG_CONFIG_PATH=/usr/local/Cellar/imagemagick/6.9.1-1/include/ImageMagick-6/magick
-export PATH="$HOME/.nodebrew/current/bin:$PATH"
 
 # pyenv config
 eval "$(pyenv init -)"
