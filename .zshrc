@@ -45,7 +45,7 @@ ZSH_THEME="gianu"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git bundler osx rake ruby gem)
 
 # User configuration
 
@@ -122,6 +122,20 @@ alias g='git'
 
 # zeus alias
 alias z='zeus'
+
+# cat
+alias c='pygmentize -O style=monokai -f terminal256 -g -O encoding=utf-8'
+function cl() {
+    c $1 | nl -n ln -b a
+}
+alias cl=cl
+alias cat=c
+
+alias vi=vim
+
+# less
+export LESS='-R'
+export LESSOPEN='|lessfilter %s'
 
 ###########################################################################
 

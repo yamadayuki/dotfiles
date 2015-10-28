@@ -31,6 +31,7 @@ set hidden
 set autoread
 set nobackup
 set noswapfile
+set clipboard+=unnamed,autoselect
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -51,11 +52,23 @@ set shiftwidth=2
 set softtabstop=2
 set autoindent
 set smartindent
+set backspace=indent,eol,start
+
+augroup fileTypeIndent
+  autocmd!
+  autocmd BufNewFile,BufRead *.py setlocal tabstop=4 softtabstop=4 shiftwidth=4 autoindent smartindent
+  autocmd BufNewFile,BufRead *.php setlocal tabstop=4 softtabstop=4 shiftwidth=4 autoindent smartindent
+  autocmd BufNewFile,BufRead *.rb setlocal tabstop=2 softtabstop=2 shiftwidth=2 autoindent smartindent
+augroup END
+
+set pastetoggle=<C-e>
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """ OS関連
 set mouse=a
+set clipboard=unnamed
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -64,6 +77,9 @@ set wildmenu
 set wildmode=list:longest,full
 set history=10000
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" ノーマルモードでコマンドラインモードに入る時の効率化
+nnoremap ; :
 
 " 括弧の対応
 " inoremap { {}<LEFT>
