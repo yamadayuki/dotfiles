@@ -21,3 +21,5 @@ alias be='bundle exec'
 # postgresql server start / stop
 alias pgstart='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start'
 alias pgstop='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log stop'
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

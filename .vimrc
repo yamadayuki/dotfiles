@@ -81,6 +81,9 @@ set history=10000
 " ノーマルモードでコマンドラインモードに入る時の効率化
 nnoremap ; :
 
+" fzf
+set rtp+=~/.fzf
+
 " 括弧の対応
 " inoremap { {}<LEFT>
 " inoremap [ []<LEFT>
