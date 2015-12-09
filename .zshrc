@@ -27,6 +27,18 @@ peco-select-history() {
 zle -N peco-select-history
 bindkey '^r' peco-select-history
 
+silent-git-status-sb() {
+  if [ "$(git rev-parse --is-inside-work-tree 2> /dev/null)" = 'true' ]; then
+    echo
+    git status -sb
+  fi
+  # builtin zle .accept-line
+  zle reset-prompt
+  return 0
+}
+zle -N silent-git-status-sb
+bindkey '^n' silent-git-status-sb
+
 # alias
 alias zr="vim ~/.zshrc"
 alias szr="source ~/.zshrc"
