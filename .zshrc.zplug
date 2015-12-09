@@ -7,6 +7,7 @@ zplug "b4b4r07/zplug"
 zplug "b4b4r07/enhancd"
 zplug "zsh-users/zsh-syntax-highlighting"
 zplug "zsh-users/zsh-completions"
+zplug "plugins/git", from:oh-my-zsh
 
 if ! zplug check --verbose; then
   printf "Install? [y/N]: "
@@ -35,6 +36,9 @@ alias ls="ls -G"
 
 alias vi=vim
 
+alias cdot="cd ~/dotfiles"
+alias vdot="vim ~/dotfiles"
+
 # settings
 plugins+=(zsh-completions)
 autoload -U compinit
@@ -57,6 +61,7 @@ setopt auto_param_slash
 setopt auto_remove_slash
 setopt HIST_NO_STORE
 setopt hist_ignore_dups
+setopt HIST_IGNORE_ALL_DUPS
 
 # source
 source ~/.zplug/repos/b4b4r07/enhancd/enhancd.sh
