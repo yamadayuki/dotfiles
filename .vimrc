@@ -1,6 +1,7 @@
 " ファイルが読み込み可能かチェック
 if filereadable(expand('$HOME/.vimrc.neobundle'))
-  source $HOME/.vimrc.neobundle " .vimrcファイル読み込み
+  " source $HOME/.vimrc.neobundle " .vimrcファイル読み込み
+  source $HOME/.vimrc.plug
 endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

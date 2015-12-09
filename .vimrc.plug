@@ -1,0 +1,24 @@
+call plug#begin('~/.vim/plugged')
+
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+nnoremap <C-e> :NERDTreeToggle<CR>
+
+" Syntax
+Plug 'derekwyatt/vim-scala'
+Plug 'elixir-lang/vim-elixir'
+Plug 'rhysd/vim-crystal'
+Plug 'vim-ruby/vim-ruby'
+Plug 'slim-template/vim-slim'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'elzr/vim-json'
+Plug 'kchmck/vim-coffee-script'
+
+" Color
+Plug 'tomasr/molokai'
+
+call plug#end()
+
+set t_Co=256
+syntax on
+colorscheme molokai
