@@ -114,8 +114,8 @@ alias be='bundle exec'
 alias bec='bundle exec rspec'
 
 # postgresql server start / stop
-alias pgstart='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start'
-alias pgstop='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log stop'
+alias pgstart='pg_ctl -D /usr/local/bin/postgres -l /usr/local/bin/postgres/server.log start'
+alias pgstop='pg_ctl -D /usr/local/bin/postgres -l /usr/local/bin/postgres/server.log stop'
 
 # git alias
 alias g='git'
@@ -129,9 +129,18 @@ function cl() {
     c $1 | nl -n ln -b a
 }
 alias cl=cl
-alias cat=c
+alias cat=cl
 
 alias vi=vim
+
+alias reco='bin/rake routes | peco'
+
+alias cdrb="cd ~/dev/RubyProject/"
+alias cdjs="cd ~/dev/JSProject/"
+
+alias zconf='vim ~/.zshrc'
+alias vconf='vim ~/.vimrc'
+alias vbconf='vim ~/.vimrc.neobundle'
 
 # less
 export LESS='-R'
@@ -174,6 +183,10 @@ eval "$(pyenv init -)"
 
 export PATH="$HOME/.gobrew/bin:$PATH"
 eval "$(gobrew init -)"
+
+export PATH="$HOME/.nodebrew/current/bin:$PATH"
+
+export EDITOR='vim'
 
 [[ -s "$HOME/.qfc/bin/qfc.sh" ]] && source "$HOME/.qfc/bin/qfc.sh"
 

@@ -26,6 +26,7 @@ NeoBundle 'scrooloose/syntastic.git'
 NeoBundle 'mattn/emmet-vim'
 NeoBundle 'AndrewRadev/splitjoin.vim'
 NeoBundle 'junegunn/fzf.vim'
+NeoBundle 'rizzatti/dash.vim'
 
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/unite-outline'

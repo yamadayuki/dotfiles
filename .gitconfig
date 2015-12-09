@@ -5,20 +5,24 @@
 	ui = auto
 [alias]
   acc = commit -am "Corrected"
-  amend = commit -a --amend --no-edit
+  # amend = commit -a --amend --no-edit
+  amend = commit --amend -C HEAD
   br = branch
   cm = commit
   co = checkout
   dmb = !git branch --merged | grep -v \\* | xargs -I % git branch -d %
   empty = commit --allow-empty
   fp = !git fetch -p && git dmb
+  history = log --graph --date=short --decorate=short --pretty=format:'%C(yellow)%h %Cgreen%cd %Cblue%cn %Cred%d%Creset%s'
+  logg = log --stat --decorate=short --pretty=format:'%C(yellow)%h %Cgreen%cr%Cblue%cn%Cred%d %Creset%s %C(cyan)%b'
   pom = pull origin master
   pp = !git pull -p && git dmb
   rebase = rebase -i
   rh = reset HEAD~1
   sh = show
   st = status
-  tr = log --graph --pretty='format:%C(yellow)%h%Creset %s %Cgreen(%an)%Creset %Cred%d%Creset'
+  # tr = log --graph --pretty='format:%C(yellow)%h%Creset %s %Cgreen(%an)%Creset %Cred%d%Creset'
+  tr = !git history
   wip = commit -m "WIP"
 [core]
 	editor = vim
@@ -32,3 +36,5 @@
 [merge "mergepbx"]
   name = XCode project files merger
   driver = mergepbx %O %A %B
+[push]
+  default = current
