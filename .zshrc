@@ -6,6 +6,7 @@ source ~/.zplug/zplug
 zplug "b4b4r07/zplug"
 zplug "b4b4r07/enhancd"
 zplug "zsh-users/zsh-syntax-highlighting"
+zplug "zsh-users/zsh-completions"
 
 if ! zplug check --verbose; then
   printf "Install? [y/N]: "
@@ -35,13 +36,12 @@ alias ls="ls -G"
 alias vi=vim
 
 # settings
+plugins+=(zsh-completions)
 autoload -U compinit
 compinit -u
 autoload -U colors
 colors
 
-source ~/dev/ZshProject/git-prompt.sh
-GIT_PS1_SHOWDIRTYSTATE=true
 PROMPT="[%{$fg[white]%}%n%{$reset_color%}@%{$fg[red]%}%m%{$reset_color%} %{$fg[cyan]%}%c%{$reset_color%}]$ "
 RPROMPT="[%{$fg_no_bold[yellow]%} %B%T%b %{$reset_color%}]"
 
