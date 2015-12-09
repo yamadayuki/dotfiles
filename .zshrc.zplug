@@ -42,7 +42,7 @@ colors
 
 source ~/dev/ZshProject/git-prompt.sh
 GIT_PS1_SHOWDIRTYSTATE=true
-PROMPT="[%{$fg[white]%}%n%{$reset_color%}@%{$fg[red]%}%m%{$reset_color%} %{$fg[cyan]%}%c%{$reset_color%}]$ "
+PROMPT="[%{$fg[white]%}%n%{$reset_color%}@%{$fg[red]%}%m%{$reset_color%} %{$fg[cyan]%}%c%{$reset_color%} __git_ps1]$ "
 RPROMPT="[%{$fg_no_bold[yellow]%} %B%T%b %{$reset_color%}]"
 
 export HISTFILE="$HOME/.zsh_history"
