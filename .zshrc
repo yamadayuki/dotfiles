@@ -19,13 +19,13 @@ fi
 zplug load --verbose
 
 # functions
-function peco-history-selection() {
-  BUFFER=`history -n 1 | tail -r | awk '!a[$0]++' | peco`
-  CURSOR=$#BUFFER
+peco-select-history() {
+  BUFFER=$(history  | sort -k1,1nr | perl -ne 'BEGIN { my @lines = (); } s/^\s*\d+\*?\s*//; $in=$_; if (!(grep {$in eq $_} @lines)) { push(@lines, $in); print $in; }' | peco --query "$LBUFFER")
+  CURSOR=${#BUFFER}
   zle reset-prompt
 }
-zle -N peco-history-selection
-bindkey '^R' peco-history-selection
+zle -N peco-select-history
+bindkey '^r' peco-select-history
 
 # alias
 alias zr="vim ~/.zshrc"
@@ -41,8 +41,8 @@ alias vdot="vim ~/dotfiles"
 
 # settings
 plugins+=(zsh-completions)
-autoload -U compinit
-compinit -u
+# autoload -U compinit
+# compinit -u
 autoload -U colors
 colors
 
