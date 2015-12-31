@@ -3,16 +3,28 @@ call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 nnoremap <C-e> :NERDTreeToggle<CR>
 
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+
 " Syntax
-Plug 'derekwyatt/vim-scala'
-Plug 'elixir-lang/vim-elixir'
-Plug 'rhysd/vim-crystal'
-Plug 'vim-ruby/vim-ruby'
-Plug 'slim-template/vim-slim'
-Plug 'pangloss/vim-javascript'
+Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
+Plug 'rhysd/vim-crystal', { 'for': 'crystal' }
+Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
+Plug 'slim-template/vim-slim', { 'for': 'slim' }
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'mxw/vim-jsx'
-Plug 'elzr/vim-json'
-Plug 'kchmck/vim-coffee-script'
+Plug 'elzr/vim-json', { 'for': 'json' }
+Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
+
+" Complete
+Plug 'Shougo/neocomplete.vim'
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+let g:acp_enableAtStartup = 0
+let g:neocomplete#enable_at_startup = 1
+inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+
+Plug 'myhere/vim-nodejs-complete', { 'for': 'javascript' }
+autocmd FileType javascript setlocal omnifunc=nodejscomplete#CompleteJS
+
 
 " Color
 Plug 'tomasr/molokai'
