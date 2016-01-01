@@ -52,6 +52,7 @@ alias vi=vim
 alias cdot="cd ~/dotfiles"
 alias vdot="vim ~/dotfiles"
 
+# bundle exec
 alias be="bundle exec"
 
 # settings
@@ -86,5 +87,3 @@ RPROMPT="[%{$fg_no_bold[yellow]%} %B%T%b %{$reset_color%}]"
 
 # source
 source ~/.zplug/repos/b4b4r07/enhancd/enhancd.sh
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
