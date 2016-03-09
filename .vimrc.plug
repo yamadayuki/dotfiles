@@ -3,7 +3,11 @@ call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 nnoremap <C-e> :NERDTreeToggle<CR>
 
+Plug 'kana/vim-submode'
+
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+
+Plug 'mattn/emmet-vim', { 'for': 'html' }
 
 " Syntax
 Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }

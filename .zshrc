@@ -1,3 +1,11 @@
+echo "                                    __                  __   _  "
+echo "   __  ______ _____ ___  ____ _____/ /___ ___  ____  __/ /__(_) "
+echo '  / / / / __ `/ __ `__ \/ __ `/ __  / __ `/ / / / / / / //_/ /  '
+echo " / /_/ / /_/ / / / / / / /_/ / /_/ / /_/ / /_/ / /_/ / ,< / /   " 
+echo " \__, /\__,_/_/ /_/ /_/\__,_/\__,_/\__,_/\__, /\__,_/_/|_/_/    " 
+echo "/____/                                  /____/                  " 
+echo ""
+
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
@@ -184,9 +192,14 @@ eval "$(pyenv init -)"
 export PATH="$HOME/.gobrew/bin:$PATH"
 eval "$(gobrew init -)"
 
-export PATH="$HOME/.nodebrew/current/bin:$PATH"
+# export PATH="$HOME/.nodebrew/current/bin:$PATH"
 
 export EDITOR='vim'
+
+eval $(docker-machine env default)
+alias dk='docker'
+alias dkc='docker-compose'
+alias dkm='docker-machine'
 
 [[ -s "$HOME/.qfc/bin/qfc.sh" ]] && source "$HOME/.qfc/bin/qfc.sh"
 
@@ -239,3 +252,4 @@ fh() {
 fkill() {
   ps -ef | sed 1d | fzf -m | awk '{print $2}' | xargs kill -${1:-9}
 }
+export PATH="/usr/local/sbin:$PATH"
