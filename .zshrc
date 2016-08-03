@@ -1,11 +1,3 @@
-echo "                                    __                  __   _  "
-echo "   __  ______ _____ ___  ____ _____/ /___ ___  ____  __/ /__(_) "
-echo '  / / / / __ `/ __ `__ \/ __ `/ __  / __ `/ / / / / / / //_/ /  '
-echo " / /_/ / /_/ / / / / / / /_/ / /_/ / /_/ / /_/ / /_/ / ,< / /   " 
-echo " \__, /\__,_/_/ /_/ /_/\__,_/\__,_/\__,_/\__, /\__,_/_/|_/_/    " 
-echo "/____/                                  /____/                  " 
-echo ""
-
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
@@ -53,7 +45,7 @@ ZSH_THEME="gianu"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git bundler osx rake ruby gem)
+plugins=(git bundler osx rake-fast ruby gem mix)
 
 # User configuration
 
@@ -131,13 +123,7 @@ alias g='git'
 # zeus alias
 alias z='zeus'
 
-# cat
-alias c='pygmentize -O style=monokai -f terminal256 -g -O encoding=utf-8'
-function cl() {
-    c $1 | nl -n ln -b a
-}
-alias cl=cl
-alias cat=cl
+alias restart='source ~/.zshrc'
 
 alias vi=vim
 
@@ -172,84 +158,33 @@ setopt auto_cd
 
 ###########################################################################
 
-# Setting PATH for Python 3.4
-# The orginal version is saved in .bash_profile.pysave
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
-
-### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
-export PATH="/usr/local/bin:$PATH"
-
 export PATH="/usr/local/ghc-7.10.2/bin:$PATH"
 export PATH="$HOME/.cabal/bin:$PATH"
 
 export PKG_CONFIG_PATH=/usr/local/Cellar/imagemagick/6.9.1-1/include/ImageMagick-6/magick
 
-# pyenv config
-eval "$(pyenv init -)"
-
 export PATH="$HOME/.gobrew/bin:$PATH"
-eval "$(gobrew init -)"
-
-# export PATH="$HOME/.nodebrew/current/bin:$PATH"
 
 export EDITOR='vim'
+export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
-eval $(docker-machine env default)
 alias dk='docker'
 alias dkc='docker-compose'
 alias dkm='docker-machine'
+alias dkl='docker-clean'
 
-[[ -s "$HOME/.qfc/bin/qfc.sh" ]] && source "$HOME/.qfc/bin/qfc.sh"
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-fshow() {
-  local out shas sha q k
-  while out=$(
-      git log --graph --color=always \
-          --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
-      fzf --ansi --multi --no-sort --reverse --query="$q" \
-          --print-query --expect=ctrl-d); do
-    q=$(head -1 <<< "$out")
-    k=$(head -2 <<< "$out" | tail -1)
-    shas=$(sed '1,2d;s/^[^a-z0-9]*//;/^$/d' <<< "$out" | awk '{print $1}')
-    [ -z "$shas" ] && continue
-    if [ "$k" = ctrl-d ]; then
-      git diff --color=always $shas | less -R
-    else
-      for sha in $shas; do
-        git show --color=always $sha | less -R
-      done
-    fi
-  done
-}
-
-# fe [FUZZY PATTERN] - Open the selected file with the default editor
-#   - Bypass fuzzy finder if there's only one match (--select-1)
-#   - Exit if there's no match (--exit-0)
-fe() {
-  local file
-  file=$(fzf --query="$1" --select-1 --exit-0)
-  [ -n "$file" ] && ${EDITOR:-vim} "$file"
-}
-
-# fd - cd to selected directory
-fd() {
-  local dir
-  dir=$(find ${1:-*} -path '*/\.*' -prune \
-                  -o -type d -print 2> /dev/null | fzf +m) &&
-  cd "$dir"
-}
-
-# fh - repeat history
-fh() {
-  eval $(([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s | sed 's/ *[0-9]* *//')
-}
-
-# fkill - kill process
-fkill() {
-  ps -ef | sed 1d | fzf -m | awk '{print $2}' | xargs kill -${1:-9}
-}
 export PATH="/usr/local/sbin:$PATH"
+
+export PATH="$PATH:/usr/local/share/git-core/contrib/diff-highlight"
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/Users/yamadayuuki/.sdkman"
+[[ -s "/Users/yamadayuuki/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/yamadayuuki/.sdkman/bin/sdkman-init.sh"
+export PATH="$HOME/.anyenv/bin:$PATH"
+eval "$(anyenv init -)"
+
+eval "$(hub alias -s)"
+
+export VAGRANT_HOME="/Volumes/Seagate/Vagrant/.vagrant.d"
+export PATH="$PATH:$VAGRANT_HOME"
+eval $(opam config env)

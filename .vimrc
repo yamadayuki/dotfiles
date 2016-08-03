@@ -8,8 +8,8 @@ endif
 """ 画面表示の設定
 set number
 set ruler
-set cursorline
-set cursorcolumn
+" set cursorline
+" set cursorcolumn
 set laststatus=2
 set showmatch
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

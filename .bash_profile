@@ -17,3 +17,7 @@ export PATH="$HOME/.nodebrew/current/bin:$PATH"
 eval "$(pyenv init -)"
 
 test -r ~/.bashrc && . ~/.bashrc
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/Users/yamadayuuki/.sdkman"
+[[ -s "/Users/yamadayuuki/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/yamadayuuki/.sdkman/bin/sdkman-init.sh"
