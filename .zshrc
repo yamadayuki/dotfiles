@@ -95,9 +95,31 @@ function peco-select-history() {
     peco --query "$LBUFFER")
   CURSOR=$#BUFFER
   zle clear-screen
+
+  local NUM=$(history | wc -l)
+  local FIRST=$((-1*(NUM-1)))
+ 
+  if [ $FIRST -eq 0 ] ; then
+    # Remove the last entry, "peco-history"
+    history -d $((HISTCMD-1))
+    echo "No history" >&2
+    return
+  fi
 }
 zle -N peco-select-history
 bindkey '^r' peco-select-history
+
+function peco-src() {
+  local selected_dir=$(ghq list | peco --query "$LBUFFER")
+  if [ -n "$selected_dir" ]; then
+    selected_dir="$GOPATH/src/$selected_dir"
+    BUFFER="cd ${selected_dir}"
+    zle accept-line
+  fi
+  zle clear-screen
+}
+zle -N peco-src
+bindkey '^t' peco-src
 
 #############################################################
 
@@ -188,3 +210,9 @@ eval "$(hub alias -s)"
 export VAGRANT_HOME="/Volumes/Seagate/Vagrant/.vagrant.d"
 export PATH="$PATH:$VAGRANT_HOME"
 eval $(opam config env)
+
+export GOPATH=$HOME/dev
+export PATH=$GOPATH/bin:$PATH
+
+export PATH=/Library/Developer/Toolchains/swift-latest.xctoolchain/usr/bin:$PATH
+export TOOLCHAINS=swift

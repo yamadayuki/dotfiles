@@ -16,6 +16,7 @@
   d  = diff
   dmb = !git branch --merged | grep -v \\* | xargs -I % git branch -d %
   empty = commit --allow-empty
+  fo = fetch -p origin
   fp = !git fetch -p && git dmb
   history = log --graph --date=short --decorate=short --pretty=format:'%C(yellow)%h %Cgreen%cd %Cblue%cn %Cred%d%Creset%s'
   logg = log --stat --decorate=short --pretty=format:'%C(yellow)%h %Cgreen%cr%Cblue%cn%Cred%d %Creset%s %C(cyan)%b'
@@ -50,3 +51,5 @@
 
 [interactive]
   diffFilter = (diff-highlight 2>/dev/null || cat)
+[ghq]
+	root = ~/dev/src
