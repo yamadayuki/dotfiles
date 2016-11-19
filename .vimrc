@@ -1,11 +1,48 @@
-" ファイルが読み込み可能かチェック
-if filereadable(expand('$HOME/.vimrc.neobundle'))
-  " source $HOME/.vimrc.neobundle " .vimrcファイル読み込み
+" Check whether the file is readable
+if filereadable(expand('$HOME/.vimrc.plug'))
+  " source $HOME/.vimrc.neobundle .vimrcファイル読み込み
   source $HOME/.vimrc.plug
 endif
 
+" "dein Scripts-----------------------------
+" if &compatible
+"   set nocompatible
+" endif
+"
+" " Required:
+" set runtimepath+=/Users/yamadayuuki/dev/src/github.com/Shougo/dein.vim
+"
+" " Required:
+" call dein#begin('/Users/yamadayuuki/.vim/dein')
+"
+" " Let dein manage dein
+" " Required:
+" call dein#add('Shougo/dein.vim')
+"
+" " Add or remove your plugins here:
+" call dein#add('Shougo/neosnippet.vim')
+" call dein#add('Shougo/neosnippet-snippets')
+"
+" " You can specify revision/branch/tag.
+" call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
+"
+" " Required:
+" call dein#end()
+"
+" " Required:
+" filetype plugin indent on
+" syntax enable
+"
+" " If you want to install not installed plugins on startup.
+" "if dein#check_install()
+" "  call dein#install()
+" "endif
+"
+" "End dein Scripts-------------------------
+
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""" 画面表示の設定
+""" Display
 set number
 set ruler
 " set cursorline
@@ -15,14 +52,14 @@ set showmatch
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""" カーソル移動の設定
+""" Cursor
 set scrolloff=5
 set sidescrolloff=5
 set sidescroll=1
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""" ファイル処理関連
+""" File
 set confirm
 set hidden
 set autoread
@@ -32,7 +69,7 @@ set clipboard+=unnamed,autoselect
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""" 検索、置換関連
+""" Search, Displacement
 set nohlsearch
 set incsearch
 set ignorecase
@@ -42,7 +79,7 @@ set gdefault
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""" タブ、インデントの設定
+""" Tab, Indent
 set expandtab
 set tabstop=2
 set shiftwidth=2
@@ -63,19 +100,19 @@ set pastetoggle=<C-e>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""" OS関連
+""" OS
 set mouse=a
 set clipboard=unnamed
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""" コマンドラインの設定
+""" Command line
 set wildmenu
 set wildmode=list:longest,full
 set history=10000
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" ノーマルモードでコマンドラインモードに入る時の効率化
+" Normal -> Command
 nnoremap ; :
 
 nnoremap s <Nop>
@@ -89,6 +126,10 @@ nnoremap sp gT
 nnoremap ss :<C-u>sp<CR>
 nnoremap sv :<C-u>vs<CR>
 
+nnoremap q <Nop>
+nnoremap qq :<C-u>q<CR>
+nnoremap qw :<C-u>wq<CR>
+
 nnoremap s= <C-w>=
 call submode#enter_with('bufmove', 'n', '', 's>', '<C-w>>')
 call submode#enter_with('bufmove', 'n', '', 's<', '<C-w><')
@@ -98,39 +139,3 @@ call submode#map('bufmove', 'n', '', '>', '<C-w>>')
 call submode#map('bufmove', 'n', '', '<', '<C-w><')
 call submode#map('bufmove', 'n', '', '+', '<C-w>+')
 call submode#map('bufmove', 'n', '', '-', '<C-w>-')
-
-" fzf
-set rtp+=~/.fzf
-
-" 括弧の対応
-" inoremap { {}<LEFT>
-" inoremap [ []<LEFT>
-" inoremap ( ()<LEFT>
-" inoremap " ""<LEFT>
-" inoremap ' ''<LEFT>
-" function! DeleteParenthesesAdjoin()
-"     let pos = col(".") - 1  " カーソルの位置．1からカウント
-"     let str = getline(".")  " カーソル行の文字列
-"     let parentLList = ["(", "[", "{", "\'", "\""]
-"     let parentRList = [")", "]", "}", "\'", "\""]
-"     let cnt = 0
-"
-"     let output = ""
-"
-"     " カーソルが行末の場合
-"     if pos == strlen(str)
-"         return "\b"
-"     endif
-"     for c in parentLList
-"         " カーソルの左右が同種の括弧
-"         if str[pos-1] == c && str[pos] == parentRList[cnt]
-"             call cursor(line("."), pos + 2)
-"             let output = "\b"
-"             break
-"         endif
-"         let cnt += 1
-"     endfor
-"     return output."\b"
-" endfunction
-" " BackSpaceに割り当て
-" inoremap <silent> <BS> <C-R>=DeleteParenthesesAdjoin()<CR>

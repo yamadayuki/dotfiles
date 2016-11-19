@@ -1,26 +1,28 @@
 [user]
-	name = Yuki Yamada
-	email = yamadayuuki0818@gmail.com
+  name = Yuki Yamada
+  email = yamadayuuki0818@gmail.com
 
 [color]
-	ui = auto
+  ui = auto
 
 [alias]
   acc = commit -am "Corrected"
   # amend = commit -a --amend --no-edit
   amend = commit --amend -C HEAD
   br = branch
-  cached-diff = diff --cached
+  brm = branch --merged
   cm = commit
+  com = commit
   co = checkout
   d  = diff
+  dc = diff --cached
   dmb = !git branch --merged | grep -v \\* | xargs -I % git branch -d %
   empty = commit --allow-empty
   fo = fetch -p origin
   fp = !git fetch -p && git dmb
   history = log --graph --date=short --decorate=short --pretty=format:'%C(yellow)%h %Cgreen%cd %Cblue%cn %Cred%d%Creset%s'
   logg = log --stat --decorate=short --pretty=format:'%C(yellow)%h %Cgreen%cr%Cblue%cn%Cred%d %Creset%s %C(cyan)%b'
-  merged = branch --merged
+  po = pull origin
   pom = pull origin master
   pp = !git pull -p && git dmb
   rebase = rebase -i
@@ -33,8 +35,8 @@
   wip = commit -m "WIP"
 
 [core]
-	editor = vim
-	excludesfile = /Users/yamadayuuki/.gitignore_global
+  editor = vim
+  excludesfile = /Users/yamadayuuki/.gitignore_global
 
 [push]
   default = current
@@ -51,5 +53,6 @@
 
 [interactive]
   diffFilter = (diff-highlight 2>/dev/null || cat)
+
 [ghq]
-	root = ~/dev/src
+  root = ~/dev/src

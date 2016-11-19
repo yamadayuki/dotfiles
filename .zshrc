@@ -1,115 +1,14 @@
-# Path to your oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh
-
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-ZSH_THEME="gianu"
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git bundler osx rake-fast ruby gem mix)
-
-# User configuration
-
-export PATH=$HOME/bin:/usr/local/bin:$PATH
-# export MANPATH="/usr/local/man:$MANPATH"
-
-source $ZSH/oh-my-zsh.sh
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-#
-
-#############################################################
-
-function peco-select-history() {
-  local tac
-  if which tac > /dev/null;
-  then
-    tac="tac"
-  else
-    tac="tail -r"
-  fi
-  BUFFER=$(\history -n 1 | \
-    eval $tac | \
-    peco --query "$LBUFFER")
-  CURSOR=$#BUFFER
-  zle clear-screen
-
-  local NUM=$(history | wc -l)
-  local FIRST=$((-1*(NUM-1)))
- 
-  if [ $FIRST -eq 0 ] ; then
-    # Remove the last entry, "peco-history"
-    history -d $((HISTCMD-1))
-    echo "No history" >&2
-    return
-  fi
+#  functions
+#-------------------------------------------------------------------------------
+peco-select-history() {
+  BUFFER=$(history  | sort -k1,1nr | perl -ne 'BEGIN { my @lines = (); } s/^\s*\d+\*?\s*//; $in=$_; if (!(grep {$in eq $_} @lines)) { push(@lines, $in); print $in; }' | peco --query "$LBUFFER")
+  CURSOR=${#BUFFER}
+  zle reset-prompt
 }
 zle -N peco-select-history
 bindkey '^r' peco-select-history
 
-function peco-src() {
+peco-go-src() {
   local selected_dir=$(ghq list | peco --query "$LBUFFER")
   if [ -n "$selected_dir" ]; then
     selected_dir="$GOPATH/src/$selected_dir"
@@ -118,101 +17,124 @@ function peco-src() {
   fi
   zle clear-screen
 }
-zle -N peco-src
-bindkey '^t' peco-src
+zle -N peco-go-src
+bindkey '^t' peco-go-src
 
-#############################################################
+silent-git-status-sb() {
+  if [ "$(git rev-parse --is-inside-work-tree 2> /dev/null)" = 'true' ]; then
+    echo
+    git status -sb
+  fi
+  # builtin zle .accept-line
+  zle reset-prompt
+  return 0
+}
+zle -N silent-git-status-sb
+bindkey '^n' silent-git-status-sb
 
-# change color file and directory
-alias ls='ls -G'
 
-# git add . && git commit -m "WIP"
-alias wip='git add . && git commit -m "WIP"'
-
-# bundle exec
-alias be='bundle exec'
-
-# bundle exec rspec
-alias bec='bundle exec rspec'
-
-# postgresql server start / stop
-alias pgstart='pg_ctl -D /usr/local/bin/postgres -l /usr/local/bin/postgres/server.log start'
-alias pgstop='pg_ctl -D /usr/local/bin/postgres -l /usr/local/bin/postgres/server.log stop'
-
-# git alias
-alias g='git'
-
-# zeus alias
-alias z='zeus'
-
-alias restart='source ~/.zshrc'
-
-alias vi=vim
-
-alias reco='bin/rake routes | peco'
-
-alias cdrb="cd ~/dev/RubyProject/"
-alias cdjs="cd ~/dev/JSProject/"
-
-alias zconf='vim ~/.zshrc'
-alias vconf='vim ~/.vimrc'
-alias vbconf='vim ~/.vimrc.neobundle'
-
-# less
-export LESS='-R'
-export LESSOPEN='|lessfilter %s'
-
-###########################################################################
-
-export LANG=ja_JP.UTF-8
-
-autoload -Uz colors
+#  settings
+#-------------------------------------------------------------------------------
+plugins+=(zsh-completions)
+autoload -U compinit
+compinit -u
+autoload -U colors
 colors
-
-autoload -Uz compinit
-compinit
 
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 zstyle ':completion:*' ignore-parents parent pwd ..
 
-setopt print_eight_bit
-setopt auto_cd
+export HISTFILE="$HOME/.zsh_history"
+export HISTSIZE=100000
+export SAVEHIST=100000
 
-###########################################################################
+setopt append_history
+setopt auto_cd auto_pushd
+setopt pushd_ignore_dups
+setopt auto_list
+setopt auto_param_slash
+setopt auto_remove_slash
+setopt HIST_NO_STORE
+setopt hist_ignore_dups
+setopt HIST_IGNORE_ALL_DUPS
 
-export PATH="/usr/local/ghc-7.10.2/bin:$PATH"
-export PATH="$HOME/.cabal/bin:$PATH"
 
-export PKG_CONFIG_PATH=/usr/local/Cellar/imagemagick/6.9.1-1/include/ImageMagick-6/magick
-
-export PATH="$HOME/.gobrew/bin:$PATH"
+#  export
+#-------------------------------------------------------------------------------
+export LESS='-R'
+export LESSOPEN='|lessfilter %s'
+export LANG=en_US.UTF-8
+export LC_ALL=$LANG
 
 export EDITOR='vim'
+
+# Cask
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
+# Go
+export GOPATH=$HOME/dev
+export PATH=$GOPATH/bin:$PATH
+
+# Cabal
+export PATH="$HOME/.cabal/bin:$PATH"
+
+export PATH="$PATH:/usr/local/share/git-core/contrib/diff-highlight"
+
+# anyenv
+export PATH="$HOME/.anyenv/bin:$PATH"
+
+
+#  alias
+#-------------------------------------------------------------------------------
+alias l="ls -laG"
+alias ls="ls -G"
+alias vi=vim
+
+# bundle exec
+alias be='bundle exec'
+
+# git alias
+alias g='git'
+
+alias restart='source ~/.zshrc'
+alias zconf='vim ~/.zshrc'
+alias vconf='vim ~/.vimrc'
+
+# docker
 alias dk='docker'
 alias dkc='docker-compose'
 alias dkm='docker-machine'
 alias dkl='docker-clean'
 
-export PATH="/usr/local/sbin:$PATH"
 
-export PATH="$PATH:/usr/local/share/git-core/contrib/diff-highlight"
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/Users/yamadayuuki/.sdkman"
-[[ -s "/Users/yamadayuuki/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/yamadayuuki/.sdkman/bin/sdkman-init.sh"
-export PATH="$HOME/.anyenv/bin:$PATH"
+#  eval
+#-------------------------------------------------------------------------------
 eval "$(anyenv init -)"
+eval "$(opam config env)"
 
-eval "$(hub alias -s)"
+#  zplug
+#-------------------------------------------------------------------------------
+[[ -f ~/.zplug/init.zsh ]] || return
+source ~/.zplug/init.zsh
 
-export VAGRANT_HOME="/Volumes/Seagate/Vagrant/.vagrant.d"
-export PATH="$PATH:$VAGRANT_HOME"
-eval $(opam config env)
+zplug "zsh-users/zsh-syntax-highlighting"
+zplug "zsh-users/zsh-completions"
+zplug "plugins/bundler", from:oh-my-zsh
+zplug "plugins/gem", from:oh-my-zsh
+zplug "plugins/git", from:oh-my-zsh
+zplug "plugins/go", from:oh-my-zsh
+zplug "plugins/heroku", from:oh-my-zsh
+zplug "plugins/mix", from:oh-my-zsh
+zplug "plugins/osx", from:oh-my-zsh
+zplug "plugins/pip", from:oh-my-zsh
+zplug "lib/git", from:oh-my-zsh
+zplug "themes/ys", from:oh-my-zsh
 
-export GOPATH=$HOME/dev
-export PATH=$GOPATH/bin:$PATH
+if ! zplug check --verbose; then
+  printf "Install? [y/N]: "
+  if read -q; then
+    echo; zplug install
+  fi
+fi
 
-export PATH=/Library/Developer/Toolchains/swift-latest.xctoolchain/usr/bin:$PATH
-export TOOLCHAINS=swift
+zplug load --verbose
