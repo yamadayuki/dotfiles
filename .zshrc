@@ -54,9 +54,8 @@ setopt pushd_ignore_dups
 setopt auto_list
 setopt auto_param_slash
 setopt auto_remove_slash
-setopt HIST_NO_STORE
 setopt hist_ignore_dups
-setopt HIST_IGNORE_ALL_DUPS
+setopt hist_ignore_all_dups
 
 
 #  export
