@@ -55,7 +55,7 @@ setopt auto_list
 setopt auto_param_slash
 setopt auto_remove_slash
 setopt hist_ignore_dups
-setopt hist_ignore_all_dups
+setopt share_history
 
 
 #  export
