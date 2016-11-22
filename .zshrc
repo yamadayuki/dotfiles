@@ -1,9 +1,28 @@
 #  functions
 #-------------------------------------------------------------------------------
-peco-select-history() {
-  BUFFER=$(history  | sort -k1,1nr | perl -ne 'BEGIN { my @lines = (); } s/^\s*\d+\*?\s*//; $in=$_; if (!(grep {$in eq $_} @lines)) { push(@lines, $in); print $in; }' | peco --query "$LBUFFER")
-  CURSOR=${#BUFFER}
-  zle reset-prompt
+function peco-select-history() {
+  local tac
+  if which tac > /dev/null;
+  then
+    tac="tac"
+  else
+    tac="tail -r"
+  fi
+  BUFFER=$(\history -n 1 | \
+    eval $tac | \
+    peco --query "$LBUFFER")
+  CURSOR=$#BUFFER
+  zle clear-screen
+
+  local NUM=$(history | wc -l)
+  local FIRST=$((-1*(NUM-1)))
+
+  if [ $FIRST -eq 0 ] ; then
+    # Remove the last entry, "peco-history"
+    history -d $((HISTCMD-1))
+    echo "No history" >&2
+    return
+  fi
 }
 zle -N peco-select-history
 bindkey '^r' peco-select-history
