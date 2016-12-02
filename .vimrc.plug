@@ -15,6 +15,7 @@ Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 Plug 'slim-template/vim-slim', { 'for': 'slim' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'flowtype/vim-flow', { 'for': 'javascript' }
+let g:flow#autoclose = 1
 Plug 'mxw/vim-jsx'
 Plug 'elzr/vim-json', { 'for': 'json' }
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
