@@ -49,7 +49,14 @@ module.exports = {
       '#56B6C2',
       '#ABB2BF',
       '#FFFFFF'
-    ]
+    ],
+
+    tabIcons: {
+      mapColors: {
+        vim: '#90A960',
+        zsh: '#6D9FB3',
+      },
+    },
   },
 
   // a list of plugins to fetch and install from npm
@@ -61,7 +68,7 @@ module.exports = {
   plugins: [
     'hypercwd',
     'hyperterm-blink',
-    // 'hyper-chester',
+    'hyper-tab-icons',
   ],
 
   // in development, you can create a directory under
@@ -69,5 +76,5 @@ module.exports = {
   // to load it and avoid it being `npm install`ed
   localPlugins: [
     'hyper-chester',
-  ]
+  ],
 };
