@@ -129,6 +129,9 @@ alias dkc='docker-compose'
 alias dkm='docker-machine'
 alias dkl='docker-clean'
 
+# ag
+alias ag="ag --color-match '1;31'"
+
 
 #  eval
 #-------------------------------------------------------------------------------
