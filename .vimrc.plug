@@ -29,12 +29,7 @@ inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 Plug 'myhere/vim-nodejs-complete', { 'for': 'javascript' }
 autocmd FileType javascript setlocal omnifunc=nodejscomplete#CompleteJS
 
-
-" Color
-Plug 'tomasr/molokai'
-
 call plug#end()
 
 set t_Co=256
 syntax on
-" colorscheme molokai
