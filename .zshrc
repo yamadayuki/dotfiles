@@ -39,18 +39,16 @@ peco-go-src() {
 zle -N peco-go-src
 bindkey '^t' peco-go-src
 
-silent-git-status-sb() {
-  if [ "$(git rev-parse --is-inside-work-tree 2> /dev/null)" = 'true' ]; then
-    echo
-    git status -sb
+peco-git-checkout() {
+  local selected_branch=$(git branch | peco --query "$LBUFFER")
+  if [ -n "$selected_branch" ]; then
+    BUFFER="git checkout ${selected_branch}"
+    zle accept-line
   fi
-  # builtin zle .accept-line
-  zle reset-prompt
-  return 0
+  zle clear-screen
 }
-zle -N silent-git-status-sb
-bindkey '^n' silent-git-status-sb
-
+zle -N peco-git-checkout
+bindkey '^g' peco-git-checkout
 
 #  settings
 #-------------------------------------------------------------------------------
