@@ -53,7 +53,9 @@ module.exports = {
 
     tabIcons: {
       mapColors: {
+        git: '#AA4144',
         gulp: '#AA4144',
+        npm: '#BE222C',
         vim: '#90A960',
         zsh: '#6D9FB3',
       },
