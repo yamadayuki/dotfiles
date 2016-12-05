@@ -40,8 +40,9 @@ zle -N peco-go-src
 bindkey '^t' peco-go-src
 
 peco-git-checkout() {
-  local selected_branch=$(git branch | peco --query "$LBUFFER")
+  local selected_branch=$(git branch -a | peco --query "$LBUFFER")
   if [ -n "$selected_branch" ]; then
+    [[ $selected_branch =~ 'remotes/origin/(.+)' ]] && selected_branch=$match[1]
     BUFFER="git checkout ${selected_branch}"
     zle accept-line
   fi
