@@ -43,6 +43,7 @@ peco-git-checkout() {
   local selected_branch=$(git branch -a | peco --query "$LBUFFER")
   if [ -n "$selected_branch" ]; then
     [[ $selected_branch =~ 'remotes/origin/(.+)' ]] && selected_branch=$match[1]
+    [[ $selected_branch =~ '\* (.+)' ]] && selected_branch=$match[1]
     BUFFER="git checkout ${selected_branch}"
     zle accept-line
   fi
@@ -71,14 +72,19 @@ setopt auto_list
 setopt auto_param_slash
 setopt auto_remove_slash
 
-setopt append_history
+setopt bang_hist
 setopt extended_history
-setopt hist_expire_dups_first
-setopt hist_ignore_dups
-setopt hist_ignore_space
-setopt hist_verify
 setopt inc_append_history
 setopt share_history
+setopt hist_expire_dups_first
+setopt hist_ignore_dups
+setopt hist_ignore_all_dups
+setopt hist_find_no_dups
+setopt hist_ignore_space
+setopt hist_save_no_dups
+setopt hist_reduce_blanks
+setopt hist_verify
+setopt hist_beep
 
 
 #  export
