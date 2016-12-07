@@ -1,4 +1,4 @@
-
+#  functions
 #-------------------------------------------------------------------------------
 function peco-select-history() {
   local tac
@@ -73,9 +73,7 @@ setopt auto_param_slash
 setopt auto_remove_slash
 
 setopt bang_hist
-setopt extended_history
 setopt inc_append_history
-setopt share_history
 setopt hist_expire_dups_first
 setopt hist_ignore_dups
 setopt hist_ignore_all_dups
