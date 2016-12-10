@@ -8,3 +8,10 @@ ln -sf "$DOTFILES_PATH/.hyper.js" ~/.hyper.js
 ln -sf "$DOTFILES_PATH/.vimrc" ~/.vimrc
 ln -sf "$DOTFILES_PATH/.vimrc.plug" ~/.vimrc.plug
 ln -sf "$DOTFILES_PATH/.zshrc" ~/.zshrc
+
+
+# For Atom
+
+# Install Sync Settings
+# https://github.com/atom-community/sync-settings
+# Gist ID from URL (This is secret)
