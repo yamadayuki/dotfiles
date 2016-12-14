@@ -51,6 +51,8 @@ module.exports = {
       '#FFFFFF'
     ],
 
+    bellSoundURL: '~/Desktop/funk.mp3',
+
     tabIcons: {
       mapColors: {
         git: '#AA4144',
