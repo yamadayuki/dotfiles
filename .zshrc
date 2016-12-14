@@ -143,8 +143,8 @@ eval "$(opam config env)"
 
 #  zplug
 #-------------------------------------------------------------------------------
-[[ -f ~/.zplug/init.zsh ]] || return
-source ~/.zplug/init.zsh
+export ZPLUG_HOME=/usr/local/opt/zplug
+source $ZPLUG_HOME/init.zsh
 
 zplug "zsh-users/zsh-syntax-highlighting"
 zplug "zsh-users/zsh-completions"
@@ -157,7 +157,7 @@ zplug "plugins/mix", from:oh-my-zsh
 zplug "plugins/osx", from:oh-my-zsh
 zplug "plugins/pip", from:oh-my-zsh
 zplug "lib/git", from:oh-my-zsh
-zplug "themes/ys", from:oh-my-zsh
+zplug "themes/ys", as:theme, from:oh-my-zsh
 
 if ! zplug check --verbose; then
   printf "Install? [y/N]: "
@@ -166,4 +166,4 @@ if ! zplug check --verbose; then
   fi
 fi
 
-zplug load --verbose
+zplug load --verbose >&/dev/null
