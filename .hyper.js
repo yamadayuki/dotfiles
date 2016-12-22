@@ -73,6 +73,7 @@ module.exports = {
   plugins: [
     'hyperterm-blink',
     'hyper-tab-icons',
+    'hyper-statusline',
   ],
 
   // in development, you can create a directory under
