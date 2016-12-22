@@ -8,6 +8,7 @@ ln -sf "$DOTFILES_PATH/.hyper.js" ~/.hyper.js
 ln -sf "$DOTFILES_PATH/.vimrc" ~/.vimrc
 ln -sf "$DOTFILES_PATH/.vimrc.plug" ~/.vimrc.plug
 ln -sf "$DOTFILES_PATH/.zshrc" ~/.zshrc
+ln -sf "$DOTFILES_PATH/.npmrc" ~/.npmrc
 
 
 # For Atom
