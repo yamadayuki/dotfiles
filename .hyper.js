@@ -51,6 +51,8 @@ module.exports = {
       '#FFFFFF'
     ],
 
+    shell: '/usr/local/bin/zsh',
+
     tabIcons: {
       mapColors: {
         git: '#AA4144',

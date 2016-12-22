@@ -1,3 +1,5 @@
+export SHELL=/usr/local/bin/zsh
+
 #  functions
 #-------------------------------------------------------------------------------
 function peco-select-history() {
