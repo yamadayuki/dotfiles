@@ -111,6 +111,9 @@ export PATH="$PATH:/usr/local/share/git-core/contrib/diff-highlight"
 # anyenv
 export PATH="$HOME/.anyenv/bin:$PATH"
 
+# Postgres.app
+export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
+
 
 #  alias
 #-------------------------------------------------------------------------------
