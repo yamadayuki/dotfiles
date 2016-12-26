@@ -9,6 +9,7 @@ ln -sf "$DOTFILES_PATH/.vimrc" ~/.vimrc
 ln -sf "$DOTFILES_PATH/.vimrc.plug" ~/.vimrc.plug
 ln -sf "$DOTFILES_PATH/.zshrc" ~/.zshrc
 ln -sf "$DOTFILES_PATH/.npmrc" ~/.npmrc
+ln -sf "$DOTFILES_PATH/.editorconfig" ~/.editorconfig
 
 
 # For Atom
