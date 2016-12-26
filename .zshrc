@@ -30,7 +30,7 @@ zle -N peco-select-history
 bindkey '^r' peco-select-history
 
 peco-go-src() {
-  local selected_dir=$(ghq list | peco --query "$LBUFFER")
+  local selected_dir=$(ghq list | peco --query "$LBUFFER" --initial-filter Fuzzy)
   if [ -n "$selected_dir" ]; then
     selected_dir="$GOPATH/src/$selected_dir"
     BUFFER="cd ${selected_dir}"
