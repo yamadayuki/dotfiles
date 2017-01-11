@@ -162,7 +162,7 @@ zplug "plugins/mix", from:oh-my-zsh
 zplug "plugins/osx", from:oh-my-zsh
 zplug "plugins/pip", from:oh-my-zsh
 zplug "lib/git", from:oh-my-zsh
-zplug "themes/ys", from:oh-my-zsh
+zplug "themes/ys", from:oh-my-zsh, as:theme
 
 if ! zplug check --verbose; then
   printf "Install? [y/N]: "
