@@ -144,6 +144,7 @@ alias ag="ag --color-match '1;31'"
 #  eval
 #-------------------------------------------------------------------------------
 eval "$(anyenv init -)"
+eval "$(pyenv init -)"
 eval "$(opam config env)"
 
 #  zplug
