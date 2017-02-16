@@ -4,6 +4,7 @@
 
 [color]
   ui = auto
+  status = always
 
 [alias]
   acc = commit -am "Corrected"
