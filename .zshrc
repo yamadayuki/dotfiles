@@ -54,6 +54,7 @@ peco-git-checkout() {
 zle -N peco-git-checkout
 bindkey '^g' peco-git-checkout
 
+
 #  settings
 #-------------------------------------------------------------------------------
 plugins+=(zsh-completions)
@@ -146,6 +147,7 @@ alias ag="ag --color-match '1;31'"
 eval "$(anyenv init -)"
 eval "$(pyenv init -)"
 eval "$(opam config env)"
+
 
 #  zplug
 #-------------------------------------------------------------------------------
