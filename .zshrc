@@ -101,16 +101,17 @@ export EDITOR='vim'
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
 # Go
+export GOENV_ROOT=$HOME/.anyenv/envs/goenv
 export GOPATH=$HOME/dev
-export PATH=$GOPATH/bin:$PATH
+export PATH=$GOENV_ROOT/bin:$GOPATH/bin:$PATH
 
 # Cabal
-export PATH="$HOME/.cabal/bin:$PATH"
+export PATH=$HOME/.cabal/bin:$PATH
 
 export PATH="$PATH:/usr/local/share/git-core/contrib/diff-highlight"
 
 # anyenv
-export PATH="$HOME/.anyenv/bin:$PATH"
+export PATH=$HOME/.anyenv/bin:$PATH
 
 # Postgres.app
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
