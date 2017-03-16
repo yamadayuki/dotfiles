@@ -116,6 +116,8 @@ export PATH=$HOME/.anyenv/bin:$PATH
 # Postgres.app
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
 
+export FZF_DEFAULT_OPTS='--reverse --height 50%'
+
 
 #  alias
 #-------------------------------------------------------------------------------
