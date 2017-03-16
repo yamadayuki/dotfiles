@@ -2,7 +2,7 @@ export SHELL=/usr/local/bin/zsh
 
 #  functions
 #-------------------------------------------------------------------------------
-function peco-select-history() {
+function fzf-select-history() {
   local tac
   if which tac > /dev/null;
   then
@@ -12,7 +12,7 @@ function peco-select-history() {
   fi
   BUFFER=$(\history -n 1 | \
     eval $tac | \
-    peco --query "$LBUFFER")
+    fzf --query "$LBUFFER")
   CURSOR=$#BUFFER
   zle clear-screen
 
@@ -20,17 +20,17 @@ function peco-select-history() {
   local FIRST=$((-1*(NUM-1)))
 
   if [ $FIRST -eq 0 ] ; then
-    # Remove the last entry, "peco-history"
+    # Remove the last entry, "fzf-history"
     history -d $((HISTCMD-1))
     echo "No history" >&2
     return
   fi
 }
-zle -N peco-select-history
-bindkey '^r' peco-select-history
+zle -N fzf-select-history
+bindkey '^r' fzf-select-history
 
-peco-go-src() {
-  local selected_dir=$(ghq list | peco --query "$LBUFFER" --initial-filter Fuzzy)
+fzf-go-src() {
+  local selected_dir=$(ghq list | fzf --query "$LBUFFER")
   if [ -n "$selected_dir" ]; then
     selected_dir="$GOPATH/src/$selected_dir"
     BUFFER="cd ${selected_dir}"
@@ -38,11 +38,11 @@ peco-go-src() {
   fi
   zle clear-screen
 }
-zle -N peco-go-src
-bindkey '^t' peco-go-src
+zle -N fzf-go-src
+bindkey '^t' fzf-go-src
 
-peco-git-checkout() {
-  local selected_branch=$(git branch -a | peco --query "$LBUFFER")
+fzf-git-checkout() {
+  local selected_branch=$(git branch -a | fzf --query "$LBUFFER")
   if [ -n "$selected_branch" ]; then
     [[ $selected_branch =~ 'remotes/origin/(.+)' ]] && selected_branch=$match[1]
     [[ $selected_branch =~ '\* (.+)' ]] && selected_branch=$match[1]
@@ -51,8 +51,8 @@ peco-git-checkout() {
   fi
   zle clear-screen
 }
-zle -N peco-git-checkout
-bindkey '^g' peco-git-checkout
+zle -N fzf-git-checkout
+bindkey '^g' fzf-git-checkout
 
 
 #  settings
@@ -116,7 +116,7 @@ export PATH=$HOME/.anyenv/bin:$PATH
 # Postgres.app
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
 
-export FZF_DEFAULT_OPTS='--reverse --height 50%'
+export FZF_DEFAULT_OPTS='--reverse'
 
 
 #  alias
