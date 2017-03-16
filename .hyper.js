@@ -7,10 +7,12 @@ module.exports = {
     // font family with optional fallbacks
     // fontFamily: 'Ricty Diminished Discord',
     fontFamily: 'Fira Code',
+    uiFontFamily: 'Fira Code',
 
     // terminal cursor background color (hex)
     cursorColor: 'white',
     cursorShape: 'BLOCK',
+    cursorBlink: true,
 
     // color of the text
     foregroundColor: '#DBE6EC',
@@ -81,7 +83,6 @@ module.exports = {
   //   `@company/project`
   //   `project#1.0.1`
   plugins: [
-    'hyperterm-blink',
     'hyper-statusline',
   ],
 
