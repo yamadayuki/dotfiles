@@ -1,3 +1,5 @@
+set shell=/usr/local/bin/zsh
+
 " Check whether the file is readable
 if filereadable(expand('$HOME/.vimrc.plug'))
   " source $HOME/.vimrc.neobundle .vimrcファイル読み込み

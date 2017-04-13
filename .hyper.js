@@ -7,10 +7,12 @@ module.exports = {
     // font family with optional fallbacks
     // fontFamily: 'Ricty Diminished Discord',
     fontFamily: 'Fira Code',
+    uiFontFamily: 'Fira Code',
 
     // terminal cursor background color (hex)
     cursorColor: 'white',
     cursorShape: 'BLOCK',
+    cursorBlink: true,
 
     // color of the text
     foregroundColor: '#DBE6EC',
@@ -62,6 +64,16 @@ module.exports = {
         zsh: '#6D9FB3',
       },
     },
+
+    hyperTabs: {
+      trafficButtons: true,
+      tabIconsColored: true,
+    },
+
+    hyperStatusLine: {
+      fontSize: 13,
+      fontFamily: '"Fira Code"',
+    },
   },
 
   // a list of plugins to fetch and install from npm
@@ -71,8 +83,6 @@ module.exports = {
   //   `@company/project`
   //   `project#1.0.1`
   plugins: [
-    'hyperterm-blink',
-    'hyper-tab-icons',
     'hyper-statusline',
   ],
 
