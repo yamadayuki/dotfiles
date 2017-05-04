@@ -53,7 +53,7 @@ module.exports = {
       '#FFFFFF'
     ],
 
-    shell: '/usr/local/bin/zsh',
+    shell: '/usr/local/bin/fish',
 
     tabIcons: {
       mapColors: {
