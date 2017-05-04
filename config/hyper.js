@@ -50,7 +50,7 @@ module.exports = {
       '#56B6C2',
       '#56B6C2',
       '#ABB2BF',
-      '#FFFFFF'
+      '#FFFFFF',
     ],
 
     shell: '/usr/local/bin/fish',
@@ -82,14 +82,10 @@ module.exports = {
   //   `hypersolar`
   //   `@company/project`
   //   `project#1.0.1`
-  plugins: [
-    'hyper-statusline',
-  ],
+  plugins: ['hyper-statusline'],
 
   // in development, you can create a directory under
   // `~/.hyperterm_plugins/local/` and include it here
   // to load it and avoid it being `npm install`ed
-  localPlugins: [
-    'hyper-chester',
-  ],
+  localPlugins: ['hyper-chester'],
 };
