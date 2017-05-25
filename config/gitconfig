@@ -57,3 +57,6 @@
 
 [ghq]
   root = ~/dev/src
+[github]
+  user = yamadayuki
+  privatekey = /Users/yamadayuki/.ssh/id_rsa
