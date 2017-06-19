@@ -1,4 +1,4 @@
-set shell=/usr/local/bin/zsh
+set shell=/usr/local/bin/fish
 
 " Check whether the file is readable
 if filereadable(expand('$HOME/.vimrc.plug'))
