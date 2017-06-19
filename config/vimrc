@@ -182,6 +182,6 @@ endfor
 " ## end of OPAM user-setup addition for vim / base ## keep this line
 " ## added by OPAM user-setup for vim / ocp-indent ## 7c11b9d5586c700d06ca80f2b6cf6838 ## you can edit, but keep this line
 if count(s:opam_available_tools,"ocp-indent") == 0
-  source "/Users/yamadayuki/.opam/4.02.3/share/vim/syntax/ocp-indent.vim"
+  " source /Users/yamadayuki/.opam/4.02.3/share/vim/syntax/ocp-indent.vim
 endif
 " ## end of OPAM user-setup addition for vim / ocp-indent ## keep this line
