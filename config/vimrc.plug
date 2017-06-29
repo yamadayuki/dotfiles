@@ -6,6 +6,21 @@ nnoremap <C-e> :Explore<CR>
 Plug 'kana/vim-submode'
 Plug 'Shougo/unite.vim'
 
+" Airline plugin
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+set laststatus=2
+set showtabline=2
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+let g:airline_theme='papercolor'
+let g:airline_powerline_fonts = 1
+
+" Window Resize
+Plug 'simeji/winresizer'
+let g:winresizer_start_key = 'sr'
+
+
 Plug 'mattn/emmet-vim', { 'for': 'html' }
 
 " Syntax
@@ -19,6 +34,7 @@ let g:flow#autoclose = 1
 Plug 'mxw/vim-jsx'
 Plug 'elzr/vim-json', { 'for': 'json' }
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
+Plug 'posva/vim-vue', { 'for': 'vue' }
 
 " Complete
 Plug 'Shougo/neocomplete.vim'
