@@ -20,7 +20,7 @@ let g:airline_powerline_fonts = 1
 Plug 'simeji/winresizer'
 let g:winresizer_start_key = 'sr'
 
-
+" Emmet
 Plug 'mattn/emmet-vim', { 'for': 'html' }
 
 " Syntax
@@ -46,7 +46,12 @@ inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 Plug 'myhere/vim-nodejs-complete', { 'for': 'javascript' }
 autocmd FileType javascript setlocal omnifunc=nodejscomplete#CompleteJS
 
+" Color theme
+Plug 'chriskempson/vim-tomorrow-theme'
+
 call plug#end()
 
 set t_Co=256
 syntax on
+set background=dark
+colorscheme Tomorrow-Night
