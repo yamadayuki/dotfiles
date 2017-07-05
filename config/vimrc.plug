@@ -49,6 +49,8 @@ autocmd FileType javascript setlocal omnifunc=nodejscomplete#CompleteJS
 " Color theme
 Plug 'chriskempson/vim-tomorrow-theme'
 
+Plug 'jiangmiao/auto-pairs'
+
 call plug#end()
 
 set t_Co=256
