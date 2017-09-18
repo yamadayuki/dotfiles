@@ -1,10 +1,8 @@
 call plug#begin('~/.vim/plugged')
 
-" Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 nnoremap <C-e> :Explore<CR>
 
 Plug 'kana/vim-submode'
-Plug 'Shougo/unite.vim'
 
 " Airline plugin
 Plug 'vim-airline/vim-airline'
