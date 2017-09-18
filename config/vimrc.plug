@@ -33,6 +33,7 @@ Plug 'mxw/vim-jsx'
 Plug 'elzr/vim-json', { 'for': 'json' }
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 Plug 'posva/vim-vue', { 'for': 'vue' }
+Plug 'dag/vim-fish', { 'for': 'fish' }
 
 " Complete
 Plug 'Shougo/neocomplete.vim'
