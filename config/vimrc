@@ -34,6 +34,12 @@ set noswapfile
 set clipboard+=unnamed,autoselect
 
 
+""" Netrw
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+autocmd FileType netrw setl bufhidden=delete
+nnoremap <C-e> :Explore<CR>
+
+
 """ Search, Displacement
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nohlsearch
