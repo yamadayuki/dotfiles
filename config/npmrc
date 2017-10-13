@@ -1,6 +1,6 @@
 prefix=/usr/local
 python=/usr/local/bin/python
-//registry.npmjs.org/:_authToken=ac3089d0-3c4c-4ae3-bf3a-85035c04634c
+//registry.npmjs.org/:_authToken=e09996e1-7432-4a81-a225-f94c63205950
 scope=yamadayuki
 init-version=0.0.0
 init-license=MIT

@@ -1,8 +1,8 @@
 module.exports = {
   config: {
     // default font size in pixels for all tabs
-    // fontSize: 10,
-    fontSize: 7,
+    fontSize: 10,
+    // fontSize: 7,
 
     // font family with optional fallbacks
     // fontFamily: 'Ricty Diminished Discord',

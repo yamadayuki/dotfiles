@@ -15,6 +15,8 @@ set ruler
 " set cursorcolumn
 set laststatus=2
 set showmatch
+set antialias
+set guifont=Fira\ Code:h10
 
 
 """ Cursor
@@ -56,15 +58,18 @@ set expandtab
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
+set showtabline=2
 set autoindent
 set smartindent
 set backspace=indent,eol,start
 
 augroup fileTypeIndent
   autocmd!
-  autocmd BufNewFile,BufRead *.py setlocal tabstop=4 softtabstop=4 shiftwidth=4 autoindent smartindent
+  autocmd BufNewFile,BufRead *.py  setlocal tabstop=4 softtabstop=4 shiftwidth=4 autoindent smartindent
   autocmd BufNewFile,BufRead *.php setlocal tabstop=4 softtabstop=4 shiftwidth=4 autoindent smartindent
-  autocmd BufNewFile,BufRead *.rb setlocal tabstop=2 softtabstop=2 shiftwidth=2 autoindent smartindent
+  autocmd BufNewFile,BufRead *.rb  setlocal tabstop=2 softtabstop=2 shiftwidth=2 autoindent smartindent
+
+  autocmd BufNewFile,BufRead .babelrc setlocal filetype=json
 augroup END
 
 set pastetoggle=<C-e>
@@ -83,11 +88,12 @@ set wildmode=list:longest,full
 set history=10000
 
 
-""" netrw
+""" Netrw
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:netrw_liststyle = 3
 let g:netrw_altv = 1
 let g:netrw_alto = 1
+let g:netrw_preview = 1
 
 
 """ Normal -> Command
@@ -100,6 +106,7 @@ nnoremap sj <C-w>j
 nnoremap sk <C-w>k
 nnoremap sl <C-w>l
 nnoremap st :<C-u>tabnew<CR>
+nnoremap sx :<C-u>tabclose<CR>
 nnoremap sn gt
 nnoremap sp gT
 nnoremap ss :<C-u>sp<CR>

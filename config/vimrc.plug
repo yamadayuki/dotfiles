@@ -9,8 +9,9 @@ set laststatus=2
 set showtabline=2
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_idx_mode = 1
-let g:airline_theme='papercolor'
+let g:airline_theme='tomorrow'
 let g:airline_powerline_fonts = 1
+let g:airline_skip_empty_sections = 1
 
 """ Window Resize
 Plug 'simeji/winresizer'
@@ -33,6 +34,19 @@ Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 Plug 'posva/vim-vue', { 'for': 'vue' }
 Plug 'dag/vim-fish', { 'for': 'fish' }
 
+""" Go
+Plug 'fatih/vim-go', { 'for': 'go' }
+let g:go_highlight_operators = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_fields = 0
+let g:go_highlight_types = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_generator_tags = 1
+let g:go_fmt_experimental = 1
+let g:go_fmt_command = "goimports"
+
 """ Complete
 Plug 'Shougo/neocomplete.vim'
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
@@ -46,11 +60,13 @@ autocmd FileType javascript setlocal omnifunc=nodejscomplete#CompleteJS
 """ Color theme
 Plug 'chriskempson/vim-tomorrow-theme'
 
+""" Auto pair plugin
 Plug 'jiangmiao/auto-pairs'
+
 
 call plug#end()
 
 set t_Co=256
 syntax on
 set background=dark
-colorscheme Tomorrow-Night
+colorscheme Tomorrow-Night-Eighties
