@@ -1,3 +1,6 @@
+#  Functions
+#--------------------------------------
+
 function print_title
   printf "\e[34m"
   echo '                                                                              '
@@ -21,5 +24,18 @@ function link_files
   end
 end
 
+function modify_defaults
+  echo "Modify macOS defaults."
+
+  # Set a blazingly fast keyboard repeat rate.
+  defaults write NSGlobalDomain KeyRepeat -int 1
+  defaults write NSGlobalDomain InitialKeyRepeat -int 10
+end
+
+
+#  Endpoint
+#--------------------------------------
+
 print_title
 link_files
+modify_defaults
