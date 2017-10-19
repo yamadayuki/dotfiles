@@ -105,10 +105,10 @@ nnoremap sh <C-w>h
 nnoremap sj <C-w>j
 nnoremap sk <C-w>k
 nnoremap sl <C-w>l
-nnoremap st :<C-u>tabnew<CR>
-nnoremap sx :<C-u>tabclose<CR>
-nnoremap sn gt
-nnoremap sp gT
+nnoremap tt :<C-u>tabnew<CR>
+nnoremap tx :<C-u>tabclose<CR>
+nnoremap tl gt
+nnoremap th gT
 nnoremap ss :<C-u>sp<CR>
 nnoremap sv :<C-u>vs<CR>
 
@@ -161,6 +161,6 @@ endfor
 " ## end of OPAM user-setup addition for vim / base ## keep this line
 " ## added by OPAM user-setup for vim / ocp-indent ## 7c11b9d5586c700d06ca80f2b6cf6838 ## you can edit, but keep this line
 if count(s:opam_available_tools,"ocp-indent") == 0
-  " source /Users/yamadayuki/.opam/4.02.3/share/vim/syntax/ocp-indent.vim
+  source /Users/yamadayuki/.opam/4.02.3/share/vim/syntax/ocp-indent.vim
 endif
 " ## end of OPAM user-setup addition for vim / ocp-indent ## keep this line
