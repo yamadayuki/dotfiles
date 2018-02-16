@@ -1,7 +1,7 @@
 module.exports = {
   config: {
     // default font size in pixels for all tabs
-    fontSize: 10,
+    fontSize: 11,
     // fontSize: 7,
 
     // font family with optional fallbacks
@@ -87,5 +87,7 @@ module.exports = {
   // in development, you can create a directory under
   // `~/.hyperterm_plugins/local/` and include it here
   // to load it and avoid it being `npm install`ed
-  localPlugins: [],
+  localPlugins: [
+    // 'tomorrow-night-hyper-dark'
+  ],
 };

@@ -11,8 +11,8 @@ endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set number
 set ruler
-" set cursorline
-" set cursorcolumn
+set nocursorline
+set nocursorcolumn
 set laststatus=2
 set showmatch
 set antialias
