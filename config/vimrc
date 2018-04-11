@@ -16,7 +16,7 @@ set nocursorcolumn
 set laststatus=2
 set showmatch
 set antialias
-set guifont=Fira\ Code:h10
+set guifont=Operator\ Mono\ SSm:h10
 
 
 """ Cursor
@@ -36,10 +36,9 @@ set noswapfile
 set clipboard+=unnamed,autoselect
 
 
-""" Netrw
+""" fzf
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-autocmd FileType netrw setl bufhidden=delete
-nnoremap <C-e> :Explore<CR>
+nnoremap <C-e> :FZF<CR>
 
 
 """ Search, Displacement
@@ -90,6 +89,7 @@ set history=10000
 
 """ Netrw
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+autocmd FileType netrw setl bufhidden=delete
 let g:netrw_liststyle = 3
 let g:netrw_altv = 1
 let g:netrw_alto = 1

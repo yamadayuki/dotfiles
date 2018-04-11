@@ -10,8 +10,12 @@ set showtabline=2
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 let g:airline_theme='tomorrow'
-let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 0
 let g:airline_skip_empty_sections = 1
+
+""" fzf
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
 
 """ Window Resize
 Plug 'simeji/winresizer'
@@ -49,6 +53,9 @@ let g:go_fmt_command = "goimports"
 
 """ OCaml
 Plug 'def-lkb/ocp-indent-vim', { 'for': 'ocaml' }
+
+""" Python
+Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 
 """ Complete
 
