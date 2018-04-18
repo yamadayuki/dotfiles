@@ -1,6 +1,6 @@
 [user]
-  name = Yuki Yamada
-  email = yamadayuuki0818@gmail.com
+	name = Yuki Yamada
+	email = yamadayuuki0818@gmail.com
 
 [color]
   ui = auto
@@ -63,5 +63,5 @@
 [filter "lfs"]
   required = true
   clean = git-lfs clean -- %f
-  smudge = git-lfs smudge -- %f
-  process = git-lfs filter-process
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
