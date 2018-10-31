@@ -1,16 +1,15 @@
-dotfiles
-===
+# dotfiles
 
 ### Installation
+
 ```
-$ ghq get -u -p yamadayuki/dotfiles
-$ cd path/to/yamadayuki/dotfiles
-$ fish install.fish
+$ bash <(curl -sSL https://raw.githubusercontent.com/yamadayuki/dotfiles/master/up)
 ```
 
 ### Configuration
 
 For OPAM
+
 ```
 $ opam switch 4.02.3
 $ opam update
