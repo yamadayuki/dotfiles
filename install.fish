@@ -42,7 +42,7 @@ end
 function install_via_fisher
     echo "+ Install modules via fisher."
 
-    set -l packages jethrokuan/fzf rafaelrinaldi/pure yamadayuki/lure
+    set -l packages jethrokuan/fzf rafaelrinaldi/pure yamadayuki/lure edc/bass
     fisher add $packages
 end
 
