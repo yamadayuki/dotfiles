@@ -53,8 +53,7 @@ install_fish() {
 }
 
 execute_installer() {
-  # local install_script_path="$DOTFILES_PATH/install.fish"
-  local install_script_path="/Users/yamadayuki/dev/src/github.com/yamadayuki/dotfiles/install.fish"
+  local install_script_path="$DOTFILES_PATH/install.fish"
 
   if ! [ -d "$install_script_path" ]; then
     echo 'Setup with fish...'
