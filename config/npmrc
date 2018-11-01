@@ -1,8 +1,0 @@
-prefix=/usr/local
-python=/usr/local/bin/python
-scope=yamadayuki
-init-version=0.0.0
-init-license=MIT
-//progress=false
-engine-strict=true
-@yamadayuki:registry=https://registry.npmjs.org/
