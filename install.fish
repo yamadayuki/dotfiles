@@ -35,14 +35,27 @@ end
 function install_via_homebrew
     echo "+ Install modules via homebrew."
 
-    set -l commands bat fd flow fzf go hub imagemagick jq lua ocaml ocamlbuild opam creasty/tools/rid sqlite the_silver_searcher tree watchman yarn
+    set -l commands bat fd ffmpeg flow fzf go hub imagemagick jq lua ocaml ocamlbuild opam creasty/tools/rid sqlite the_silver_searcher tig tree watchman yarn
     brew install $commands
 end
 
+function install_fisher
+    functions -q fisher and return
+
+    echo "+ Install fisher"
+    curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
+    source ~/.config/fish/functions/fisher.fish
+end
+
 function install_via_fisher
+    if not functions -q fisher
+        echo "  ><> fisher is not installed..."
+        return
+    end
+
     echo "+ Install modules via fisher."
 
-    set -l packages jethrokuan/fzf rafaelrinaldi/pure yamadayuki/lure
+    set -l packages edc/bass jethrokuan/fzf laughedelic/pisces oh-my-fish/plugin-nodenv oh-my-fish/plugin-pyenv oh-my-fish/plugin-rbenv rafaelrinaldi/pure yamadayuki/lure
     fisher add $packages
 end
 
@@ -59,6 +72,7 @@ end
 print_title
 link_files
 modify_defaults
+install_fisher
 install_via_homebrew
 install_via_fisher
 setup
