@@ -55,15 +55,8 @@ function install_via_fisher
 
     echo "+ Install modules via fisher."
 
-    set -l packages edc/bass jethrokuan/fzf laughedelic/pisces oh-my-fish/plugin-nodenv oh-my-fish/plugin-pyenv oh-my-fish/plugin-rbenv rafaelrinaldi/pure yamadayuki/lure
+    set -l packages edc/bass jethrokuan/fzf oh-my-fish/plugin-nodenv oh-my-fish/plugin-pyenv oh-my-fish/plugin-rbenv rafaelrinaldi/pure yamadayuki/lure
     fisher add $packages
-end
-
-function setup
-    echo "+ Setup environment variables."
-
-    set -x GOPATH $HOME/dev
-    set -x PATH $PATH $GOENV_ROOT/bin $GOPATH/bin
 end
 
 #  Endpoint
@@ -75,4 +68,3 @@ modify_defaults
 install_fisher
 install_via_homebrew
 install_via_fisher
-setup
