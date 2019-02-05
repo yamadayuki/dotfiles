@@ -54,26 +54,6 @@ module.exports = {
     ],
 
     shell: "/usr/local/bin/fish",
-
-    tabIcons: {
-      mapColors: {
-        git: "#AA4144",
-        gulp: "#AA4144",
-        npm: "#BE222C",
-        vim: "#90A960",
-        zsh: "#6D9FB3",
-      },
-    },
-
-    hyperTabs: {
-      trafficButtons: true,
-      tabIconsColored: true,
-    },
-
-    hyperStatusLine: {
-      fontSize: 7,
-      fontFamily: '"Fira Code"',
-    },
   },
 
   // a list of plugins to fetch and install from npm
@@ -83,9 +63,6 @@ module.exports = {
   //   `@company/project`
   //   `project#1.0.1`
   plugins: [
-    "hyper-statusline",
-    "hyper-tabs-enhanced",
-    "hyperterm-oceanic-next",
   ],
 
   // in development, you can create a directory under

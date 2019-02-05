@@ -73,8 +73,17 @@ nnoremap <silent> gd :call LanguageClient_textDocument_definition()<cr>
 nnoremap <silent> gf :call LanguageClient_textDocument_formatting()<cr>
 nnoremap <silent> <cr> :call LanguageClient_textDocument_hover()<cr>
 
-""" Complete
+" "Plug 'jordwalke/vim-reasonml'
+" "let g:airline_extensions = ['esy', 'reason']
+" "let g:reasonml_project_airline=1
+" "let g:reasonml_syntastic_airline=1
+" "let g:reasonml_clean_project_airline=1
 
+""" Complete
+Plug 'lifepillar/vim-mucomplete'
+let g:mucomplete#can_complete = {}
+let g:mucomplete#enable_auto_at_startup = 1
+let g:mucomplete#chains = {'default': ['omni']}
 
 """ Color theme
 Plug 'chriskempson/vim-tomorrow-theme'
