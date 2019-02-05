@@ -3,66 +3,66 @@
 	email = yamadayuuki0818@gmail.com
 
 [color]
-  ui = auto
-  status = always
+	ui = auto
+	status = always
 
 [alias]
-  acc = commit -am "Corrected"
-  # amend = commit -a --amend --no-edit
-  amend = commit --amend -C HEAD
-  br = branch
-  brm = branch --merged
-  cm = commit
-  com = commit
-  co = checkout
-  d  = diff
-  dc = diff --cached
-  dmb = !git branch --merged | grep -v \\* | xargs -I % git branch -d %
-  empty = commit --allow-empty
-  fo = fetch -p origin
-  fp = !git fetch -p && git dmb
-  history = log --graph --date=short --decorate=short --pretty=format:'%C(yellow)%h %Cgreen%cd %Cblue%cn %Cred%d%Creset%s'
-  logg = log --stat --decorate=short --pretty=format:'%C(yellow)%h %Cgreen%cr%Cblue%cn%Cred%d %Creset%s %C(cyan)%b'
-  po = pull origin
-  pom = pull origin master
-  pp = !git pull -p && git dmb
-  rebase = rebase -i
-  rh = reset HEAD~1
-  sh = show
-  s  = status
-  st = status
-  # tr = log --graph --pretty='format:%C(yellow)%h%Creset %s %Cgreen(%an)%Creset %Cred%d%Creset'
-  tr = !git history
-  wip = commit -m "WIP"
+	acc = commit -am "Corrected"
+	# amend = commit -a --amend --no-edit
+	amend = commit --amend -C HEAD
+	br = branch
+	brm = branch --merged
+	cm = commit
+	com = commit
+	co = checkout
+	d = diff
+	dc = diff --cached
+	dmb = !git branch --merged | grep -v \\* | xargs -I % git branch -d %
+	empty = commit --allow-empty
+	fo = fetch -p origin
+	fp = !git fetch -p && git dmb
+	history = log --graph --date=short --decorate=short --pretty=format:'%C(yellow)%h %Cgreen%cd %Cblue%cn %Cred%d%Creset%s'
+	logg = log --stat --decorate=short --pretty=format:'%C(yellow)%h %Cgreen%cr%Cblue%cn%Cred%d %Creset%s %C(cyan)%b'
+	po = pull origin
+	pom = pull origin master
+	pp = !git pull -p && git dmb
+	rebase = rebase -i
+	rh = reset HEAD~1
+	sh = show
+	s = status
+	st = status
+	# tr = log --graph --pretty='format:%C(yellow)%h%Creset %s %Cgreen(%an)%Creset %Cred%d%Creset'
+	tr = !git history
+	wip = commit -m "WIP"
 
 [core]
-  editor = vim
-  excludesfile = ~/.gitignore_global
+	editor = vim
+	excludesfile = ~/.gitignore_global
 
 [push]
-  default = current
+	default = current
 
 [diff]
-  algorithm = histogram
-  tool = vimdiff
-  compactionHeuristic = true
+	algorithm = histogram
+	tool = vimdiff
+	compactionHeuristic = true
 
 [pager]
-  log = (diff-highlight 2>/dev/null || cat) | ${PAFER:-less}
-  show = (diff-highlight 2>/dev/null || cat) | ${PAFER:-less}
-  diff = (diff-highlight 2>/dev/null || cat) | ${PAFER:-less}
+	log = (diff-highlight 2>/dev/null || cat) | ${PAFER:-less}
+	show = (diff-highlight 2>/dev/null || cat) | ${PAFER:-less}
+	diff = (diff-highlight 2>/dev/null || cat) | ${PAFER:-less}
 
 [interactive]
-  diffFilter = (diff-highlight 2>/dev/null || cat)
+	diffFilter = (diff-highlight 2>/dev/null || cat)
 
 [ghq]
-  root = ~/dev/src
+	root = ~/dev/src
 [github]
-  user = yamadayuki
-  privatekey = /Users/yamadayuki/.ssh/id_rsa
+	user = yamadayuki
+	privatekey = /Users/yamadayuki/.ssh/id_rsa
 [filter "lfs"]
-  required = true
-  clean = git-lfs clean -- %f
+	required = true
+	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 [credential]
