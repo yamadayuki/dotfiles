@@ -32,11 +32,18 @@ function modify_defaults
     defaults write NSGlobalDomain InitialKeyRepeat -int 10
 end
 
-function install_via_homebrew
+function install_modules_via_homebrew
     echo "+ Install modules via homebrew."
 
     set -l commands bat fd ffmpeg flow fzf go hub imagemagick jq lua ocaml ocamlbuild opam creasty/tools/rid ripgrep sqlite tig tree watchman yarn
     brew install $commands
+end
+
+function install_casks_via_homebrew
+    echo "+ Install casks via homebrew."
+
+    set -l casks google-chrome insomnia visual-studio-code
+    brew cask install $casks
 end
 
 function install_fisher
@@ -66,5 +73,6 @@ print_title
 link_files
 modify_defaults
 install_fisher
-install_via_homebrew
+install_modules_via_homebrew
+install_casks_via_homebrew
 install_via_fisher
