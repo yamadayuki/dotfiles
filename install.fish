@@ -15,6 +15,18 @@ function print_title
     printf "\e[0m\n"
 end
 
+function print_done
+    printf "\e[34m"
+    echo '                                                                              '
+    echo '                              ____                                            '
+    echo '                             / __ \____  ____  ___                            '
+    echo '                            / / / / __ \/ __ \/ _ \                           '
+    echo '                           / /_/ / /_/ / / / /  __/                           '
+    echo '                          /_____/\____/_/ /_/\___(_)                          '
+    echo '                                                                              '
+    printf "\e[0m\n"
+end
+
 function link_files
     echo "+ Link config files in dotfiles/config ."
 
@@ -76,3 +88,4 @@ install_fisher
 install_modules_via_homebrew
 install_casks_via_homebrew
 install_via_fisher
+print_done
