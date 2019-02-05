@@ -35,7 +35,7 @@ end
 function install_via_homebrew
     echo "+ Install modules via homebrew."
 
-    set -l commands bat fd ffmpeg flow fzf go hub imagemagick jq lua ocaml ocamlbuild opam creasty/tools/rid sqlite the_silver_searcher tig tree watchman yarn
+    set -l commands bat fd ffmpeg flow fzf go hub imagemagick jq lua ocaml ocamlbuild opam creasty/tools/rid ripgrep sqlite tig tree watchman yarn
     brew install $commands
 end
 
