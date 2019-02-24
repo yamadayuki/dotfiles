@@ -2,12 +2,6 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'kana/vim-submode'
 
-""" Language Server
-Plug 'autozimu/LanguageClient-neovim', {
-  \ 'branch': 'next',
-  \ 'do': 'bash install.sh',
-  \ }
-
 """ Airline plugin
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -19,78 +13,22 @@ let g:airline_theme='tomorrow'
 let g:airline_powerline_fonts = 0
 let g:airline_skip_empty_sections = 1
 
-""" fzf
-Plug '/usr/local/opt/fzf'
-Plug 'junegunn/fzf.vim'
-
-""" Window Resize
-Plug 'simeji/winresizer'
-let g:winresizer_start_key = 'sr'
-
-""" Emmet
-Plug 'mattn/emmet-vim', { 'for': 'html' }
-
-""" Syntax
-Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
-Plug 'rhysd/vim-crystal', { 'for': 'crystal' }
-Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
-Plug 'slim-template/vim-slim', { 'for': 'slim' }
-Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-Plug 'flowtype/vim-flow', { 'for': 'javascript' }
-let g:flow#autoclose = 1
-Plug 'mxw/vim-jsx', { 'for': 'javascript' }
-Plug 'elzr/vim-json', { 'for': 'json' }
-Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
-Plug 'posva/vim-vue', { 'for': 'vue' }
-Plug 'dag/vim-fish', { 'for': 'fish' }
-
-""" Go
-Plug 'fatih/vim-go', { 'for': 'go' }
-let g:go_highlight_operators = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_fields = 0
-let g:go_highlight_types = 1
-let g:go_highlight_extra_types = 1
-let g:go_highlight_build_constraints = 1
-let g:go_highlight_generator_tags = 1
-let g:go_fmt_experimental = 1
-let g:go_fmt_command = "goimports"
-
-""" OCaml
-Plug 'def-lkb/ocp-indent-vim', { 'for': 'ocaml' }
-
-""" Python
-Plug 'davidhalter/jedi-vim', { 'for': 'python' }
-
-""" ReasonML
-Plug 'reasonml-editor/vim-reason-plus'
-let g:LanguageClient_serverCommands = {
-  \ 'reason': ['ocaml-language-server', '--stdio'],
-  \ 'ocaml': ['ocaml-language-server', '--stdio'],
-  \ }
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<cr>
-nnoremap <silent> gf :call LanguageClient_textDocument_formatting()<cr>
-nnoremap <silent> <cr> :call LanguageClient_textDocument_hover()<cr>
-
-" "Plug 'jordwalke/vim-reasonml'
-" "let g:airline_extensions = ['esy', 'reason']
-" "let g:reasonml_project_airline=1
-" "let g:reasonml_syntastic_airline=1
-" "let g:reasonml_clean_project_airline=1
-
-""" Complete
-Plug 'lifepillar/vim-mucomplete'
-let g:mucomplete#can_complete = {}
-let g:mucomplete#enable_auto_at_startup = 1
-let g:mucomplete#chains = {'default': ['omni']}
-
 """ Color theme
 Plug 'chriskempson/vim-tomorrow-theme'
 
-""" Auto pair plugin
-Plug 'jiangmiao/auto-pairs'
+""" Lexima
+Plug 'cohama/lexima.vim'
 
+""" FZF
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
+
+""" JavaScript / TypeScript
+Plug 'othree/yajs.vim'
+
+""" Fish
+
+Plug 'dag/vim-fish', { 'for': 'fish' }
 
 call plug#end()
 
@@ -98,3 +36,4 @@ set t_Co=256
 syntax on
 set background=dark
 colorscheme Tomorrow-Night-Eighties
+
