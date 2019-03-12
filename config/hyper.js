@@ -50,9 +50,9 @@ module.exports = {
       lightBlue: "#3FC4DE",
       lightMagenta: "#F075B5",
       lightCyan: "#6BE4E6",
-      lightWhite: "#D5D8DA",
-      // colorCubes: "",
-      grayscale: "#6C6F93",
+      // lightWhite: "",
+      colorCubes: "#6C6F934D",
+      grayscale: "#D5D8DA",
     },
 
     shell: "/usr/local/bin/fish",
