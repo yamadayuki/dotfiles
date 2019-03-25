@@ -59,7 +59,7 @@
 	root = ~/dev/src
 [github]
 	user = yamadayuki
-	privatekey = /Users/yamadayuki/.ssh/id_rsa
+	privatekey = $HOME/.ssh/id_rsa
 [filter "lfs"]
 	required = true
 	clean = git-lfs clean -- %f
