@@ -7,8 +7,6 @@
 	status = always
 
 [alias]
-	acc = commit -am "Corrected"
-	# amend = commit -a --amend --no-edit
 	amend = commit --amend -C HEAD
 	br = branch
 	brm = branch --merged
@@ -21,7 +19,7 @@
 	empty = commit --allow-empty
 	fo = fetch -p origin
 	fp = !git fetch -p && git dmb
-	history = log --graph --date=short --decorate=short --pretty=format:'%C(yellow)%h %Cgreen%cd %Cblue%cn %Cred%d%Creset%s'
+	history = log --graph --date=iso --decorate=short --pretty=format:'%C(yellow)%h %Cgreen%cd %Cblue%cn %Cred%d %Creset%s'
 	logg = log --stat --decorate=short --pretty=format:'%C(yellow)%h %Cgreen%cr%Cblue%cn%Cred%d %Creset%s %C(cyan)%b'
 	po = pull origin
 	pom = pull origin master
@@ -31,6 +29,7 @@
 	sh = show
 	s = status
 	st = status
+	sync = git co master && git pom && git fp
 	# tr = log --graph --pretty='format:%C(yellow)%h%Creset %s %Cgreen(%an)%Creset %Cred%d%Creset'
 	tr = !git history
 	wip = commit -m "WIP"

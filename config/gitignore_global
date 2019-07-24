@@ -7,3 +7,4 @@ node_modules
 .envrc
 .eslintcache
 dive.log
+.bundle
