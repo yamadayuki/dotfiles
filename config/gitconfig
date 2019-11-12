@@ -15,7 +15,7 @@
 	co = checkout
 	d = diff
 	dc = diff --cached
-	dmb = !git branch --merged | grep -v \\* | xargs -I % git branch -d %
+	dmb = !git branch --merged | grep -vE '^\\*|master$|develop$' | xargs -I % git branch -d %
 	empty = commit --allow-empty
 	fo = fetch -p origin
 	fp = !git fetch -p && git dmb

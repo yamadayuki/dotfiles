@@ -6,7 +6,9 @@ module.exports = {
     // font family with optional fallbacks
     // fontFamily: 'Ricty Diminished Discord',
     fontFamily: "Operator Mono SSm",
+    // fontFamily: "Fira Code",
     uiFontFamily: "Operator Mono SSm",
+    fontWeight: "normal",
 
     // terminal cursor background color (hex)
     cursorColor: "#6C6F93",

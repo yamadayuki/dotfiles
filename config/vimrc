@@ -112,6 +112,10 @@ nnoremap q <Nop>
 nnoremap qq :<C-u>q<CR>
 nnoremap qw :<C-u>wq<CR>
 
+nnoremap <silent> <C-j> :bprev<CR>
+nnoremap <silent> <C-k> :bnext<CR>
+nnoremap <silent> <C-l> :Ve<CR>
+
 nnoremap s= <C-w>=
 call submode#enter_with('bufmove', 'n', '', 's>', '<C-w>>')
 call submode#enter_with('bufmove', 'n', '', 's<', '<C-w><')
@@ -136,4 +140,4 @@ endfunction
 """ FZF customization
 noremap <C-e> :GFiles <CR>
 noremap <Leader>e :Files <CR>
-noremap <Leader>r :Rg 
+noremap <Leader>r :Rg

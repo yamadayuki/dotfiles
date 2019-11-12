@@ -24,10 +24,9 @@ Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 
 """ JavaScript / TypeScript
-Plug 'othree/yajs.vim'
+Plug 'othree/yajs.vim', { 'for': 'javascript' }
 
 """ Fish
-
 Plug 'dag/vim-fish', { 'for': 'fish' }
 
 call plug#end()
