@@ -15,18 +15,6 @@ function print_title
     printf "\e[0m\n"
 end
 
-function print_done
-    printf "\e[34m"
-    echo '                                                                              '
-    echo '                              ____                                            '
-    echo '                             / __ \____  ____  ___                            '
-    echo '                            / / / / __ \/ __ \/ _ \                           '
-    echo '                           / /_/ / /_/ / / / /  __/                           '
-    echo '                          /_____/\____/_/ /_/\___(_)                          '
-    echo '                                                                              '
-    printf "\e[0m\n"
-end
-
 function link_files
     echo "+ Link config files in dotfiles/config ."
 
@@ -47,14 +35,36 @@ end
 function install_modules_via_homebrew
     echo "+ Install modules via homebrew."
 
-    set -l commands bat fd ffmpeg flow fzf go hub imagemagick jq lua ocaml ocamlbuild opam creasty/tools/rid ripgrep sqlite tig tree watchman yarn
+    set -l commands \
+        # Clone of cat(1) with syntax highlighting and Git integration
+        bat \
+        # Simple, fast and user-friendly alternative to find
+        fd \
+        # Fuzzy Finder in rust!
+        sk \
+        # Search tool like grep and The Silver Searcher
+        ripgrep \
+        go \
+        hub \
+        ffmpeg \
+        imagemagick \
+        creasty/tools/rid \
+        tree \
+        watchman \
+        yarn
     brew install $commands
 end
 
 function install_casks_via_homebrew
     echo "+ Install casks via homebrew."
 
-    set -l casks google-chrome insomnia visual-studio-code
+    set -l casks \
+        google-chrome \
+        insomnia \
+        visual-studio-code \
+        hyper \
+        alfred \
+        firefox
     brew cask install $casks
 end
 
@@ -72,10 +82,33 @@ function install_via_fisher
         return
     end
 
-    echo "+ Install modules via fisher."
+    echo "  + Install modules via fisher."
 
-    set -l packages edc/bass jethrokuan/fzf oh-my-fish/plugin-nodenv oh-my-fish/plugin-pyenv oh-my-fish/plugin-rbenv rafaelrinaldi/pure yamadayuki/lure
+    set -l packages \
+        edc/bass \
+        oh-my-fish/plugin-nodenv \
+        oh-my-fish/plugin-pyenv \
+        oh-my-fish/plugin-rbenv \
+        yamadayuki/lure
     fisher add $packages
+end
+
+function link_config_file
+    echo "+ Link config.fish file into .config/fish/config.fish ."
+
+    ln -sf "$HOME/dotfiles/config.fish" "$HOME/.config/fish/config.fish"
+end
+
+function print_done
+    printf "\e[34m"
+    echo '                                                                              '
+    echo '                              ____                                            '
+    echo '                             / __ \____  ____  ___                            '
+    echo '                            / / / / __ \/ __ \/ _ \                           '
+    echo '                           / /_/ / /_/ / / / /  __/                           '
+    echo '                          /_____/\____/_/ /_/\___(_)                          '
+    echo '                                                                              '
+    printf "\e[0m\n"
 end
 
 #  Endpoint
@@ -88,4 +121,5 @@ install_fisher
 install_modules_via_homebrew
 install_casks_via_homebrew
 install_via_fisher
+link_config_file
 print_done
