@@ -35,6 +35,7 @@ end
 function install_modules_via_homebrew
     echo "+ Install modules via homebrew."
 
+    set -l taps federico-terzi/espanso
     set -l commands \
         # Clone of cat(1) with syntax highlighting and Git integration
         bat \
@@ -51,7 +52,10 @@ function install_modules_via_homebrew
         creasty/tools/rid \
         tree \
         watchman \
-        yarn
+        yarn \
+        espanso
+
+    brew tap $taps
     brew install $commands
 end
 
@@ -62,7 +66,7 @@ function install_casks_via_homebrew
         google-chrome \
         insomnia \
         visual-studio-code \
-        hyper \
+        # hyper \
         alfred \
         firefox
     brew cask install $casks
@@ -97,6 +101,13 @@ function link_config_file
     echo "+ Link config.fish file into .config/fish/config.fish ."
 
     ln -sf "$HOME/dotfiles/config.fish" "$HOME/.config/fish/config.fish"
+end
+
+function link_espanso_file
+    echo "+ Link espanso config file"
+
+    mkdir -p "$HOME/Library/Preferences/espanso"
+    ln -sf "$HOME/dotfiles/espanso.yml" "$HOME/Library/Preferences/espanso/default.yml"
 end
 
 function print_done
