@@ -37,7 +37,7 @@ module.exports = {
     // some color overrides. see http://bit.ly/29k1iU2 for
     // the full list
     colors: {
-      // black: "",
+      // black: "#1C1E26",
       red: "#E95678",
       green: "#29D398",
       yellow: "#FAB795",
