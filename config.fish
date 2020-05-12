@@ -39,6 +39,7 @@ eval (opam env)
 
 # anyenv
 source (anyenv init -|psub)
+# eval (anyenv init - | source)
 
 # fzf
 set -x FZF_DEFAULT_OPTS --height 40% --layout=reverse
@@ -47,7 +48,10 @@ set -x FZF_DEFAULT_OPTS --height 40% --layout=reverse
 set -x SKIM_DEFAULT_OPTIONS --ansi --layout=reverse --height 40%
 
 # bat
-alias cat "bat --plain --paging never"
+alias cat "bat --plain --paging never --theme \"Monokai Extended\""
+
+# exa
+alias ls exa
 
 export LANGUAGE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8

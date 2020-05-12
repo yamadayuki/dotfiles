@@ -3,10 +3,11 @@
 vendor/bundle
 ios/vendor/bundle
 node_modules
-.vscode
 *.code-workspace
 .envrc
 .eslintcache
 dive.log
 .bundle
 coverage
+.vscode
+telepresence.log
