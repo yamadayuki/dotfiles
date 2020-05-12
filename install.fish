@@ -45,6 +45,10 @@ function install_modules_via_homebrew
         sk \
         # Search tool like grep and The Silver Searcher
         ripgrep \
+        # Modern ls
+        exa \
+        # Pretty git diff tool
+        git-delta \
         go \
         hub \
         ffmpeg \
@@ -75,7 +79,7 @@ end
 function install_fisher
     functions -q fisher and return
 
-    echo "+ Install fisher"
+    echo "+ Install fisher."
     curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
     source ~/.config/fish/functions/fisher.fish
 end
@@ -95,6 +99,18 @@ function install_via_fisher
         oh-my-fish/plugin-rbenv \
         yamadayuki/lure
     fisher add $packages
+end
+
+function install_rustup
+    which -s rustup and return
+
+    echo "+ Install rustup."
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+end
+
+function install_via_cargo
+    echo "  + Install modules via cargo."
+    cargo install sd bottom
 end
 
 function link_config_file
