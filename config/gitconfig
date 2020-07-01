@@ -29,8 +29,6 @@
 	sh = show
 	s = status
 	st = status
-  # sync = git co master && git pom && git fp && git dmb
-	# tr = log --graph --pretty='format:%C(yellow)%h%Creset %s %Cgreen(%an)%Creset %Cred%d%Creset'
 	tr = !git history
 	wip = commit -m "WIP"
 
@@ -58,13 +56,19 @@
 
 [ghq]
 	root = ~/dev/src
+
 [github]
 	user = yamadayuki
 	privatekey = $HOME/.ssh/id_rsa
+
 [filter "lfs"]
 	required = true
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
+
 [credential]
 	helper = osxkeychain
+
+[pull]
+	ff = only
