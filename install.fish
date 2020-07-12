@@ -72,7 +72,8 @@ function install_casks_via_homebrew
         visual-studio-code \
         # hyper \
         alfred \
-        firefox
+        firefox \
+        phoenix
     brew cask install $casks
 end
 
