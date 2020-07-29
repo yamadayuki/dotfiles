@@ -43,7 +43,7 @@
 [diff]
   algorithm = histogram
   tool = vimdiff
-  compactionHeuristic = true
+  indentHeuristic = true
 
 [pager]
   # log = (diff-highlight 2>/dev/null || cat) | ${PAFER:-less}
