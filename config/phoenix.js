@@ -249,7 +249,9 @@ const AppPosition = {
 };
 
 Key.on("left", AppPosition.MODIFIERS, () => AppPosition.toLeft());
+Key.on("j", AppPosition.MODIFIERS, () => AppPosition.toLeft());
 Key.on("right", AppPosition.MODIFIERS, () => AppPosition.toRight());
+Key.on("l", AppPosition.MODIFIERS, () => AppPosition.toRight());
 Key.on("up", AppPosition.MODIFIERS, () => AppPosition.toTop());
 Key.on("down", AppPosition.MODIFIERS, () => AppPosition.toBottom());
 Key.on("c", AppPosition.MODIFIERS, () => AppPosition.centerize());
