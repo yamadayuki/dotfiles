@@ -115,9 +115,15 @@ function install_via_cargo
 end
 
 function link_config_file
-    echo "+ Link config.fish file into .config/fish/config.fish ."
+    echo "+ Link config.fish file into .config/fish/config.fish"
 
     ln -sf "$HOME/dotfiles/config.fish" "$HOME/.config/fish/config.fish"
+end
+
+function link_alacritty_config_file
+    echo "+ Link alacritty.yml file into .config/alacritty/alacritty.yml"
+
+    ln -sf "$HOME/dotfiles/alacritty.yml" "$HOME/.config/alacritty/alacritty.yml"
 end
 
 function link_espanso_file
@@ -150,4 +156,5 @@ install_modules_via_homebrew
 install_casks_via_homebrew
 install_via_fisher
 link_config_file
+link_alacritty_config_file
 print_done
