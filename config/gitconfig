@@ -45,13 +45,7 @@
   tool = vimdiff
   indentHeuristic = true
 
-[pager]
-  # log = (diff-highlight 2>/dev/null || cat) | ${PAFER:-less}
-  # show = (diff-highlight 2>/dev/null || cat) | ${PAFER:-less}
-  # diff = (diff-highlight 2>/dev/null || cat) | ${PAFER:-less}
-
 [interactive]
-  # diffFilter = (diff-highlight 2>/dev/null || cat)
   diffFilter = delta --color-only
 
 [ghq]
@@ -74,12 +68,13 @@
   ff = only
 
 [delta]
-	line-numbers = true
-	file-style = bold yellow ul
-	file-decoration-style = none
+  features = side-by-side line-numbers decorations
+  file-style = bold yellow ul
+  file-decoration-style = none
   hunk-header-decoration-style = none
 
 [rerere]
   enabled = true
+
 [init]
-	defaultBranch = main
+  defaultBranch = main
