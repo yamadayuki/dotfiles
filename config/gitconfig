@@ -21,6 +21,7 @@
   fp = !git fetch -p
   history = log --graph --date=iso --decorate=short --pretty=format:'%C(yellow)%h %Cgreen%cd %Cblue%cn %Cred%d %Creset%s'
   logg = log --stat --decorate=short --pretty=format:'%C(yellow)%h %Cgreen%cr%Cblue%cn%Cred%d %Creset%s %C(cyan)%b'
+  pd = !git log --oneline | sk | awk '{ print $1 }' | xargs -I% git show %
   po = pull origin
   pom = pull origin master
   pp = !git pull -p && git dmb
