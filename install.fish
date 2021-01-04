@@ -28,8 +28,8 @@ function modify_defaults
     echo "+ Modify macOS defaults."
 
     # Set a blazingly fast keyboard repeat rate.
-    defaults write NSGlobalDomain KeyRepeat -int 1
-    defaults write NSGlobalDomain InitialKeyRepeat -int 10
+    defaults write -g InitialKeyRepeat -int 10
+    defaults write -g KeyRepeat -int 1
 end
 
 function install_modules_via_homebrew
@@ -53,11 +53,11 @@ function install_modules_via_homebrew
         hub \
         ffmpeg \
         imagemagick \
-        creasty/tools/rid \
-        tree \
-        watchman \
-        yarn \
-        espanso
+        # creasty/tools/rid \
+        tree
+    # watchman \
+    # yarn \
+    # espanso
 
     brew tap $taps
     brew install $commands
@@ -66,15 +66,9 @@ end
 function install_casks_via_homebrew
     echo "+ Install casks via homebrew."
 
-    set -l casks \
-        google-chrome \
-        insomnia \
-        visual-studio-code \
-        # hyper \
-        alfred \
-        firefox \
-        phoenix
-    brew cask install $casks
+    # set -l casks \
+    #     google-chrome
+    # brew cask install $casks
 end
 
 function install_fisher
@@ -94,12 +88,10 @@ function install_via_fisher
     echo "  + Install modules via fisher."
 
     set -l packages \
-        edc/bass \
+        jorgebucaran/fisher \
         oh-my-fish/plugin-nodenv \
-        oh-my-fish/plugin-pyenv \
-        oh-my-fish/plugin-rbenv \
         yamadayuki/lure
-    fisher add $packages
+    fisher install $packages
 end
 
 function install_rustup
