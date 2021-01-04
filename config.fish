@@ -52,7 +52,7 @@ end
 source (hub alias -s|psub)
 
 # opam
-eval (opam env)
+# eval (opam env)
 
 # anyenv
 source (anyenv init -|psub)
