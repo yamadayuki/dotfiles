@@ -1,11 +1,12 @@
-set -x SHELL /opt/homebrew/bin/fish
+set -x SHELL (which fish)
 
 for file in $fisher_path/conf.d/*.fish
     builtin source $file 2>/dev/null
 end
 
 # Homebrew
-set -U fish_user_paths /opt/homebrew/bin $fish_user_paths
+set -x HOMEBREW_PREFIX (brew config | grep HOMEBREW_PREFIX |  awk '{ print $2 }')
+set -U fish_user_paths $HOMEBREW_PREFIX/bin $fish_user_paths
 
 # Rust
 set -U fish_user_paths $HOME/.cargo/bin $fish_user_paths
@@ -14,8 +15,8 @@ set -U fish_user_paths $HOME/.cargo/bin $fish_user_paths
 set -x GOPATH $HOME/dev
 set -U fish_user_paths $fish_user_paths $GOPATH/bin
 
-# Go M1 preview
-# set -U fish_user_paths $HOME/go-darwin-arm64-bootstrap/bin $fish_user_paths
+alias vi vim
+set -x EDITOR vim
 
 # direnv
 # eval (direnv hook fish)
@@ -44,24 +45,23 @@ source (hub alias -s|psub)
 # anyenv
 source (anyenv init -|psub)
 
+# fzf
+set -x FZF_DEFAULT_OPTS --height 100% --layout=reverse
+
 # skim
 set -x SKIM_DEFAULT_OPTIONS --ansi --layout=reverse --height 40%
 
 # bat
 alias cat "bat --plain --paging never"
 
+# Visual Studio Code - Insiders
+set -U fish_user_paths $fish_user_paths /Applications/Visual\ Studio\ Code\ -\ Insiders.app/Contents/Resources/app/bin/
+
 # exa
 alias ls exa
 
-# vim
-alias vi vim
-set -x EDITOR vim
-
-# Visual Studio Code - Exploration
-# set -U fish_user_paths $fish_user_paths /Applications/Visual\ Studio\ Code\ -\ Exploration.app/Contents/Resources/app/bin
-set -U fish_user_paths $fish_user_paths /Applications/Visual\ Studio\ Code\ -\ Insiders.app/Contents/Resources/app/bin
-
-set -x ENHANCD_FILTER sk
+# zoxide
+zoxide init fish | source
 
 export LANGUAGE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8

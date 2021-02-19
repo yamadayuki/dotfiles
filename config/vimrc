@@ -1,4 +1,4 @@
-set shell=/opt/homebrew/bin/fish
+set shell=fish
 
 " Check whether the file is readable
 if filereadable(expand('$HOME/.vimrc.plug'))

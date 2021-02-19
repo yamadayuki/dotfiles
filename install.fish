@@ -106,6 +106,11 @@ function install_via_cargo
     cargo install sd bottom
 end
 
+function clone_tmux_plugin
+    echo "+ Clone tmux-plugins/tpm"
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+end
+
 function link_config_file
     echo "+ Link config.fish file into .config/fish/config.fish"
 
