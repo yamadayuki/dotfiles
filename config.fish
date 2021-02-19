@@ -1,37 +1,27 @@
-set fish_function_path $fish_function_path $fisher_path/functions
-set fish_complete_path $fish_complete_path $fisher_path/completions
-
-set -x SHELL /usr/local/bin/fish
+set -x SHELL /opt/homebrew/bin/fish
 
 for file in $fisher_path/conf.d/*.fish
     builtin source $file 2>/dev/null
 end
 
+# Homebrew
+set -U fish_user_paths /opt/homebrew/bin $fish_user_paths
+
 # Rust
-set -x PATH $PATH $HOME/.cargo/bin
+set -U fish_user_paths $HOME/.cargo/bin $fish_user_paths
 
 # Go
 set -x GOPATH $HOME/dev
-set -x PATH $PATH $GOPATH/bin
+set -U fish_user_paths $fish_user_paths $GOPATH/bin
 
-# Deno
-set -x PATH $PATH $HOME/.deno/bin
-
-# Wantedly
-set -x PATH $PATH $HOME/.wantedly/bin
-
-# Homebrew
-set -g fish_user_paths /usr/local/sbin $fish_user_paths
-
-alias vi vim
-
-set -x EDITOR vim
+# Go M1 preview
+# set -U fish_user_paths $HOME/go-darwin-arm64-bootstrap/bin $fish_user_paths
 
 # direnv
 # eval (direnv hook fish)
 function __direnv_export_eval --on-event fish_prompt
     # Run on each prompt to update the state
-    "/usr/local/bin/direnv" export fish | source
+    direnv export fish | source
 
     # Handle cd history arrows between now and the next prompt
     function __direnv_cd_hook --on-variable PWD
@@ -51,33 +41,42 @@ end
 # hub command config
 source (hub alias -s|psub)
 
-# opam
-eval (opam env)
-
 # anyenv
 source (anyenv init -|psub)
-# eval (anyenv init - | source)
-
-# fzf
-set -x FZF_DEFAULT_OPTS --height 40% --layout=reverse
 
 # skim
 set -x SKIM_DEFAULT_OPTIONS --ansi --layout=reverse --height 40%
 
 # bat
-alias cat "bat --plain --paging never --theme \"Monokai Extended\""
+alias cat "bat --plain --paging never"
 
 # exa
 alias ls exa
+
+# vim
+alias vi vim
+set -x EDITOR vim
+
+# Visual Studio Code - Exploration
+# set -U fish_user_paths $fish_user_paths /Applications/Visual\ Studio\ Code\ -\ Exploration.app/Contents/Resources/app/bin
+set -U fish_user_paths $fish_user_paths /Applications/Visual\ Studio\ Code\ -\ Insiders.app/Contents/Resources/app/bin
+
+set -x ENHANCD_FILTER sk
 
 export LANGUAGE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LC_TYPE=en_US.UTF-8
 
+# Self installed binaries
+set -x SELF_INSTALLED_RUST_TOOLS \
+    bat \
+    pastel \
+    procs \
+    "git-delta" \
+    exa \
+    ripgrep \
+    fd-find \
+    skim
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f "$HOME/google-cloud-sdk/path.fish.inc" ]
-    . "$HOME/google-cloud-sdk/path.fish.inc"
-end
-
+set -x COLORTERM truecolor
