@@ -1,6 +1,3 @@
-set fish_function_path $fish_function_path $fisher_path/functions
-set fish_complete_path $fish_complete_path $fisher_path/completions
-
 set -x SHELL /usr/local/bin/fish
 
 for file in $fisher_path/conf.d/*.fish
@@ -8,20 +5,17 @@ for file in $fisher_path/conf.d/*.fish
 end
 
 # Rust
-set -x PATH $PATH $HOME/.cargo/bin
+set -U fish_user_paths $HOME/.cargo/bin $fish_user_paths
 
 # Go
 set -x GOPATH $HOME/dev
-set -x PATH $PATH $GOPATH/bin
+set -U fish_user_paths $fish_user_paths $GOPATH/bin
 
 # Deno
-set -x PATH $PATH $HOME/.deno/bin
-
-# Wantedly
-set -x PATH $PATH $HOME/.wantedly/bin
+set -U fish_user_paths $fish_user_paths $HOME/.deno/bin
 
 # Homebrew
-set -g fish_user_paths /usr/local/sbin $fish_user_paths
+set -U fish_user_paths /usr/local/sbin $fish_user_paths
 
 alias vi vim
 
@@ -51,24 +45,26 @@ end
 # hub command config
 source (hub alias -s|psub)
 
-# opam
-# eval (opam env)
-
 # anyenv
 source (anyenv init -|psub)
-# eval (anyenv init - | source)
 
 # fzf
-set -x FZF_DEFAULT_OPTS --height 40% --layout=reverse
+set -x FZF_DEFAULT_OPTS --height 100% --layout=reverse
 
 # skim
 set -x SKIM_DEFAULT_OPTIONS --ansi --layout=reverse --height 40%
 
 # bat
-alias cat "bat --plain --paging never --theme \"Monokai Extended\""
+alias cat "bat --plain --paging never"
+
+# Visual Studio Code - Insiders
+set -U fish_user_paths $fish_user_paths /Applications/Visual\ Studio\ Code\ -\ Insiders.app/Contents/Resources/app/bin/
 
 # exa
 alias ls exa
+
+# zoxide
+zoxide init fish | source
 
 export LANGUAGE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
