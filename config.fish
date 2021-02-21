@@ -1,19 +1,26 @@
 set -gx SHELL (which fish)
 
+# PATHS
+set -gx PATH /opt/homebrew/bin
+set -gx PATH $PATH /Users/yamadayuki/.cargo/bin
+set -gx PATH $PATH /Users/yamadayuki/dev/bin
+set -gx PATH $PATH /Users/yamadayuki/.anyenv/bin
+set -gx PATH $PATH /Applications/Visual\ Studio\ Code\ -\ Insiders.app/Contents/Resources/app/bin/
+set -gx PATH $PATH /usr/local/bin
+set -gx PATH $PATH /usr/bin
+set -gx PATH $PATH /bin
+set -gx PATH $PATH /usr/sbin
+set -gx PATH $PATH /sbin
+
 for file in $fisher_path/conf.d/*.fish
     builtin source $file 2>/dev/null
 end
 
 # Homebrew
 set -gx HOMEBREW_PREFIX (brew config | grep HOMEBREW_PREFIX |  awk '{ print $2 }')
-set -g fish_user_paths $HOMEBREW_PREFIX/bin $fish_user_paths
-
-# Rust
-set -g fish_user_paths $HOME/.cargo/bin $fish_user_paths
 
 # Go
 set -gx GOPATH $HOME/dev
-set -g fish_user_paths $fish_user_paths $GOPATH/bin
 
 alias vi vim
 set -gx EDITOR vim
@@ -43,7 +50,6 @@ end
 source (hub alias -s|psub)
 
 # anyenv
-set -g fish_user_paths $fish_user_paths $HOME/.anyenv/bin
 source (anyenv init -|psub)
 
 # fzf
@@ -54,9 +60,6 @@ set -gx SKIM_DEFAULT_OPTIONS --ansi --layout=reverse --height 40%
 
 # bat
 alias cat "bat --plain --paging never"
-
-# Visual Studio Code - Insiders
-set -g fish_user_paths $fish_user_paths /Applications/Visual\ Studio\ Code\ -\ Insiders.app/Contents/Resources/app/bin/
 
 # exa
 alias ls exa
