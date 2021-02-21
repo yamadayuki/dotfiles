@@ -1,22 +1,22 @@
-set -x SHELL (which fish)
+set -gx SHELL (which fish)
 
 for file in $fisher_path/conf.d/*.fish
     builtin source $file 2>/dev/null
 end
 
 # Homebrew
-set -x HOMEBREW_PREFIX (brew config | grep HOMEBREW_PREFIX |  awk '{ print $2 }')
-set -U fish_user_paths $HOMEBREW_PREFIX/bin $fish_user_paths
+set -gx HOMEBREW_PREFIX (brew config | grep HOMEBREW_PREFIX |  awk '{ print $2 }')
+set -g fish_user_paths $HOMEBREW_PREFIX/bin $fish_user_paths
 
 # Rust
-set -U fish_user_paths $HOME/.cargo/bin $fish_user_paths
+set -g fish_user_paths $HOME/.cargo/bin $fish_user_paths
 
 # Go
-set -x GOPATH $HOME/dev
-set -U fish_user_paths $fish_user_paths $GOPATH/bin
+set -gx GOPATH $HOME/dev
+set -g fish_user_paths $fish_user_paths $GOPATH/bin
 
 alias vi vim
-set -x EDITOR vim
+set -gx EDITOR vim
 
 # direnv
 # eval (direnv hook fish)
@@ -43,19 +43,20 @@ end
 source (hub alias -s|psub)
 
 # anyenv
+set -g fish_user_paths $fish_user_paths $HOME/.anyenv/bin
 source (anyenv init -|psub)
 
 # fzf
-set -x FZF_DEFAULT_OPTS --height 100% --layout=reverse
+set -gx FZF_DEFAULT_OPTS --height 100% --layout=reverse
 
 # skim
-set -x SKIM_DEFAULT_OPTIONS --ansi --layout=reverse --height 40%
+set -gx SKIM_DEFAULT_OPTIONS --ansi --layout=reverse --height 40%
 
 # bat
 alias cat "bat --plain --paging never"
 
 # Visual Studio Code - Insiders
-set -U fish_user_paths $fish_user_paths /Applications/Visual\ Studio\ Code\ -\ Insiders.app/Contents/Resources/app/bin/
+set -g fish_user_paths $fish_user_paths /Applications/Visual\ Studio\ Code\ -\ Insiders.app/Contents/Resources/app/bin/
 
 # exa
 alias ls exa
@@ -69,7 +70,7 @@ export LANG=en_US.UTF-8
 export LC_TYPE=en_US.UTF-8
 
 # Self installed binaries
-set -x SELF_INSTALLED_RUST_TOOLS \
+set -gx SELF_INSTALLED_RUST_TOOLS \
     bat \
     pastel \
     procs \
@@ -79,4 +80,4 @@ set -x SELF_INSTALLED_RUST_TOOLS \
     fd-find \
     skim
 
-set -x COLORTERM truecolor
+set -gx COLORTERM truecolor
