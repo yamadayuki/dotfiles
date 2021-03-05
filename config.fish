@@ -2,15 +2,19 @@ set -gx SHELL (which fish)
 
 # PATHS
 set -gx PATH /opt/homebrew/bin
-set -gx PATH $PATH /Users/yamadayuki/.cargo/bin
-set -gx PATH $PATH /Users/yamadayuki/dev/bin
-set -gx PATH $PATH /Users/yamadayuki/.anyenv/bin
+set -gx PATH $PATH $HOME/.cargo/bin
+set -gx PATH $PATH $HOME/dev/bin
+set -gx PATH $PATH $HOME/.anyenv/bin
 set -gx PATH $PATH /Applications/Visual\ Studio\ Code\ -\ Insiders.app/Contents/Resources/app/bin/
 set -gx PATH $PATH /usr/local/bin
 set -gx PATH $PATH /usr/bin
 set -gx PATH $PATH /bin
 set -gx PATH $PATH /usr/sbin
 set -gx PATH $PATH /sbin
+set -gx PATH $PATH $HOME/google-cloud-sdk/bin
+
+# asdf
+source (brew --prefix asdf)/asdf.fish
 
 for file in $fisher_path/conf.d/*.fish
     builtin source $file 2>/dev/null
@@ -50,7 +54,7 @@ end
 source (hub alias -s|psub)
 
 # anyenv
-source (anyenv init -|psub)
+# source (anyenv init -|psub)
 
 # fzf
 set -gx FZF_DEFAULT_OPTS --height 100% --layout=reverse
