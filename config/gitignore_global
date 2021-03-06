@@ -11,3 +11,4 @@ dive.log
 coverage
 .vscode
 telepresence.log
+.tool-versions
