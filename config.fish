@@ -5,7 +5,7 @@ set -gx PATH /opt/homebrew/bin
 set -gx PATH $PATH $HOME/.cargo/bin
 set -gx PATH $PATH $HOME/dev/bin
 set -gx PATH $PATH $HOME/.anyenv/bin
-set -gx PATH $PATH /Applications/Visual\ Studio\ Code\ -\ Insiders.app/Contents/Resources/app/bin/
+set -gx PATH $PATH /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/
 set -gx PATH $PATH /usr/local/bin
 set -gx PATH $PATH /usr/bin
 set -gx PATH $PATH /bin
@@ -81,7 +81,7 @@ set -gx SELF_INSTALLED_RUST_TOOLS \
     bat \
     pastel \
     procs \
-    "git-delta" \
+    git-delta \
     exa \
     ripgrep \
     fd-find \

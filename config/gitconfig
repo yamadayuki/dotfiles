@@ -11,7 +11,6 @@
   br = branch
   brm = branch --merged
   cm = commit
-  com = commit
   co = checkout
   d = diff
   dc = diff --cached

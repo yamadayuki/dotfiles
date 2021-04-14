@@ -12,3 +12,4 @@ coverage
 .vscode
 telepresence.log
 .tool-versions
+.protolint.yaml
