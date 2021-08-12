@@ -6,6 +6,12 @@
   ui = auto
   status = always
 
+[color "status"]
+  added = green bold
+  changed = yellow bold
+  untracked = cyan
+  branch = yellow bold ul
+
 [alias]
   amend = commit --amend -C HEAD
   br = branch

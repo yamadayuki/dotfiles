@@ -12,6 +12,7 @@ set -gx PATH $PATH /bin
 set -gx PATH $PATH /usr/sbin
 set -gx PATH $PATH /sbin
 set -gx PATH $PATH $HOME/google-cloud-sdk/bin
+set -gx PATH $PATH $HOME/.local/bin
 
 # asdf
 source (brew --prefix asdf)/asdf.fish
