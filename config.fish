@@ -2,6 +2,7 @@ set -gx SHELL (which fish)
 
 # PATHS
 set -gx PATH /opt/homebrew/bin
+set -gx PATH $PATH /opt/homebrew/sbin
 set -gx PATH $PATH $HOME/.cargo/bin
 set -gx PATH $PATH $HOME/dev/bin
 set -gx PATH $PATH $HOME/.anyenv/bin
