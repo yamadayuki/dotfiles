@@ -13,3 +13,4 @@ coverage
 telepresence.log
 .tool-versions
 .protolint.yaml
+*google-application-credentials.json

@@ -6,6 +6,7 @@ if filereadable(expand('$HOME/.vimrc.plug'))
   source $HOME/.vimrc.plug
 endif
 
+filetype plugin on
 
 let mapleader = ','
 
@@ -137,7 +138,3 @@ function! s:disable_lexima_inside_regexp(char) abort
   \ })
 endfunction
 
-""" FZF customization
-noremap <C-e> :GFiles <CR>
-noremap <Leader>e :Files <CR>
-noremap <Leader>r :Rg
