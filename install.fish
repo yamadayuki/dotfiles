@@ -35,7 +35,6 @@ end
 function install_modules_via_homebrew
     echo "+ Install modules via homebrew."
 
-    set -l taps federico-terzi/espanso
     set -l commands \
         # Clone of cat(1) with syntax highlighting and Git integration
         bat \
@@ -55,9 +54,6 @@ function install_modules_via_homebrew
         imagemagick \
         # creasty/tools/rid \
         tree
-    # watchman \
-    # yarn \
-    # espanso
 
     brew tap $taps
     brew install $commands
@@ -89,7 +85,6 @@ function install_via_fisher
 
     set -l packages \
         jorgebucaran/fisher \
-        oh-my-fish/plugin-nodenv \
         yamadayuki/lure
     fisher install $packages
 end
