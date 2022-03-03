@@ -78,6 +78,9 @@
   file-style = bold yellow ul
   file-decoration-style = none
   hunk-header-decoration-style = none
+  plus-style = syntax "#004a00"
+  plus-emph-style = syntax "#006400"
+  plus-empty-line-marker-style = syntax "#004a00"
 
 [rerere]
   enabled = true
