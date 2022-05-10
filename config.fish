@@ -72,6 +72,7 @@ alias ls exa
 
 # zoxide
 zoxide init fish | source
+set -gx _ZO_FZF_OPTS "--height 100% --layout=reverse --preview='l {2..}'"
 
 export LANGUAGE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
@@ -90,3 +91,6 @@ set -gx SELF_INSTALLED_RUST_TOOLS \
     skim
 
 set -gx COLORTERM truecolor
+
+# gh open with browser
+set -gx GH_BROWSER open
