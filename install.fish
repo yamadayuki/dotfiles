@@ -118,6 +118,12 @@ function link_alacritty_config_file
     ln -sf "$HOME/dotfiles/alacritty.yml" "$HOME/.config/alacritty/alacritty.yml"
 end
 
+function link_wezterm_config_file
+    echo "+ Link wezterm.lua file into .config/wezterm/wezterm.lua"
+
+    ln -sf "$HOME/dotfiles/wezterm.lua" "$HOME/.config/wezterm/wezterm.lua"
+end
+
 function link_espanso_file
     echo "+ Link espanso config file"
 
