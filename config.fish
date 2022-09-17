@@ -17,7 +17,7 @@ set -gx PATH $PATH $HOME/.local/bin
 
 # asdf
 source (brew --prefix asdf)/asdf.fish
-set -gx ASDF_DIR /usr/local/opt/asdf/libexec
+set -gx ASDF_DIR (brew --prefix asdf)/libexec
 
 for file in $fisher_path/conf.d/*.fish
     builtin source $file 2>/dev/null
