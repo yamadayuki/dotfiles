@@ -16,10 +16,10 @@ return {
   default_cursor_style = 'SteadyBlock',
 
   colors = {
-    foreground = '#d5d8da',
-    background = '#1c1e26',
+    foreground = '#b3b1ad',
+    background = '#0d1117',
 
-    cursor_fg = '#1c1e26',
+    cursor_fg = '#0d1117',
     cursor_bg = 'cyan',
     cursor_border = 'cyan',
 
@@ -30,29 +30,32 @@ return {
     split = 'cyan',
 
     ansi = {
-      '1d1f21', -- black
-      'e95678', -- red
-      '29d398', -- green
-      'fab795', -- yellow
-      '26bbd9', -- blue
-      'ee64ac', -- magenta
-      '59e1e3', -- cyan
-      'd5d8da', -- white
+      '484f58', -- black
+      'ff7b72', -- red
+      '3fb950', -- green
+      'd29922', -- yellow
+      '58a6ff', -- blue
+      'bc8cff', -- magenta
+      '39c5cf', -- cyan
+      'b1bac4', -- white
     },
 
     brights = {
-      '666666', -- black
-      'ec6a88', -- red
-      '3fdaa4', -- green
-      'fbc3a7', -- yellow
-      '3fc4de', -- blue
-      'f075b5', -- magenta
-      '6be4e6', -- cyan
-      'd5d8da', -- white
+      '6e7681', -- black
+      'ffa198', -- red
+      '56d364', -- green
+      'e3b341', -- yellow
+      '79c0ff', -- blue
+      'd2a8ff', -- magenta
+      '56d4dd', -- cyan
+      'f0f6fc', -- white
     },
 
     -- Arbitrary colors of the palette in the range from 16 to 255
-    -- indexed = { [136] = '#af8700' },
+    indexed = {
+      [16] = '#d18616',
+      [17] = '#ffa198'
+    },
 
     -- Since: 20220319-142410-0fcdea07
     -- When the IME, a dead key or a leader key are being processed and are effectively
