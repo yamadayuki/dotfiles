@@ -1,10 +1,10 @@
 set shell=fish
 
 " Check whether the file is readable
-if filereadable(expand('$HOME/.vimrc.plug'))
+" if filereadable(expand('$HOME/.vimrc.plug'))
   " source $HOME/.vimrc.neobundle .vimrcファイル読み込み
-  source $HOME/.vimrc.plug
-endif
+"   source $HOME/.vimrc.plug
+" endif
 
 filetype plugin on
 
@@ -118,23 +118,23 @@ nnoremap <silent> <C-k> :bnext<CR>
 nnoremap <silent> <C-l> :Ve<CR>
 
 nnoremap s= <C-w>=
-call submode#enter_with('bufmove', 'n', '', 's>', '<C-w>>')
-call submode#enter_with('bufmove', 'n', '', 's<', '<C-w><')
-call submode#enter_with('bufmove', 'n', '', 's+', '<C-w>+')
-call submode#enter_with('bufmove', 'n', '', 's-', '<C-w>-')
-call submode#map('bufmove', 'n', '', '>', '<C-w>>')
-call submode#map('bufmove', 'n', '', '<', '<C-w><')
-call submode#map('bufmove', 'n', '', '+', '<C-w>+')
-call submode#map('bufmove', 'n', '', '-', '<C-w>-')
+" call submode#enter_with('bufmove', 'n', '', 's>', '<C-w>>')
+" call submode#enter_with('bufmove', 'n', '', 's<', '<C-w><')
+" call submode#enter_with('bufmove', 'n', '', 's+', '<C-w>+')
+" call submode#enter_with('bufmove', 'n', '', 's-', '<C-w>-')
+" call submode#map('bufmove', 'n', '', '>', '<C-w>>')
+" call submode#map('bufmove', 'n', '', '<', '<C-w><')
+" call submode#map('bufmove', 'n', '', '+', '<C-w>+')
+" call submode#map('bufmove', 'n', '', '-', '<C-w>-')
 
 """ Lexima customization
-call lexima#set_default_rules()
-
-function! s:disable_lexima_inside_regexp(char) abort
-  call lexima#add_rule({
-    \ 'char':  a:char,
-    \ 'at':    '\(...........\)\?/\S.*\%#.*\S/',
-    \ 'input': a:char,
-  \ })
-endfunction
+" call lexima#set_default_rules()
+" 
+" function! s:disable_lexima_inside_regexp(char) abort
+"   call lexima#add_rule({
+"     \ 'char':  a:char,
+"     \ 'at':    '\(...........\)\?/\S.*\%#.*\S/',
+"     \ 'input': a:char,
+"   \ })
+" endfunction
 

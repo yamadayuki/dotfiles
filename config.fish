@@ -95,3 +95,6 @@ set -gx COLORTERM truecolor
 
 # gh open with browser
 set -gx GH_BROWSER open
+
+set -gx DENO_INSTALL $HOME/.deno
+set -gx PATH $PATH $DENO_INSTALL/bin
