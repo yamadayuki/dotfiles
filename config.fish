@@ -16,8 +16,8 @@ set -gx PATH $PATH $HOME/google-cloud-sdk/bin
 set -gx PATH $PATH $HOME/.local/bin
 
 # asdf
-source (brew --prefix asdf)/asdf.fish
 set -gx ASDF_DIR (brew --prefix asdf)/libexec
+source $ASDF_DIR/asdf.fish
 
 for file in $fisher_path/conf.d/*.fish
     builtin source $file 2>/dev/null
