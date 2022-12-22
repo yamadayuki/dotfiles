@@ -15,3 +15,4 @@ telepresence.log
 .protolint.yaml
 *google-application-credentials.json
 dotnet-tools.json
+.devcontainer
