@@ -69,7 +69,7 @@ main() {
     # For git
     ln -sf "$DOTFILES_PATH/config/gitconfig" "$HOME/.gitconfig"
     mkdir -p "$HOME/.config/git"
-    ln -sf "$DOTFILES_PATH/gitignore" "$HOME/.config/git/ignore"
+    ln -sf "$DOTFILES_PATH/ignore" "$HOME/.config/git/ignore"
     return
   fi
 
