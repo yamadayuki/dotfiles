@@ -40,7 +40,6 @@
 
 [core]
   editor = vim
-  excludesfile = ~/.gitignore_global
   pager = delta
 
 [push]

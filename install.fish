@@ -124,11 +124,11 @@ function link_wezterm_config_file
     ln -sf "$HOME/dotfiles/wezterm.lua" "$HOME/.config/wezterm/wezterm.lua"
 end
 
-function link_espanso_file
-    echo "+ Link espanso config file"
+function link_gitignore
+    echo "+ Link gitignore file into .config/git/ignore"
 
-    mkdir -p "$HOME/Library/Preferences/espanso"
-    ln -sf "$HOME/dotfiles/espanso.yml" "$HOME/Library/Preferences/espanso/default.yml"
+    mkdir -p "$HOME/.config/git"
+    ln -sf "$HOME/dotfiles/gitignore" "$HOME/.config/git/ignore"
 end
 
 function print_done
@@ -155,4 +155,6 @@ install_casks_via_homebrew
 install_via_fisher
 link_config_file
 link_alacritty_config_file
+link_wezterm_config_file
+link_gitignore
 print_done
