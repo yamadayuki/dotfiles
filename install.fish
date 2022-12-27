@@ -128,7 +128,7 @@ function link_gitignore
     echo "+ Link gitignore file into .config/git/ignore"
 
     mkdir -p "$HOME/.config/git"
-    ln -sf "$HOME/dotfiles/gitignore" "$HOME/.config/git/ignore"
+    ln -sf "$HOME/dotfiles/ignore" "$HOME/.config/git/ignore"
 end
 
 function print_done
