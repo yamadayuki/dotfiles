@@ -16,3 +16,4 @@ telepresence.log
 *google-application-credentials.json
 dotnet-tools.json
 .devcontainer
+*.bak
