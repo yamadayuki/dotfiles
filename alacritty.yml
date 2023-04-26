@@ -1,3 +1,5 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/distinction-dev/alacritty-schema/main/alacritty/reference.json
+
 # Configuration for Alacritty, the GPU enhanced terminal emulator.
 
 # Any items in the `env` entry below will be added as
@@ -36,6 +38,8 @@ window:
   padding:
     x: 8
     y: 8
+
+  opacity: 0.7
 
   # Spread additional padding evenly around the terminal content.
   #dynamic_padding: false
@@ -255,12 +259,6 @@ colors:
 #  animation: EaseOutExpo
 #  duration: 0
 #  color: '#ffffff'
-
-# Background opacity
-#
-# Window opacity as a floating point number from `0.0` to `1.0`.
-# The value `0.0` is completely transparent and `1.0` is opaque.
-# background_opacity: 0.2
 
 #selection:
 #semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"
