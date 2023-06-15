@@ -39,7 +39,8 @@ window:
     x: 8
     y: 8
 
-  opacity: 0.7
+  # opacity: 1.0
+  opacity: 0.9
 
   # Spread additional padding evenly around the terminal content.
   #dynamic_padding: false

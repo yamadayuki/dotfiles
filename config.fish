@@ -24,7 +24,10 @@ for file in $fisher_path/conf.d/*.fish
 end
 
 # Homebrew
-set -gx HOMEBREW_PREFIX (brew config | grep HOMEBREW_PREFIX |  awk '{ print $2 }')
+# If the HOMEBREW_PREFIX is not set, set it to the default
+if test -z "$HOMEBREW_PREFIX"
+    set -gx HOMEBREW_PREFIX (brew config | rg HOMEBREW_PREFIX |  awk '{ print $2 }')
+end
 
 # Go
 set -gx GOPATH $HOME/dev
