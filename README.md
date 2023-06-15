@@ -6,13 +6,9 @@
 $ bash <(curl -sSL https://raw.githubusercontent.com/yamadayuki/dotfiles/master/up)
 ```
 
-### Configuration
-
-For OPAM
+### Profiling
 
 ```
-$ opam switch 4.02.3
-$ opam update
-$ opam pin add lock https://github.com/rgrinberg/opam-lock.git
-$ opam lock --install < opam.lock
+$ fish --profile-startup /tmp/fish.profile -i -c exit
+$ sort -nk2 /tmp/fish.profile
 ```
