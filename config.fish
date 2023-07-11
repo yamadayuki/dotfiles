@@ -32,6 +32,9 @@ end
 # Go
 set -gx GOPATH $HOME/dev
 
+# Python (rye)
+set -gx PATH $PATH $HOME/.rye/shims
+
 alias vi vim
 set -gx EDITOR vim
 
@@ -101,3 +104,7 @@ set -gx GH_BROWSER open
 
 set -gx DENO_INSTALL $HOME/.deno
 set -gx PATH $PATH $DENO_INSTALL/bin
+
+# tabtab source for packages
+# uninstall by removing these lines
+[ -f ~/.config/tabtab/fish/__tabtab.fish ]; and . ~/.config/tabtab/fish/__tabtab.fish; or true
