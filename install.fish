@@ -131,6 +131,15 @@ function link_gitignore
     ln -sf "$HOME/dotfiles/ignore" "$HOME/.config/git/ignore"
 end
 
+function link_warp_config
+    echo "+ Link warp config file into $HOME/.warp"
+
+    mkdir -p "$HOME/.warp"
+    for file in (ls $HOME/dotfiles/warp)
+        ln -sf "$HOME/dotfiles/warp/$file" "$HOME/.warp/$file"
+    end
+end
+
 function print_done
     printf "\e[34m"
     echo '                                                                              '
@@ -157,4 +166,5 @@ link_config_file
 link_alacritty_config_file
 link_wezterm_config_file
 link_gitignore
+link_warp_config
 print_done
