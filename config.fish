@@ -74,8 +74,8 @@ set -gx SKIM_DEFAULT_OPTIONS --ansi --layout=reverse --height 40%
 # bat
 alias cat "bat --plain --paging never"
 
-# exa
-alias ls exa
+# eza
+alias ls eza
 
 # zoxide
 zoxide init fish | source
@@ -92,7 +92,6 @@ set -gx SELF_INSTALLED_RUST_TOOLS \
     pastel \
     procs \
     git-delta \
-    exa \
     ripgrep \
     fd-find \
     skim

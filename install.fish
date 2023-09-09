@@ -45,7 +45,7 @@ function install_modules_via_homebrew
         # Search tool like grep and The Silver Searcher
         ripgrep \
         # Modern ls
-        exa \
+        eza \
         # Pretty git diff tool
         git-delta \
         go \
