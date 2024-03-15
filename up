@@ -63,16 +63,6 @@ execute_installer() {
 }
 
 main() {
-  if [ $REMOTE_CONTAINERS ]; then
-    echo 'Setup only for remote containers'
-
-    # For git
-    ln -sf "$DOTFILES_PATH/config/gitconfig" "$HOME/.gitconfig"
-    mkdir -p "$HOME/.config/git"
-    ln -sf "$DOTFILES_PATH/ignore" "$HOME/.config/git/ignore"
-    return
-  fi
-
   clone_or_update_repo
   install_homebrew
   install_fish
