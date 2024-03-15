@@ -48,14 +48,14 @@ function install_modules_via_homebrew
         eza \
         # Pretty git diff tool
         git-delta \
-        go \
         hub \
         ffmpeg \
         imagemagick \
-        # creasty/tools/rid \
-        tree
+        tree \
+        fzf \
+        zoxide \
+        jq
 
-    brew tap $taps
     brew install $commands
 end
 
@@ -98,12 +98,7 @@ end
 
 function install_via_cargo
     echo "  + Install modules via cargo."
-    cargo install sd bottom
-end
-
-function clone_tmux_plugin
-    echo "+ Clone tmux-plugins/tpm"
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    # cargo install sd bottom
 end
 
 function link_config_file
@@ -160,11 +155,8 @@ link_files
 modify_defaults
 install_fisher
 install_modules_via_homebrew
-install_casks_via_homebrew
 install_via_fisher
 link_config_file
-link_alacritty_config_file
-link_wezterm_config_file
 link_gitignore
 link_warp_config
 print_done

@@ -86,16 +86,6 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LC_TYPE=en_US.UTF-8
 
-# Self installed binaries
-set -gx SELF_INSTALLED_RUST_TOOLS \
-    bat \
-    pastel \
-    procs \
-    git-delta \
-    ripgrep \
-    fd-find \
-    skim
-
 set -gx COLORTERM truecolor
 
 # gh open with browser
@@ -103,7 +93,3 @@ set -gx GH_BROWSER open
 
 set -gx DENO_INSTALL $HOME/.deno
 set -gx PATH $PATH $DENO_INSTALL/bin
-
-# tabtab source for packages
-# uninstall by removing these lines
-[ -f ~/.config/tabtab/fish/__tabtab.fish ]; and . ~/.config/tabtab/fish/__tabtab.fish; or true
