@@ -54,7 +54,10 @@ function install_modules_via_homebrew
         tree \
         fzf \
         zoxide \
-        jq
+        jq \
+        gh \
+        asdf \
+        direnv
 
     brew install $commands
 end

@@ -1,5 +1,3 @@
-set -gx SHELL (which fish)
-
 # PATHS
 set -gx PATH /opt/homebrew/bin
 set -gx PATH $PATH /opt/homebrew/sbin
@@ -14,6 +12,8 @@ set -gx PATH $PATH /usr/sbin
 set -gx PATH $PATH /sbin
 set -gx PATH $PATH $HOME/google-cloud-sdk/bin
 set -gx PATH $PATH $HOME/.local/bin
+
+set -gx SHELL (which fish)
 
 # asdf
 set -gx ASDF_DIR (brew --prefix asdf)/libexec
