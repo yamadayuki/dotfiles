@@ -86,9 +86,3 @@
 
 [init]
   defaultBranch = main
-[scalar]
-	repo = /Users/yamada/dev/src/github.com/caddijp/mocad
-	repo = /Users/yamada/dev/src/github.com/caddijp/Knob
-[maintenance]
-	repo = /Users/yamada/dev/src/github.com/caddijp/mocad
-	repo = /Users/yamada/dev/src/github.com/caddijp/Knob
