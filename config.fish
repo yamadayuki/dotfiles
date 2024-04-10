@@ -15,10 +15,6 @@ set -gx PATH $PATH $HOME/.local/bin
 
 set -gx SHELL (which fish)
 
-# asdf
-set -gx ASDF_DIR (brew --prefix asdf)/libexec
-source $ASDF_DIR/asdf.fish
-
 for file in $fisher_path/conf.d/*.fish
     builtin source $file 2>/dev/null
 end
@@ -93,3 +89,6 @@ set -gx GH_BROWSER open
 
 set -gx DENO_INSTALL $HOME/.deno
 set -gx PATH $PATH $DENO_INSTALL/bin
+
+# mise
+~/.local/bin/mise activate fish | source
