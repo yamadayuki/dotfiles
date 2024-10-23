@@ -68,6 +68,7 @@ set -gx FZF_DEFAULT_OPTS --height 100% --layout=reverse
 set -gx SKIM_DEFAULT_OPTIONS --ansi --layout=reverse --height 40%
 
 # bat
+set -gx BAT_THEME base16
 alias cat "bat --plain --paging never"
 
 # eza
