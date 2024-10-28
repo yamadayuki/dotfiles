@@ -49,7 +49,6 @@ config.macos_window_background_blur = 20
 
 -- Title bar
 config.window_decorations = "RESIZE"
-config.hide_tab_bar_if_only_one_tab = true
 config.tab_max_width = 24
 
 config.window_frame = {
