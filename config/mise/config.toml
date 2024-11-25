@@ -1,0 +1,24 @@
+[settings]
+experimental = true
+
+[tasks.homebrewupgrade]
+description = "Upgrade Homebrew packages"
+run = [
+    "brew upgrade --greedy",
+    "brew autoremove",
+    "brew cleanup",
+]
+dir = "{{cwd}}"
+
+[tasks.miseupgrade]
+description = "Upgrade mise packages"
+run = [
+    "mise self-update --yes",
+    "mise upgrade",
+]
+dir = "{{cwd}}"
+
+[tasks.up]
+description = "Upgrade dependencies in my local environment"
+depends = ["homebrewupgrade", "miseupgrade"]
+dir = "{{cwd}}"
