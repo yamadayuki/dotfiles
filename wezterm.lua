@@ -6,7 +6,7 @@ config.automatically_reload_config = true
 
 -- Font
 config.font = wezterm.font 'MonoLisa Variable'
-config.font_size = 12.0
+config.font_size = 14.0
 
 -- Enable IME for Japanese
 config.use_ime = true
@@ -49,14 +49,14 @@ config.macos_window_background_blur = 20
 
 -- Title bar
 config.window_decorations = "RESIZE"
-config.tab_max_width = 24
+config.tab_max_width = 32
 
 config.window_frame = {
   inactive_titlebar_bg = "none",
   active_titlebar_bg = "none",
 
-  font = wezterm.font 'MonoLisa Variable',
-  font_size = 12.0,
+  font = wezterm.font('Inter', { weight = "Regular" }),
+  font_size = 14.0,
 }
 config.window_background_gradient = {
   colors = {
@@ -75,8 +75,6 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
   local edge_background = "none"
   local edge_foreground = background
 
-  local title = " " .. wezterm.truncate_right(tab.active_pane.title, max_width - 1) .. " "
-
   return {
     { Background = { Color = edge_background } },
     { Foreground = { Color = edge_foreground } },
@@ -84,7 +82,7 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
 
     { Background = { Color = background } },
     { Foreground = { Color = foreground } },
-    { Text = title },
+    { Text = " " .. wezterm.truncate_right(tab.active_pane.title, max_width ) .. " " },
 
     { Background = { Color = edge_background } },
     { Foreground = { Color = edge_foreground } },
