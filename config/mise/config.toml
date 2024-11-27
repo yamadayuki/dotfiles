@@ -18,7 +18,18 @@ run = [
 ]
 dir = "{{cwd}}"
 
+[tasks.rustupupdate]
+description = "Upgrade rustup components"
+run = [
+    "rustup update",
+]
+dir = "{{cwd}}"
+
 [tasks.up]
 description = "Upgrade dependencies in my local environment"
-depends = ["homebrewupgrade", "miseupgrade"]
+depends = [
+    "homebrewupgrade",
+    "miseupgrade",
+    "rustupupdate",
+]
 dir = "{{cwd}}"
