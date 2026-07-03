@@ -133,10 +133,27 @@ function link_gitignore
 end
 
 function link_mise_config
-    echo "+ Link mise config file into .config/mise/config.toml"
+    echo "+ Setup mise config"
 
+    # Ensure ~/.config/mise exists for tools config (managed by mise use)
     mkdir -p "$HOME/.config/mise"
-    ln -sf "$HOME/dotfiles/config/mise/config.toml" "$HOME/.config/mise/config.toml"
+    
+    # Note: System-wide config at /etc/mise/config.toml requires sudo.
+    # Run this manually after installation:
+    #   sudo mkdir -p /etc/mise
+    #   sudo ln -sf ~/dotfiles/config/mise/config.toml /etc/mise/config.toml
+    #
+    # This keeps [settings] and [tasks] in dotfiles while allowing
+    # ~/.config/mise/config.toml to be managed by `mise use` for [tools].
+    
+    if test -w /etc/mise
+        # If /etc/mise is writable, create the symlink
+        sudo ln -sf "$HOME/dotfiles/config/mise/config.toml" /etc/mise/config.toml
+        echo "  ✓ Linked /etc/mise/config.toml"
+    else
+        echo "  ⚠ Skipping /etc/mise/config.toml (requires sudo)"
+        echo "    Run manually: sudo mkdir -p /etc/mise && sudo ln -sf ~/dotfiles/config/mise/config.toml /etc/mise/config.toml"
+    end
 end
 
 function link_herdr_config
