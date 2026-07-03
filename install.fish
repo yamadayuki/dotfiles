@@ -20,7 +20,10 @@ function link_files
 
     set -l dotfiles_path "$HOME/dotfiles/config"
     for file in (ls $dotfiles_path)
-        ln -sf "$dotfiles_path/$file" "$HOME/.$file"
+        # Skip directories (they are managed by specific functions)
+        if test -f "$dotfiles_path/$file"
+            ln -sf "$dotfiles_path/$file" "$HOME/.$file"
+        end
     end
 end
 
@@ -129,6 +132,13 @@ function link_gitignore
     ln -sf "$HOME/dotfiles/ignore" "$HOME/.config/git/ignore"
 end
 
+function link_mise_config
+    echo "+ Link mise config file into .config/mise/config.toml"
+
+    mkdir -p "$HOME/.config/mise"
+    ln -sf "$HOME/dotfiles/config/mise/config.toml" "$HOME/.config/mise/config.toml"
+end
+
 function link_herdr_config
     echo "+ Link herdr config file into .config/herdr/config.toml"
 
@@ -175,6 +185,7 @@ install_modules_via_homebrew
 install_via_fisher
 link_config_file
 link_gitignore
+link_mise_config
 link_herdr_config
 link_ghostty_config
 link_warp_config
