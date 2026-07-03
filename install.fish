@@ -140,20 +140,21 @@ function link_mise_config
     
     # Note: System-wide config at /etc/mise/config.toml requires sudo.
     # mise does not recognize symlinks in /etc/mise, so we copy the file.
+    # Use -c flag for copy-on-write on macOS APFS.
     # Run this manually after installation:
     #   sudo mkdir -p /etc/mise
-    #   sudo cp ~/dotfiles/config/mise/config.toml /etc/mise/config.toml
+    #   sudo cp -c ~/dotfiles/config/mise/config.toml /etc/mise/config.toml
     #
     # This keeps [settings] and [tasks] in dotfiles while allowing
     # ~/.config/mise/config.toml to be managed by `mise use` for [tools].
     
     if test -w /etc/mise
-        # If /etc/mise is writable, copy the config file
-        sudo cp "$HOME/dotfiles/config/mise/config.toml" /etc/mise/config.toml
-        echo "  ✓ Copied to /etc/mise/config.toml"
+        # If /etc/mise is writable, copy the config file with copy-on-write
+        sudo cp -c "$HOME/dotfiles/config/mise/config.toml" /etc/mise/config.toml
+        echo "  ✓ Copied to /etc/mise/config.toml (copy-on-write)"
     else
         echo "  ⚠ Skipping /etc/mise/config.toml (requires sudo)"
-        echo "    Run manually: sudo mkdir -p /etc/mise && sudo cp ~/dotfiles/config/mise/config.toml /etc/mise/config.toml"
+        echo "    Run manually: sudo mkdir -p /etc/mise && sudo cp -c ~/dotfiles/config/mise/config.toml /etc/mise/config.toml"
     end
 end
 

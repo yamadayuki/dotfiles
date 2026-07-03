@@ -14,10 +14,10 @@ The mise system-wide configuration requires manual setup:
 
 ```bash
 sudo mkdir -p /etc/mise
-sudo cp ~/dotfiles/config/mise/config.toml /etc/mise/config.toml
+sudo cp -c ~/dotfiles/config/mise/config.toml /etc/mise/config.toml
 ```
 
-**Note:** mise does not recognize symlinks in `/etc/mise`, so we copy the file instead of linking it. If you update `~/dotfiles/config/mise/config.toml`, remember to copy it again to `/etc/mise/config.toml`.
+**Note:** mise does not recognize symlinks in `/etc/mise`, so we copy the file using copy-on-write (`-c` flag on macOS APFS). If you update `~/dotfiles/config/mise/config.toml`, remember to copy it again to `/etc/mise/config.toml`.
 
 This allows:
 - Global settings (`[settings]`, `[tasks]`) managed in dotfiles at `/etc/mise/config.toml`
