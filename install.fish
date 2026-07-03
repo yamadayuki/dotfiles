@@ -129,6 +129,20 @@ function link_gitignore
     ln -sf "$HOME/dotfiles/ignore" "$HOME/.config/git/ignore"
 end
 
+function link_herdr_config
+    echo "+ Link herdr config file into .config/herdr/config.toml"
+
+    mkdir -p "$HOME/.config/herdr"
+    ln -sf "$HOME/dotfiles/config/herdr/config.toml" "$HOME/.config/herdr/config.toml"
+end
+
+function link_ghostty_config
+    echo "+ Link ghostty config file into .config/ghostty/config"
+
+    mkdir -p "$HOME/.config/ghostty"
+    ln -sf "$HOME/dotfiles/config/ghostty/config" "$HOME/.config/ghostty/config"
+end
+
 function link_warp_config
     echo "+ Link warp config file into $HOME/.warp"
 
@@ -161,5 +175,7 @@ install_modules_via_homebrew
 install_via_fisher
 link_config_file
 link_gitignore
+link_herdr_config
+link_ghostty_config
 link_warp_config
 print_done

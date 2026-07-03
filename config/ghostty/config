@@ -1,0 +1,25 @@
+font-family = MonoLisaCode
+font-thicken = true
+font-feature = -dlig
+
+theme = GitHub Dark
+
+background-opacity = 0.9
+background-blur-radius = 20
+
+macos-window-buttons = hidden
+macos-titlebar-style = hidden
+macos-icon = glass
+
+keybind = ctrl+left_bracket=text:\x1b
+
+cursor-style = block
+cursor-style-blink = true
+shell-integration-features = no-cursor
+
+mouse-hide-while-typing = true
+
+window-padding-x = 0
+window-padding-y = 0
+window-padding-balance = true
+window-padding-color = extend-always
