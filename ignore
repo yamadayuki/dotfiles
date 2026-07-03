@@ -17,3 +17,9 @@ telepresence.log
 dotnet-tools.json
 .devcontainer
 *.bak
+.antigravitycli
+.gemini
+.agents
+
+**/.claude/settings.local.json
+**/.claude/worktrees/

@@ -1,5 +1,5 @@
 # PATHS
-set -gx PATH /opt/homebrew/bin
+set -gx PATH $PATH /opt/homebrew/bin
 set -gx PATH $PATH /opt/homebrew/sbin
 set -gx PATH $PATH $HOME/.cargo/bin
 set -gx PATH $PATH $HOME/dev/bin
@@ -27,6 +27,9 @@ end
 
 # Go
 set -gx GOPATH $HOME/dev
+
+# Docker
+set -gx PATH $PATH $HOME/.docker/bin
 
 # Python (rye)
 set -gx PATH $PATH $HOME/.rye/shims
@@ -93,3 +96,23 @@ set -gx PATH $PATH $DENO_INSTALL/bin
 
 # mise
 ~/.local/bin/mise activate fish | source
+
+# starship
+starship init fish | source
+
+# pnpm
+set -gx PNPM_HOME "$HOME/Library/pnpm"
+if not string match -q -- $PNPM_HOME $PATH
+  set -gx PATH "$PNPM_HOME" $PATH
+end
+# pnpm end
+
+
+# Added by Antigravity CLI installer
+set -gx PATH "$HOME/.local/bin" $PATH
+
+# Added by Antigravity IDE
+set -gx PATH "$HOME/.antigravity-ide/antigravity-ide/bin" $PATH
+
+# Vite+
+set -gx PATH $PATH "$HOME/.vite-plus/bin"

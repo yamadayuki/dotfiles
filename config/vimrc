@@ -1,6 +1,7 @@
 set shell=fish
 
 filetype plugin on
+syntax enable
 
 let mapleader = ','
 
@@ -31,6 +32,7 @@ set hidden
 set autoread
 set nobackup
 set noswapfile
+set splitright
 set clipboard+=unnamed,autoselect
 
 
