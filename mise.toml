@@ -4,7 +4,7 @@ dotfiles.default_mode = "symlink"
 
 [dotfiles]
 "~/.gitconfig" = "config/git/gitconfig"
-"~/.vimrc" = "config/vimrc"
+"~/.vimrc" = "config/vim/vimrc"
 "~/.config/fish/config.fish" = "config/fish/config.fish"
 "~/.config/git/ignore" = "config/git/ignore"
 "~/.config/herdr/config.toml" = "config/herdr/config.toml"
