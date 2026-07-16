@@ -1,0 +1,47 @@
+# hunk configuration
+# Place this file at ~/.config/hunk/config.toml
+
+# Theme id, "auto" (matches terminal background), or "custom"
+# theme = "auto"
+
+# Layout mode: "auto", "split", or "stack"
+# mode = "auto"
+
+# Override VCS auto-detection: "git", "jj", or "sl"
+# vcs = "git"
+
+# Auto-reload when the diff input changes
+# watch = false
+
+# Exclude untracked files from working-tree diff sessions (git/sl only)
+# exclude_untracked = false
+
+# Show line numbers
+# line_numbers = true
+
+# Wrap long diff lines instead of truncating
+# wrap_lines = false
+
+# Show the menu bar
+# menu_bar = true
+
+# Show agent notes by default
+# agent_notes = false
+
+# Prompt to save changed view preferences on quit
+# prompt_save_view_preferences = true
+
+# Let the terminal background show through Hunk surfaces
+# transparent_background = false
+
+# [custom_theme]
+# base = "graphite"        # inherit from a built-in theme
+# label = "Custom"
+# accent = "#7fd1ff"
+# panel = "#10161d"
+# noteBorder = "#c49bff"
+#
+# [custom_theme.syntax]
+# keyword = "#8ed4ff"
+# string = "#c7b4ff"
+# comment = "#6e85a7"

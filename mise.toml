@@ -9,6 +9,7 @@ dotfiles.default_mode = "symlink"
 "~/.config/git/ignore" = "config/git/ignore"
 "~/.config/herdr/config.toml" = "config/herdr/config.toml"
 "~/.config/ghostty/config" = "config/ghostty/config"
+"~/.config/hunk/config.toml" = "config/hunk/config.toml"
 "~/.config/mise/conf.d/00-dotfiles.toml" = "config/mise/config.toml"
 "~/.config/fish/functions" = { source = "config/fish/functions", mode = "symlink-each" }
 "~/.config/fish/conf.d" = { source = "config/fish/conf.d", mode = "symlink-each" }
@@ -30,6 +31,7 @@ dotfiles.default_mode = "symlink"
 "brew:jq" = "latest"
 "brew:starship" = "latest"
 "brew:direnv" = "latest"
+"brew:hunk" = "latest"
 
 [bootstrap.macos.keyboard]
 key_repeat = 1
