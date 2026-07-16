@@ -39,7 +39,7 @@ initial_key_repeat = 10
 login_shell = "/opt/homebrew/bin/fish"
 
 [tasks."migrate-legacy-setup"]
-description = "One-time migration for machines set up before mise bootstrap: safe to delete this task once every machine has run it. Removes fisher (and its managed files, now vendored in [dotfiles]) and the old sudo-copied /etc/mise/config.toml (superseded by ~/.config/mise/conf.d/00-dotfiles.toml)"
+description = "One-time migration for machines set up before mise bootstrap: safe to delete this task once every machine has run it. Removes fisher (and its managed files, now vendored in [dotfiles]), the old sudo-copied /etc/mise/config.toml (superseded by ~/.config/mise/conf.d/00-dotfiles.toml), and clears any stale mise ignored-config state"
 run = '''
 if fish -c 'functions -q fisher' 2>/dev/null; then
   fish -c 'fisher remove yamadayuki/lure' || true
@@ -53,5 +53,12 @@ if [ -f /etc/mise/config.toml ]; then
   sudo rmdir /etc/mise 2>/dev/null || true
 else
   echo "/etc/mise/config.toml not found, nothing to migrate"
+fi
+
+if [ -d "$HOME/.local/state/mise/ignored-configs" ] && [ "$(ls -A "$HOME/.local/state/mise/ignored-configs" 2>/dev/null)" ]; then
+  echo "Clearing stale mise ignored-config state (config/mise/config.toml may have been auto-ignored before mise trust covered it)"
+  rm -rf "$HOME/.local/state/mise/ignored-configs"
+else
+  echo "No stale mise ignored-config state found"
 fi
 '''

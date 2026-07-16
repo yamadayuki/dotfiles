@@ -43,11 +43,11 @@ See: https://mise.jdx.dev/bootstrap.html and https://mise.jdx.dev/dotfiles.html
 #### Migrating an existing machine set up before mise bootstrap
 
 Machines that ran an older version of this repo may still have `fisher` and its
-managed files (`yamadayuki/lure`), and/or a sudo-copied `/etc/mise/config.toml`
+managed files (`yamadayuki/lure`), a sudo-copied `/etc/mise/config.toml`
 lying around (both superseded — `fisher` by `[dotfiles]` in `mise.toml`, `/etc/mise`
-by `~/.config/mise/conf.d/00-dotfiles.toml`). `mise bootstrap`'s dotfiles step
-refuses to symlink over `fisher`'s unmanaged real files, so run this **before**
-`mise bootstrap`:
+by `~/.config/mise/conf.d/00-dotfiles.toml`), and/or stale mise "ignored config"
+state (see below). `mise bootstrap`'s dotfiles step refuses to symlink over
+`fisher`'s unmanaged real files, so run this **before** `mise bootstrap`:
 
 ```bash
 mise run migrate-legacy-setup
@@ -57,6 +57,16 @@ This is a one-time, idempotent task (each part no-ops if there's nothing to
 migrate) and asks for sudo to remove `/etc/mise/config.toml` if present. Once
 every machine you use has run it, this task and its README section can be
 deleted.
+
+**Symptom of the stale-ignored-config case**: `mise run up` fails with
+`no task up found`, but `~/.config/mise/conf.d/00-dotfiles.toml` is a correct,
+readable symlink. `config/mise/config.toml` uses template syntax (`{{cwd}}`),
+so it isn't exempt from mise's trust requirement; on a machine that ran `up`
+before it explicitly trusted this file, mise silently auto-marked it
+"ignored" the first time it read it non-interactively, and merely trusting it
+again doesn't undo that (`mise doctor` will list it under
+`ignored_config_files`). `migrate-legacy-setup` clears the ignored-config
+state so the explicit `mise trust` in `up` can take effect.
 
 ### Profiling
 
