@@ -1,5 +1,28 @@
 # dotfiles
 
+### What's managed
+
+Everything is declared in `mise.toml` (`[dotfiles]` for symlinks, `[bootstrap.*]`
+for packages, macOS defaults, and the login shell):
+
+- **fish** — `config.fish` plus `functions`/`conf.d`/`completions` symlinked
+  file-by-file (includes the vendored former `yamadayuki/lure` prompt)
+- **git** — `~/.gitconfig` and the global ignore file
+- **Vim / Neovim** — a single shared `vimrc` (native features only, no plugin
+  manager; netrw configured as a NERDTree-like toggleable sidebar) with a
+  GitHub Dark colorscheme matched to Ghostty. Neovim's `init.vim` extends
+  `runtimepath` with `~/.vim` and sources the same `vimrc`; `has('nvim')`
+  branches handle the few differences
+- **Ghostty** — terminal config (GitHub Dark + transparency)
+- **hunk** — theme matched to Ghostty's GitHub Dark
+- **herdr** — terminal-multiplexer config (prefix moved off `ctrl+w` so it
+  doesn't shadow Vim's window commands)
+- **mise** — global `[settings]`/`[tasks]` (e.g. `mise run up` to upgrade
+  Homebrew/mise/rustup), merged via `~/.config/mise/conf.d/00-dotfiles.toml`
+
+CLI tools (fish, Neovim, hunk, ripgrep, fzf, starship, …) are installed as
+`brew:` packages through `[bootstrap.packages]`.
+
 ### Installation
 
 ```
@@ -11,25 +34,15 @@ itself can take over), then runs `mise bootstrap` from the repo root (`mise.toml
 That single command installs Homebrew packages (including fish), symlinks/copies
 dotfiles, sets macOS defaults, and configures fish shell activation — all
 idempotently, so re-running `up` at any time converges the machine back to the
-declared state. There's no separate `install.fish` step anymore; everything that
-doesn't need to exist before mise does is declared in `mise.toml`.
+declared state.
 
-Fish plugins are no longer managed by `fisher` — the former `yamadayuki/lure`
-fisher plugin (prompt colors, keybindings, and assorted utility functions) is
-vendored directly under `config/fish/{functions,conf.d,completions}` and
-symlinked file-by-file via `[dotfiles]`, so there's nothing left for a plugin
-manager to do.
-
-This allows:
+The mise config is split into three layers:
 - Global settings (`[settings]`, `[tasks]`) tracked in dotfiles and merged from
   `~/.config/mise/conf.d/00-dotfiles.toml`, available from any directory
 - Tool-specific config (`[tools]`) managed by `mise use -g` at `~/.config/mise/config.toml`,
   not tracked in dotfiles
 - Project-scoped bootstrap declarations (`[dotfiles]`, `[bootstrap.*]`) tracked in
   `mise.toml` at the repo root, applied via `mise bootstrap` when run from `~/dotfiles`
-
-Unlike `/etc/mise`, `~/.config/mise/conf.d` is a normal user-owned directory, so mise
-follows the symlink there directly — no sudo, no copy-on-write, no manual re-sync.
 
 Check machine state at any time with:
 
@@ -39,34 +52,6 @@ mise dotfiles status    # symlink/copy status for tracked dotfiles
 ```
 
 See: https://mise.jdx.dev/bootstrap.html and https://mise.jdx.dev/dotfiles.html
-
-#### Migrating an existing machine set up before mise bootstrap
-
-Machines that ran an older version of this repo may still have `fisher` and its
-managed files (`yamadayuki/lure`), a sudo-copied `/etc/mise/config.toml`
-lying around (both superseded — `fisher` by `[dotfiles]` in `mise.toml`, `/etc/mise`
-by `~/.config/mise/conf.d/00-dotfiles.toml`), and/or stale mise "ignored config"
-state (see below). `mise bootstrap`'s dotfiles step refuses to symlink over
-`fisher`'s unmanaged real files, so run this **before** `mise bootstrap`:
-
-```bash
-mise run migrate-legacy-setup
-```
-
-This is a one-time, idempotent task (each part no-ops if there's nothing to
-migrate) and asks for sudo to remove `/etc/mise/config.toml` if present. Once
-every machine you use has run it, this task and its README section can be
-deleted.
-
-**Symptom of the stale-ignored-config case**: `mise run up` fails with
-`no task up found`, but `~/.config/mise/conf.d/00-dotfiles.toml` is a correct,
-readable symlink. `config/mise/config.toml` uses template syntax (`{{cwd}}`),
-so it isn't exempt from mise's trust requirement; on a machine that ran `up`
-before it explicitly trusted this file, mise silently auto-marked it
-"ignored" the first time it read it non-interactively, and merely trusting it
-again doesn't undo that (`mise doctor` will list it under
-`ignored_config_files`). `migrate-legacy-setup` clears the ignored-config
-state so the explicit `mise trust` in `up` can take effect.
 
 ### Profiling
 
