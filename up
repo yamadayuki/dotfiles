@@ -6,6 +6,36 @@ set -o pipefail
 : ${DOTFILES_PATH:="$HOME/dotfiles"}
 : ${DOTFILES_BRANCH:=master}
 
+print_title() {
+  printf '\033[34m'
+  cat <<'EOF'
+
+                    https://github.com/yamadayuki/dotfiles
+
+                             __      __  _____ __
+                        ____/ /___  / /_/ __(_) /__  _____
+                       / __  / __ \/ __/ /_/ / / _ \/ ___/
+                     _/ /_/ / /_/ / /_/ __/ / /  __(__  )
+                    (_)__,_/\____/\__/_/ /_/_/\___/____/
+
+EOF
+  printf '\033[0m\n'
+}
+
+print_done() {
+  printf '\033[34m'
+  cat <<'EOF'
+
+                              ____
+                             / __ \____  ____  ___
+                            / / / / __ \/ __ \/ _ \
+                           / /_/ / /_/ / / / /  __/
+                          /_____/\____/_/ /_/\___(_)
+
+EOF
+  printf '\033[0m\n'
+}
+
 clone_or_update_repo() {
   local git_dir="$DOTFILES_PATH/.git"
 
@@ -44,14 +74,6 @@ install_homebrew() {
   echo 'done'
 }
 
-install_fish() {
-  command -v 'fish' > /dev/null 2>&1 && return
-
-  echo 'Installing fish...'
-  brew install fish
-  echo 'done'
-}
-
 install_mise() {
   export PATH="$HOME/.local/bin:$PATH"
   command -v 'mise' > /dev/null 2>&1 && return
@@ -61,22 +83,22 @@ install_mise() {
   echo 'done'
 }
 
-execute_installer() {
-  local install_script_path="$DOTFILES_PATH/install.fish"
+run_mise_bootstrap() {
+  export PATH="$HOME/.local/bin:$PATH"
 
-  if ! [ -d "$install_script_path" ]; then
-    echo 'Setup with fish...'
-    fish "$install_script_path"
-    echo 'done'
-  fi
+  echo 'Running mise bootstrap...'
+  mise trust "$DOTFILES_PATH"
+  mise bootstrap --cd "$DOTFILES_PATH" --yes
+  echo 'done'
 }
 
 main() {
+  print_title
   clone_or_update_repo
   install_homebrew
-  install_fish
   install_mise
-  execute_installer
+  run_mise_bootstrap
+  print_done
 }
 
 main

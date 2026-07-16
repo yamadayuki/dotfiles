@@ -6,12 +6,14 @@
 $ bash <(curl -sSL https://raw.githubusercontent.com/yamadayuki/dotfiles/master/up)
 ```
 
-`up` installs Homebrew, fish, and mise, then runs `install.fish`, which symlinks
-`config/mise/config.toml` into `~/.config/mise/conf.d/00-dotfiles.toml` and runs
-`mise bootstrap` from the repo root (`mise.toml`). That single command installs
-Homebrew packages, symlinks/copies dotfiles, sets macOS defaults, configures fish
-shell activation, and installs fisher plugins — all idempotently, so re-running
-`up` at any time converges the machine back to the declared state.
+`up` installs Homebrew and mise (the only two things that must exist before mise
+itself can take over), then runs `mise bootstrap` from the repo root (`mise.toml`).
+That single command installs Homebrew packages (including fish), symlinks/copies
+dotfiles, sets macOS defaults, configures fish shell activation, and installs
+fisher plugins — all idempotently, so re-running `up` at any time converges the
+machine back to the declared state. There's no separate `install.fish` step
+anymore; everything that doesn't need to exist before mise does is declared in
+`mise.toml`.
 
 This allows:
 - Global settings (`[settings]`, `[tasks]`) tracked in dotfiles and merged from
