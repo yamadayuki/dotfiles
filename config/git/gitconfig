@@ -35,6 +35,7 @@
   sh = show
   s = status
   st = status
+  sync = !git fetch --prune && (git merge --ff-only @{u} 2>/dev/null || true) && git branch -vv | awk '/: gone]/{print $1}' | xargs -I % git branch -d %
   tr = !git history
   wip = commit -m "WIP"
 
