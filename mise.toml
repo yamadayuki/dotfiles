@@ -31,11 +31,12 @@ dotfiles.default_mode = "symlink"
 "brew:starship" = "latest"
 "brew:direnv" = "latest"
 
-[bootstrap.macos.defaults]
-"NSGlobalDomain" = { InitialKeyRepeat = 10, KeyRepeat = 1 }
+[bootstrap.macos.keyboard]
+key_repeat = 1
+initial_key_repeat = 10
 
-[bootstrap.mise_shell_activate]
-fish = "activate"
+[bootstrap.user]
+login_shell = "/opt/homebrew/bin/fish"
 
 [tasks."migrate-legacy-setup"]
 description = "One-time migration for machines set up before mise bootstrap: safe to delete this task once every machine has run it. Removes fisher (and its managed files, now vendored in [dotfiles]) and the old sudo-copied /etc/mise/config.toml (superseded by ~/.config/mise/conf.d/00-dotfiles.toml)"
