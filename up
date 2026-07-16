@@ -87,7 +87,10 @@ run_mise_bootstrap() {
   export PATH="$HOME/.local/bin:$PATH"
 
   echo 'Running mise bootstrap...'
-  mise trust "$DOTFILES_PATH"
+  # --all: config/mise/config.toml uses template syntax ({{cwd}}), so it needs
+  # its own trust entry separate from the top-level mise.toml, even though it's
+  # inside the already-trusted dotfiles directory.
+  mise trust --all "$DOTFILES_PATH"
   mise bootstrap --cd "$DOTFILES_PATH" --yes
   echo 'done'
 }
