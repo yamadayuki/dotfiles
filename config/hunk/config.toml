@@ -2,7 +2,8 @@
 # Place this file at ~/.config/hunk/config.toml
 
 # Theme id, "auto" (matches terminal background), or "custom"
-# theme = "auto"
+# Matches Ghostty's "GitHub Dark" theme (config/ghostty/config).
+theme = "github-dark-default"
 
 # Layout mode: "auto", "split", or "stack"
 # mode = "auto"
@@ -32,7 +33,8 @@
 # prompt_save_view_preferences = true
 
 # Let the terminal background show through Hunk surfaces
-# transparent_background = false
+# Ghostty runs with background-opacity = 0.9, so let it show through here too.
+transparent_background = true
 
 # [custom_theme]
 # base = "graphite"        # inherit from a built-in theme
