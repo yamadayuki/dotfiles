@@ -75,6 +75,9 @@ alias ls eza
 
 # zoxide
 zoxide init fish | source
+# `z`'s `--wraps=__zoxide_z` pre-registers a completion at startup, which
+# blocks fish's normal completions/z.fish autoload, so source it explicitly.
+source $__fish_config_dir/completions/z.fish
 set -gx _ZO_FZF_OPTS "--height 100% --layout=reverse --preview='l {2..}'"
 
 export LANGUAGE=en_US.UTF-8
