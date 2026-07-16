@@ -9,12 +9,22 @@ let mapleader = ','
 """ Native packages (bundled with Vim; no plugin manager)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 packadd! matchit
-packadd! comment
-packadd! hlyank
 packadd! nohlsearch
 packadd! cfilter
-packadd! editorconfig
 packadd! netrw
+
+if has('nvim')
+  " gc/gcc commenting and editorconfig support ship in Neovim's core, and
+  " hlyank has no Neovim-bundled equivalent, so replicate it directly.
+  augroup yankHighlight
+    autocmd!
+    autocmd TextYankPost * silent! lua vim.highlight.on_yank()
+  augroup END
+else
+  packadd! comment
+  packadd! hlyank
+  packadd! editorconfig
+endif
 
 
 """ Colors
@@ -141,7 +151,11 @@ autocmd FileType netrw setl bufhidden=delete
 
 """ Terminal
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-autocmd TerminalOpen * setlocal nonumber norelativenumber signcolumn=no
+if has('nvim')
+  autocmd TermOpen * setlocal nonumber norelativenumber signcolumn=no
+else
+  autocmd TerminalOpen * setlocal nonumber norelativenumber signcolumn=no
+endif
 tnoremap <Esc> <C-\><C-n>
 
 

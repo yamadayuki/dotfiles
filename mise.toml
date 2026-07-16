@@ -6,6 +6,7 @@ dotfiles.default_mode = "symlink"
 "~/.gitconfig" = "config/git/gitconfig"
 "~/.vimrc" = "config/vim/vimrc"
 "~/.vim/colors" = { source = "config/vim/colors", mode = "symlink-each" }
+"~/.config/nvim/init.vim" = "config/nvim/init.vim"
 "~/.config/fish/config.fish" = "config/fish/config.fish"
 "~/.config/git/ignore" = "config/git/ignore"
 "~/.config/herdr/config.toml" = "config/herdr/config.toml"
