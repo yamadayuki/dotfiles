@@ -1,6 +1,10 @@
 [settings]
 experimental = true
 
+[tools]
+gh = "latest"
+ghq = "latest"
+
 [tasks.homebrewupgrade]
 description = "Upgrade Homebrew packages"
 run = [
