@@ -9,11 +9,16 @@ $ bash <(curl -sSL https://raw.githubusercontent.com/yamadayuki/dotfiles/master/
 `up` installs Homebrew and mise (the only two things that must exist before mise
 itself can take over), then runs `mise bootstrap` from the repo root (`mise.toml`).
 That single command installs Homebrew packages (including fish), symlinks/copies
-dotfiles, sets macOS defaults, configures fish shell activation, and installs
-fisher plugins — all idempotently, so re-running `up` at any time converges the
-machine back to the declared state. There's no separate `install.fish` step
-anymore; everything that doesn't need to exist before mise does is declared in
-`mise.toml`.
+dotfiles, sets macOS defaults, and configures fish shell activation — all
+idempotently, so re-running `up` at any time converges the machine back to the
+declared state. There's no separate `install.fish` step anymore; everything that
+doesn't need to exist before mise does is declared in `mise.toml`.
+
+Fish plugins are no longer managed by `fisher` — the former `yamadayuki/lure`
+fisher plugin (prompt colors, keybindings, and assorted utility functions) is
+vendored directly under `config/fish/{functions,conf.d,completions}` and
+symlinked file-by-file via `[dotfiles]`, so there's nothing left for a plugin
+manager to do.
 
 This allows:
 - Global settings (`[settings]`, `[tasks]`) tracked in dotfiles and merged from
@@ -47,6 +52,20 @@ mise run migrate-etc-mise-config
 
 This is a one-time, idempotent task (a no-op if `/etc/mise/config.toml` doesn't
 exist) and asks for sudo to remove the file.
+
+#### Migrating an existing machine off `fisher`
+
+Machines that ran an older version of this repo may still have `fisher` and its
+managed files (`yamadayuki/lure`) installed. `mise bootstrap`'s dotfiles step
+refuses to symlink over those unmanaged real files, so run this **before**
+`mise bootstrap`:
+
+```bash
+mise run migrate-remove-fisher
+```
+
+This removes the `fisher` plugin manager and its `yamadayuki/lure` install so
+the vendored copies under `config/fish/` can take their place.
 
 ### Profiling
 

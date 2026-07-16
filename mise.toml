@@ -11,6 +11,9 @@ dotfiles.default_mode = "symlink"
 "~/.config/ghostty/config" = "config/ghostty/config"
 "~/.config/wezterm/wezterm.lua" = "wezterm.lua"
 "~/.config/mise/conf.d/00-dotfiles.toml" = "config/mise/config.toml"
+"~/.config/fish/functions" = { source = "config/fish/functions", mode = "symlink-each" }
+"~/.config/fish/conf.d" = { source = "config/fish/conf.d", mode = "symlink-each" }
+"~/.config/fish/completions" = { source = "config/fish/completions", mode = "symlink-each" }
 
 [bootstrap.packages]
 "brew:fish" = "latest"
@@ -37,14 +40,14 @@ dotfiles.default_mode = "symlink"
 [bootstrap.mise_shell_activate]
 fish = "activate"
 
-[tasks.bootstrap]
-description = "Install fisher and fish plugins (no declarative mise equivalent exists)"
+[tasks."migrate-remove-fisher"]
+description = "One-time migration: remove fisher and its managed files now that fisher plugins are vendored directly in this repo's [dotfiles]"
 run = '''
-fish -c 'functions -q fisher; or begin
-    curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
-    source ~/.config/fish/functions/fisher.fish
-end'
-fish -c 'fisher install yamadayuki/lure'
+if fish -c 'functions -q fisher' 2>/dev/null; then
+  fish -c 'fisher remove yamadayuki/lure' || true
+fi
+rm -f ~/.config/fish/functions/fisher.fish ~/.config/fish/fish_plugins
+echo "fisher removed (if it was present)"
 '''
 
 [tasks."migrate-etc-mise-config"]

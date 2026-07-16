@@ -15,10 +15,6 @@ set -gx PATH $PATH $HOME/.local/bin
 
 set -gx SHELL (which fish)
 
-for file in $fisher_path/conf.d/*.fish
-    builtin source $file 2>/dev/null
-end
-
 # Homebrew
 # If the HOMEBREW_PREFIX is not set, set it to the default
 if test -z "$HOMEBREW_PREFIX"
