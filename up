@@ -52,6 +52,15 @@ install_fish() {
   echo 'done'
 }
 
+install_mise() {
+  export PATH="$HOME/.local/bin:$PATH"
+  command -v 'mise' > /dev/null 2>&1 && return
+
+  echo 'Installing mise...'
+  curl https://mise.run | sh
+  echo 'done'
+}
+
 execute_installer() {
   local install_script_path="$DOTFILES_PATH/install.fish"
 
@@ -66,6 +75,7 @@ main() {
   clone_or_update_repo
   install_homebrew
   install_fish
+  install_mise
   execute_installer
 }
 
