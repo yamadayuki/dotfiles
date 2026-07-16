@@ -59,9 +59,6 @@ function __direnv_export_eval --on-event fish_prompt
     end
 end
 
-# hub command config
-source (hub alias -s|psub)
-
 # anyenv
 # source (anyenv init -|psub)
 

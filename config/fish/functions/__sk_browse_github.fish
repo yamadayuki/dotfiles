@@ -5,7 +5,7 @@ function __sk_browse_github -d "Browse remote repository on github"
 
     if [ $line ]
         set -l repo_name (string split -m1 "/" $line)[2]
-        hub browse $repo_name
+        gh repo view $repo_name --web
     end
 
     commandline -f repaint
