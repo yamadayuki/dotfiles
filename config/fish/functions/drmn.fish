@@ -1,7 +1,3 @@
-function drmn
-    if type docker >/dev/null 2<&1
-        docker network rm (docker network ls -q)
-    else
-        echo "docker command not installed"
-    end
+function drmn --description 'Remove all docker networks'
+    __docker_rm_all networks
 end

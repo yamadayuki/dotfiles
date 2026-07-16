@@ -32,4 +32,3 @@ depends = [
     "miseupgrade",
     "rustupupdate",
 ]
-dir = "{{cwd}}"

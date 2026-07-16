@@ -16,9 +16,14 @@ set -gx PATH $PATH $HOME/.local/bin
 set -gx SHELL (which fish)
 
 # Homebrew
-# If the HOMEBREW_PREFIX is not set, set it to the default
+# If the HOMEBREW_PREFIX is not set, set it based on the well-known install path
+# (avoids shelling out to `brew config` on every new shell).
 if test -z "$HOMEBREW_PREFIX"
-    set -gx HOMEBREW_PREFIX (brew config | rg HOMEBREW_PREFIX |  awk '{ print $2 }')
+    if test -d /opt/homebrew
+        set -gx HOMEBREW_PREFIX /opt/homebrew
+    else
+        set -gx HOMEBREW_PREFIX /usr/local
+    end
 end
 
 # Go
@@ -77,6 +82,9 @@ alias ls eza
 zoxide init fish | source
 # `z`'s `--wraps=__zoxide_z` pre-registers a completion at startup, which
 # blocks fish's normal completions/z.fish autoload, so source it explicitly.
+# (This must run after `zoxide init`, and conf.d loads before config.fish,
+# so this completion can't just live in conf.d/ either — it has to be
+# sourced here, in this exact position.)
 source $__fish_config_dir/completions/z.fish
 set -gx _ZO_FZF_OPTS "--height 100% --layout=reverse --preview='l {2..}'"
 

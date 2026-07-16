@@ -1,7 +1,3 @@
-function drmc
-    if type docker >/dev/null 2<&1
-        docker rm -f (docker ps -aq)
-    else
-        echo "docker command not installed"
-    end
+function drmc --description 'Remove all docker containers'
+    __docker_rm_all containers
 end
