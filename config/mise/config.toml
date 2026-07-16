@@ -13,6 +13,7 @@ run = [
     "brew cleanup",
 ]
 dir = "{{cwd}}"
+interactive = true
 
 [tasks.miseupgrade]
 description = "Upgrade mise packages"
