@@ -34,6 +34,7 @@ dotfiles.default_mode = "symlink"
 "brew:starship" = "latest"
 "brew:direnv" = "latest"
 "brew:hunk" = "latest"
+"brew:neovim" = "latest"
 
 [bootstrap.macos.keyboard]
 key_repeat = 1
