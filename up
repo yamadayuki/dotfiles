@@ -88,6 +88,12 @@ run_mise_bootstrap() {
 
   echo 'Running mise bootstrap...'
   mise trust "$DOTFILES_PATH"
+  # config/mise/config.toml is only discovered indirectly (symlinked into
+  # ~/.config/mise/conf.d/), not via mise's standard project-file discovery,
+  # so `mise trust`/`--all` above never sees it. Its tasks use template
+  # syntax ({{cwd}}), so without this it gets silently auto-ignored the
+  # first time mise reads it non-interactively.
+  mise trust "$DOTFILES_PATH/config/mise/config.toml"
   mise bootstrap --cd "$DOTFILES_PATH" --yes
   echo 'done'
 }
