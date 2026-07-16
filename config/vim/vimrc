@@ -1,9 +1,26 @@
 set shell=fish
 
-filetype plugin on
+filetype plugin indent on
 syntax enable
 
 let mapleader = ','
+
+
+""" Native packages (bundled with Vim; no plugin manager)
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+packadd! matchit
+packadd! comment
+packadd! hlyank
+packadd! nohlsearch
+packadd! cfilter
+packadd! editorconfig
+
+
+""" Colors
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set termguicolors
+set background=dark
+colorscheme github_dark
 
 
 """ Display
@@ -14,15 +31,18 @@ set nocursorline
 set nocursorcolumn
 set laststatus=2
 set showmatch
-set antialias
-set guifont=Operator\ Mono\ SSm:h10
+set signcolumn=yes
+set breakindent
+set list
+set listchars=tab:»\ ,trail:·,extends:>,precedes:<,nbsp:+
 
 
-""" Cursor
+""" Cursor, Scroll
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set scrolloff=5
 set sidescrolloff=5
 set sidescroll=1
+set virtualedit=block
 
 
 """ File
@@ -33,17 +53,44 @@ set autoread
 set nobackup
 set noswapfile
 set splitright
-set clipboard+=unnamed,autoselect
+set splitbelow
+set undofile
+
+let s:undodir = expand('~/.vim/undo')
+if !isdirectory(s:undodir)
+  call mkdir(s:undodir, 'p')
+endif
+let &undodir = s:undodir . '//'
+
+augroup checkTimeOnFocus
+  autocmd!
+  autocmd FocusGained,BufEnter * checktime
+augroup END
 
 
-""" Search, Displacement
+""" Search
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set nohlsearch
+set hlsearch
 set incsearch
 set ignorecase
 set smartcase
 set wrapscan
 set gdefault
+
+
+""" Completion, Command line, Native fuzzy finder
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set wildmenu
+set wildoptions=pum
+set wildmode=list:longest,full
+set history=10000
+set complete=.,w,b,u,t
+set completeopt=menuone,popup,noselect
+set path=.,,**
+set updatetime=300
+
+nnoremap <leader>f :<C-u>find<Space>
+nnoremap <leader>b :<C-u>buffer<Space>
 
 
 """ Tab, Indent
@@ -59,12 +106,16 @@ set backspace=indent,eol,start
 
 augroup fileTypeIndent
   autocmd!
-  autocmd BufNewFile,BufRead *.py  setlocal tabstop=4 softtabstop=4 shiftwidth=4 autoindent smartindent
-  autocmd BufNewFile,BufRead *.php setlocal tabstop=4 softtabstop=4 shiftwidth=4 autoindent smartindent
-  autocmd BufNewFile,BufRead *.rb  setlocal tabstop=2 softtabstop=2 shiftwidth=2 autoindent smartindent
-
-  autocmd BufNewFile,BufRead .babelrc setlocal filetype=json
+  autocmd FileType python,php setlocal tabstop=4 softtabstop=4 shiftwidth=4
+  autocmd FileType ruby       setlocal tabstop=2 softtabstop=2 shiftwidth=2
 augroup END
+
+
+""" Folding, Diff
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set foldmethod=indent
+set foldlevelstart=99
+set diffopt+=vertical,linematch:60
 
 
 """ OS
@@ -73,23 +124,32 @@ set mouse=a
 set clipboard=unnamed
 
 
-""" Command line
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set wildmenu
-set wildmode=list:longest,full
-set history=10000
-
-
 """ Netrw
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-autocmd FileType netrw setl bufhidden=delete
 let g:netrw_liststyle = 3
 let g:netrw_altv = 1
 let g:netrw_alto = 1
 let g:netrw_preview = 1
+let g:netrw_banner = 0
+let g:netrw_winsize = 25
+
+autocmd FileType netrw setl bufhidden=delete
 
 
-""" Normal -> Command
+""" Terminal
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+autocmd TerminalOpen * setlocal nonumber norelativenumber signcolumn=no
+tnoremap <Esc> <C-\><C-n>
+
+
+""" Quickfix, Location list
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <silent> ]q :<C-u>cnext<CR>
+nnoremap <silent> [q :<C-u>cprev<CR>
+nnoremap <silent> <leader>q :<C-u>copen<CR>
+
+
+""" Normal -> Command, Window, Tab
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap ; :
 
@@ -98,12 +158,14 @@ nnoremap sh <C-w>h
 nnoremap sj <C-w>j
 nnoremap sk <C-w>k
 nnoremap sl <C-w>l
+nnoremap s= <C-w>=
+nnoremap ss :<C-u>sp<CR>
+nnoremap sv :<C-u>vs<CR>
+
 nnoremap tt :<C-u>tabnew<CR>
 nnoremap tx :<C-u>tabclose<CR>
 nnoremap tl gt
 nnoremap th gT
-nnoremap ss :<C-u>sp<CR>
-nnoremap sv :<C-u>vs<CR>
 
 nnoremap q <Nop>
 nnoremap qq :<C-u>q<CR>
@@ -113,4 +175,8 @@ nnoremap <silent> <C-j> :bprev<CR>
 nnoremap <silent> <C-k> :bnext<CR>
 nnoremap <silent> <C-l> :Ve<CR>
 
-nnoremap s= <C-w>=
+
+""" Misc
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <silent> <leader>l :<C-u>set list!<CR>
+nnoremap <silent> <leader>s :<C-u>setlocal spell! spelllang=en,cjk<CR>
