@@ -42,22 +42,22 @@ clone_or_update_repo() {
   if [ -d "$git_dir" ]; then
     echo 'Updating repo...'
 
-    if [ "$(git --git-dir="$git_dir" symbolic-ref --short HEAD 2> /dev/null)" != "master" ]; then
+    if [ "$(git --git-dir="$git_dir" --work-tree="$DOTFILES_PATH" symbolic-ref --short HEAD 2> /dev/null)" != "master" ]; then
       echo 'skip (working on a non-master branch)'
       return
     fi
 
-    if ! git --git-dir="$git_dir" diff --no-ext-diff --quiet --exit-code > /dev/null 2>&1; then
+    if ! git --git-dir="$git_dir" --work-tree="$DOTFILES_PATH" diff --no-ext-diff --quiet --exit-code > /dev/null 2>&1; then
       echo 'skip (unstaged changes present)'
       return
     fi
 
-    if ! git --git-dir="$git_dir" diff-index --cached --quiet HEAD -- > /dev/null 2>&1; then
+    if ! git --git-dir="$git_dir" --work-tree="$DOTFILES_PATH" diff-index --cached --quiet HEAD -- > /dev/null 2>&1; then
       echo 'skip (uncommitted changes present)'
       return
     fi
 
-    git --git-dir="$git_dir" pull origin master
+    git --git-dir="$git_dir" --work-tree="$DOTFILES_PATH" pull origin master
     echo 'done'
   elif ! [ -d "$DOTFILES_PATH" ]; then
     echo 'Cloning repo...'
