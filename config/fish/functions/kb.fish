@@ -23,7 +23,7 @@ function kb
     switch "$cmd"
         case po
             kube $cluster get po \
-                | sk $lure_skim_default_option \
+                | sk $sk_default_option \
                 | perl -pe 'chomp if eof' \
                 | awk '{ print $1 }' \
                 | read line
