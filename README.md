@@ -6,7 +6,8 @@ Everything is declared in `mise.toml` (`[dotfiles]` for symlinks, `[bootstrap.*]
 for packages, macOS defaults, and the login shell):
 
 - **fish** — `config.fish` plus `functions`/`conf.d`/`completions` symlinked
-  file-by-file (includes the vendored former `yamadayuki/lure` prompt)
+  file-by-file
+- **starship** — prompt config (`starship.toml`)
 - **git** — `~/.gitconfig` and the global ignore file
 - **Vim / Neovim** — a single shared `vimrc` (native features only, no plugin
   manager; netrw configured as a NERDTree-like toggleable sidebar) with a

@@ -1,0 +1,9 @@
+[shell]
+disabled = false
+
+[kubernetes]
+disabled = false
+
+[[kubernetes.contexts]]
+context_pattern = "gke_.*"
+style = "bold red"

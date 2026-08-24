@@ -3,8 +3,8 @@ function fish_title
     set --local current_command (status current-command 2>/dev/null; or echo $_)
 
     if test $current_command = fish
-        echo (_lure_print_prompt $current_directory)
+        echo $current_directory
     else
-        echo (_lure_print_prompt $current_command)
+        echo $current_command
     end
 end

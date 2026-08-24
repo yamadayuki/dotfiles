@@ -13,6 +13,7 @@ dotfiles.default_mode = "symlink"
 "~/.config/ghostty/config" = "config/ghostty/config"
 "~/.config/hunk/config.toml" = "config/hunk/config.toml"
 "~/.config/mise/conf.d/00-dotfiles.toml" = "config/mise/config.toml"
+"~/.config/starship.toml" = "config/starship/starship.toml"
 "~/.config/fish/functions" = { source = "config/fish/functions", mode = "symlink-each" }
 "~/.config/fish/conf.d" = { source = "config/fish/conf.d", mode = "symlink-each" }
 "~/.config/fish/completions" = { source = "config/fish/completions", mode = "symlink-each" }
