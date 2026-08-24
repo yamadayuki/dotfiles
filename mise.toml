@@ -40,5 +40,15 @@ dotfiles.default_mode = "symlink"
 key_repeat = 1
 initial_key_repeat = 10
 
+[bootstrap.macos.dock]
+autohide = true
+tilesize = 64
+
+[bootstrap.macos.finder]
+preferred_view_style = "column"
+
+[bootstrap.macos.trackpad]
+tap_to_click = true
+
 [bootstrap.user]
 login_shell = "/opt/homebrew/bin/fish"
