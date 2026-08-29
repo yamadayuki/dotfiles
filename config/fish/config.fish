@@ -1,17 +1,18 @@
 # PATHS
-set -gx PATH $PATH /opt/homebrew/bin
-set -gx PATH $PATH /opt/homebrew/sbin
-set -gx PATH $PATH $HOME/.cargo/bin
-set -gx PATH $PATH $HOME/dev/bin
-set -gx PATH $PATH $HOME/.anyenv/bin
-set -gx PATH $PATH /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/
-set -gx PATH $PATH /usr/local/bin
-set -gx PATH $PATH /usr/bin
-set -gx PATH $PATH /bin
-set -gx PATH $PATH /usr/sbin
-set -gx PATH $PATH /sbin
-set -gx PATH $PATH $HOME/google-cloud-sdk/bin
-set -gx PATH $PATH $HOME/.local/bin
+# Homebrew must come before system paths (/usr/bin etc.) so brewed tools win.
+fish_add_path --global --move --prepend /opt/homebrew/bin /opt/homebrew/sbin
+fish_add_path --global --append \
+    $HOME/.cargo/bin \
+    $HOME/dev/bin \
+    $HOME/.anyenv/bin \
+    /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/ \
+    /usr/local/bin \
+    /usr/bin \
+    /bin \
+    /usr/sbin \
+    /sbin \
+    $HOME/google-cloud-sdk/bin \
+    $HOME/.local/bin
 
 set -gx SHELL (which fish)
 
@@ -30,10 +31,10 @@ end
 set -gx GOPATH $HOME/dev
 
 # Docker
-set -gx PATH $PATH $HOME/.docker/bin
+fish_add_path --global --append $HOME/.docker/bin
 
 # Python (rye)
-set -gx PATH $PATH $HOME/.rye/shims
+fish_add_path --global --append $HOME/.rye/shims
 
 alias vi vim
 set -gx EDITOR vim
@@ -96,7 +97,7 @@ set -gx COLORTERM truecolor
 set -gx GH_BROWSER open
 
 set -gx DENO_INSTALL $HOME/.deno
-set -gx PATH $PATH $DENO_INSTALL/bin
+fish_add_path --global --append $DENO_INSTALL/bin
 
 # mise
 ~/.local/bin/mise activate fish | source
@@ -106,20 +107,18 @@ starship init fish | source
 
 # pnpm
 set -gx PNPM_HOME "$HOME/Library/pnpm"
-if not string match -q -- $PNPM_HOME $PATH
-  set -gx PATH "$PNPM_HOME" $PATH
-end
+fish_add_path --global --move "$PNPM_HOME"
 # pnpm end
 
 
 # Added by Antigravity CLI installer
-set -gx PATH "$HOME/.local/bin" $PATH
+fish_add_path --global --move "$HOME/.local/bin"
 
 # Added by Antigravity IDE
-set -gx PATH "$HOME/.antigravity-ide/antigravity-ide/bin" $PATH
+fish_add_path --global --move "$HOME/.antigravity-ide/antigravity-ide/bin"
 
 # Vite+
-set -gx PATH $PATH "$HOME/.vite-plus/bin"
+fish_add_path --global --append "$HOME/.vite-plus/bin"
 
 # moonbit
-fish_add_path "$HOME/.moon/bin"
+fish_add_path --global "$HOME/.moon/bin"
