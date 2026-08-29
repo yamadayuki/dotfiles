@@ -27,7 +27,7 @@ CLI tools (fish, Neovim, hunk, ripgrep, fzf, starship, …) are installed as
 ### Installation
 
 ```
-$ bash <(curl -sSL https://raw.githubusercontent.com/yamadayuki/dotfiles/master/up)
+$ bash <(curl -sSL https://raw.githubusercontent.com/yamadayuki/dotfiles/main/up)
 ```
 
 `up` installs Homebrew and mise (the only two things that must exist before mise

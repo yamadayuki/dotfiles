@@ -4,7 +4,7 @@ set -eu
 set -o pipefail
 
 : ${DOTFILES_PATH:="$HOME/dotfiles"}
-: ${DOTFILES_BRANCH:=master}
+: ${DOTFILES_BRANCH:=main}
 
 print_title() {
   printf '\033[34m'
@@ -42,8 +42,8 @@ clone_or_update_repo() {
   if [ -d "$git_dir" ]; then
     echo 'Updating repo...'
 
-    if [ "$(git --git-dir="$git_dir" --work-tree="$DOTFILES_PATH" symbolic-ref --short HEAD 2> /dev/null)" != "master" ]; then
-      echo 'skip (working on a non-master branch)'
+    if [ "$(git --git-dir="$git_dir" --work-tree="$DOTFILES_PATH" symbolic-ref --short HEAD 2> /dev/null)" != "main" ]; then
+      echo 'skip (working on a non-main branch)'
       return
     fi
 
@@ -57,7 +57,7 @@ clone_or_update_repo() {
       return
     fi
 
-    git --git-dir="$git_dir" --work-tree="$DOTFILES_PATH" pull origin master
+    git --git-dir="$git_dir" --work-tree="$DOTFILES_PATH" pull origin main
     echo 'done'
   elif ! [ -d "$DOTFILES_PATH" ]; then
     echo 'Cloning repo...'
