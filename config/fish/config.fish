@@ -120,3 +120,6 @@ set -gx PATH "$HOME/.antigravity-ide/antigravity-ide/bin" $PATH
 
 # Vite+
 set -gx PATH $PATH "$HOME/.vite-plus/bin"
+
+# moonbit
+fish_add_path "$HOME/.moon/bin"
