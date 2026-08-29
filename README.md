@@ -30,8 +30,11 @@ CLI tools (fish, Neovim, hunk, ripgrep, fzf, starship, …) are installed as
 $ bash <(curl -sSL https://raw.githubusercontent.com/yamadayuki/dotfiles/main/up)
 ```
 
-`up` installs Homebrew and mise (the only two things that must exist before mise
-itself can take over), then runs `mise bootstrap` from the repo root (`mise.toml`).
+`up` installs Homebrew, mise, and rustup (the tools that must exist before mise
+itself can take over or `mise run up` can upgrade them), then runs `mise bootstrap`
+from the repo root (`mise.toml`). rustup is installed directly via its official
+script rather than through mise, since mise's `rust` tool would replace rustup
+rather than complement it.
 That single command installs Homebrew packages (including fish), symlinks/copies
 dotfiles, sets macOS defaults, and configures fish shell activation — all
 idempotently, so re-running `up` at any time converges the machine back to the

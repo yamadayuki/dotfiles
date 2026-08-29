@@ -83,6 +83,14 @@ install_mise() {
   echo 'done'
 }
 
+install_rustup() {
+  command -v 'rustup' > /dev/null 2>&1 && return
+
+  echo 'Installing rustup...'
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path
+  echo 'done'
+}
+
 run_mise_bootstrap() {
   export PATH="$HOME/.local/bin:$PATH"
 
@@ -103,6 +111,7 @@ main() {
   clone_or_update_repo
   install_homebrew
   install_mise
+  install_rustup
   run_mise_bootstrap
   print_done
 }
