@@ -1,16 +1,17 @@
 # PATHS
 # Homebrew must come before system paths (/usr/bin etc.) so brewed tools win.
 fish_add_path --global --move --prepend /opt/homebrew/bin /opt/homebrew/sbin
+# Do NOT fish_add_path system dirs (/usr/local/bin, /usr/bin, /bin, /usr/sbin, /sbin):
+# they're already on PATH via macOS's launchd/path_helper. Adding them to
+# fish_user_paths makes fish re-prepend them ahead of mise (and other tools)
+# every time something later in this file calls fish_add_path again — e.g. the
+# pnpm/antigravity/moonbit blocks below, which installers keep appending — which
+# is exactly how a stale system `gem`/`ruby` ends up shadowing mise's shims.
 fish_add_path --global --append \
     $HOME/.cargo/bin \
     $HOME/dev/bin \
     $HOME/.anyenv/bin \
     /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/ \
-    /usr/local/bin \
-    /usr/bin \
-    /bin \
-    /usr/sbin \
-    /sbin \
     $HOME/google-cloud-sdk/bin \
     $HOME/.local/bin
 
@@ -38,27 +39,6 @@ fish_add_path --global --append $HOME/.rye/shims
 
 alias vi vim
 set -gx EDITOR vim
-
-# direnv
-# eval (direnv hook fish)
-function __direnv_export_eval --on-event fish_prompt
-    # Run on each prompt to update the state
-    direnv export fish | source
-
-    # Handle cd history arrows between now and the next prompt
-    function __direnv_cd_hook --on-variable PWD
-        # ensure any output overwrites the prompt instead of going after it
-        echo -ne '\r'
-        # run the outer function to apply any changes
-        __direnv_export_eval
-    end
-
-    function __direnv_disable_cd --on-event fish_preexec
-        # Once we're running commands, stop monitoring cd changes
-        # until we get to the prompt again
-        functions --erase __direnv_cd_hook
-    end
-end
 
 # anyenv
 # source (anyenv init -|psub)

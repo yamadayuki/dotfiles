@@ -33,7 +33,6 @@ dotfiles.default_mode = "symlink"
 "brew:zoxide" = "latest"
 "brew:jq" = "latest"
 "brew:starship" = "latest"
-"brew:direnv" = "latest"
 "brew:hunk" = "latest"
 "brew:neovim" = "latest"
 
