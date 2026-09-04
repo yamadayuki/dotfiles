@@ -1,7 +1,3 @@
-# The following lines were added by Docker Desktop to add commands to your PATH.
-export PATH="$PATH:/Users/yamadayuki/.docker/bin"
-# End of Docker Desktop section.
-
 # PATHS
 # Homebrew must come before system paths (/usr/bin etc.) so brewed tools win.
 fish_add_path --global --move --prepend /opt/homebrew/bin /opt/homebrew/sbin
