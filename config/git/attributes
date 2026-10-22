@@ -1,0 +1,12 @@
+# lock ファイルは diff を畳む (中身を見たいときは git diff -a)
+*.lock -diff
+package-lock.json -diff
+pnpm-lock.yaml -diff
+go.sum -diff
+
+# 画像は形式・サイズ・容量の差分を表示
+*.png diff=image
+*.jpg diff=image
+*.jpeg diff=image
+*.gif diff=image
+*.webp diff=image

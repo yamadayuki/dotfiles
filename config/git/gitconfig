@@ -1,56 +1,124 @@
+# ---- identity ----------------------------------------------------------------
+
 [user]
   name = Yamada Yuki
   email = yamadayuuki0818@gmail.com
 
-[color]
-  ui = auto
-  status = always
+[github]
+  user = yamadayuki
+
+[credential]
+  helper = osxkeychain
+
+# GitHub は gh のトークンを使う。gh が PATH に無い環境では keychain にフォールバック
+[credential "https://github.com"]
+  helper =
+  helper = !gh auth git-credential
+  helper = osxkeychain
+
+[credential "https://gist.github.com"]
+  helper =
+  helper = !gh auth git-credential
+  helper = osxkeychain
+
+# ---- core --------------------------------------------------------------------
+
+[core]
+  editor = vim
+  pager = delta
+  # 大きいリポジトリでも git status を速くする
+  fsmonitor = true
+  untrackedCache = true
+
+[init]
+  defaultBranch = main
+
+[help]
+  autocorrect = prompt
+
+[alias]
+  sync = !git fetch && (git merge --ff-only @{u} 2>/dev/null || true) && git branch -vv | awk '/: gone]/{print $1}' | xargs -I % git branch -d %
+  lg = log --graph --pretty=compact
+
+# ---- appearance --------------------------------------------------------------
+# local = blue, remote = magenta (VSCode の Source Control Graph に寄せる)
 
 [color "status"]
   added = green bold
   changed = yellow bold
   untracked = cyan
-  branch = yellow bold ul
+  branch = blue bold ul
+  localBranch = blue bold
+  remoteBranch = magenta bold
 
-[alias]
-  sync = !git fetch --prune && (git merge --ff-only @{u} 2>/dev/null || true) && git branch -vv | awk '/: gone]/{print $1}' | xargs -I % git branch -d %
+[color "decorate"]
+  HEAD = bold cyan
+  branch = bold blue
+  remoteBranch = bold magenta
+  tag = bold yellow
+  stash = bold green
 
-[core]
-  editor = vim
-  pager = delta
+[color "branch"]
+  current = bold blue
+  remote = magenta
+  upstream = magenta
 
-[push]
-  default = current
+[pretty]
+  # hash subject author date (refs)
+  compact = %C(auto)%h%C(reset) %C(bold)%s%C(reset) %C(blue)%an%C(reset) %C(dim)%ar%C(reset)%C(auto)%(decorate:pointer= → )%C(reset)
+  # hash (refs) subject / author date / body
+  detail = format:%C(auto)%h%(decorate:pointer= → )%C(reset) %C(bold)%s%C(reset)%n%C(blue)%an%C(reset) %C(dim)%ad (%ar)%C(reset)%n%w(0,4,4)%+b%w(0,0,0)
+
+[format]
+  pretty = detail
+
+[log]
+  date = format-local:%Y-%m-%d %H:%M
+  graphColors = blue, magenta, yellow, cyan, green, red
+
+[branch]
+  sort = -committerdate
+
+[tag]
+  sort = version:refname
+
+[status]
+  showStash = true
+
+[grep]
+  lineNumber = true
+  patternType = perl
+
+# ---- diff / merge ------------------------------------------------------------
 
 [diff]
   algorithm = histogram
   tool = vimdiff
-  indentHeuristic = true
+  colorMoved = default
+  colorMovedWS = allow-indentation-change
+
+[difftool]
+  prompt = false
+
+[diff "image"]
+  textconv = magick identify -format \"%m %wx%h %b\\n\"
+
+[merge]
+  conflictStyle = zdiff3
+  autoStash = true
+
+[rerere]
+  enabled = true
+  autoUpdate = true
 
 [interactive]
   diffFilter = delta --color-only
 
-[ghq]
-  root = ~/dev/src
-
-[github]
-  user = yamadayuki
-  privatekey = $HOME/.ssh/id_rsa
-
-[filter "lfs"]
-  required = true
-  clean = git-lfs clean -- %f
-  smudge = git-lfs smudge -- %f
-  process = git-lfs filter-process
-
-[credential]
-  helper = osxkeychain
-
-[pull]
-  ff = only
-
 [delta]
   features = side-by-side line-numbers decorations
+  navigate = true
+  hyperlinks = true
+  hyperlinks-file-link-format = "vscode://file/{path}:{line}"
   file-style = bold yellow ul
   file-decoration-style = none
   hunk-header-decoration-style = none
@@ -58,11 +126,40 @@
   plus-emph-style = syntax "#006400"
   plus-empty-line-marker-style = syntax "#004a00"
 
-[rerere]
-  enabled = true
+# ---- remote workflow ---------------------------------------------------------
 
-[init]
-  defaultBranch = main
+[fetch]
+  prune = true
+  writeCommitGraph = true
 
+[pull]
+  ff = only
+
+[push]
+  default = current
+  autoSetupRemote = true
+  followTags = true
+  useForceIfIncludes = true
+
+[rebase]
+  autoStash = true
+  autoSquash = true
+  updateRefs = true
+
+[commit]
+  verbose = true
+
+# ---- tools -------------------------------------------------------------------
+
+[ghq]
+  root = ~/dev/src
+
+[filter "lfs"]
+  required = true
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+
+# machine-local overrides (must stay last)
 [include]
   path = ~/.gitconfig.local
