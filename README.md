@@ -16,8 +16,6 @@ for packages, macOS defaults, and the login shell):
   branches handle the few differences
 - **Ghostty** — terminal config (GitHub Dark + transparency)
 - **hunk** — theme matched to Ghostty's GitHub Dark
-- **herdr** — terminal-multiplexer config (prefix moved off `ctrl+w` so it
-  doesn't shadow Vim's window commands)
 - **mise** — global `[settings]`/`[tasks]` (e.g. `mise run up` to upgrade
   Homebrew/mise/rustup), merged via `~/.config/mise/conf.d/00-dotfiles.toml`
 
