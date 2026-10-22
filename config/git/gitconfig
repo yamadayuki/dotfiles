@@ -13,31 +13,7 @@
   branch = yellow bold ul
 
 [alias]
-  amend = commit --amend -C HEAD
-  br = branch
-  brm = branch --merged
-  cm = commit
-  co = checkout
-  d = diff
-  dc = diff --cached
-  dmb = !git branch --merged | grep -vE '^\\*|main$|master$|develop$' | xargs -I % git branch -d %
-  empty = commit --allow-empty
-  fo = fetch -p origin
-  fp = !git fetch -p
-  history = log --graph --date=iso --decorate=short --pretty=format:'%C(yellow)%h %Cgreen%cd %Cblue%cn %Cred%d %Creset%s'
-  logg = log --stat --decorate=short --pretty=format:'%C(yellow)%h %Cgreen%cr%Cblue%cn%Cred%d %Creset%s %C(cyan)%b'
-  pd = !git log --oneline | sk | awk '{ print $1 }' | xargs -I% git show %
-  po = pull origin
-  pom = pull origin main
-  pp = !git pull -p && git dmb
-  rebase = rebase -i
-  rh = reset HEAD~1
-  sh = show
-  s = status
-  st = status
   sync = !git fetch --prune && (git merge --ff-only @{u} 2>/dev/null || true) && git branch -vv | awk '/: gone]/{print $1}' | xargs -I % git branch -d %
-  tr = !git history
-  wip = commit -m "WIP"
 
 [core]
   editor = vim
