@@ -50,6 +50,8 @@ $env.config = {
     show_banner: false
     buffer_editor: "vim"
     color_config: (get_theme)
+    # Check PATH and highlight valid vs invalid/missing commands in real-time (like fish)
+    highlight_resolved_externals: true
 
     table: {
         mode: "rounded"

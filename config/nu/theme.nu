@@ -13,7 +13,10 @@ export def get_theme [] {
         shape_custom: "magenta"
         shape_datetime: "cyan_bold"
         shape_directory: "cyan_bold"
-        shape_external: "blue_bold"
+        # Commands not found in PATH appear red (matching fish_color_error)
+        shape_external: "red_bold"
+        # Commands found in PATH appear blue (matching fish_color_command)
+        shape_external_resolved: "blue_bold"
         shape_externalarg: "green"
         shape_filepath: "cyan"
         shape_flag: "cyan_bold"
