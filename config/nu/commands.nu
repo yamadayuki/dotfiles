@@ -102,3 +102,22 @@ export def sk-browse [] {
         gh repo view $repo --web
     }
 }
+
+# -----------------------------------------------------------------------------
+# Directory listing utilities (sorted by modified time descending)
+# -----------------------------------------------------------------------------
+export def ll [path?: string] {
+    if ($path | is-empty) {
+        ls -l | sort-by modified -r
+    } else {
+        ls -l $path | sort-by modified -r
+    }
+}
+
+export def la [path?: string] {
+    if ($path | is-empty) {
+        ls -a -l | sort-by modified -r
+    } else {
+        ls -a -l $path | sort-by modified -r
+    }
+}

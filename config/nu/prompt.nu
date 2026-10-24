@@ -141,3 +141,13 @@ $env.PROMPT_INDICATOR_VI_NORMAL = {||
 $env.PROMPT_MULTILINE_INDICATOR = {||
     $"(ansi dark_gray)::: (ansi reset)"
 }
+
+# -----------------------------------------------------------------------------
+# Transient Prompt (collapses past executed prompts to simple 1 line)
+# -----------------------------------------------------------------------------
+$env.TRANSIENT_PROMPT_COMMAND = {|| "" }
+$env.TRANSIENT_PROMPT_COMMAND_RIGHT = {|| "" }
+$env.TRANSIENT_PROMPT_INDICATOR = {|| $"(ansi green_bold)❯ (ansi reset)" }
+$env.TRANSIENT_PROMPT_INDICATOR_VI_INSERT = {|| $"(ansi green_bold)❯ (ansi reset)" }
+$env.TRANSIENT_PROMPT_INDICATOR_VI_NORMAL = {|| $"(ansi blue_bold)❮ (ansi reset)" }
+$env.TRANSIENT_PROMPT_MULTILINE_INDICATOR = {|| "" }
