@@ -52,6 +52,9 @@ $env.config = {
     color_config: (get_theme)
     # Check PATH and highlight valid vs invalid/missing commands in real-time (like fish)
     highlight_resolved_externals: true
+    # Enable Kitty keyboard protocol for reliable modifier key handling (e.g. Ghostty)
+    use_kitty_protocol: true
+    bracketed_paste: true
 
     # Safety: move to trash by default instead of permanent delete (use `rm -p` for permanent)
     rm: {
@@ -77,6 +80,11 @@ $env.config = {
         }
     }
 
+    datetime_format: {
+        normal: "%Y-%m-%d %H:%M:%S"
+        table: "%Y-%m-%d %H:%M:%S"
+    }
+
     completions: {
         case_sensitive: false
         quick: true
@@ -94,9 +102,21 @@ $env.config = {
         sync_on_enter: true
         file_format: "sqlite"
         isolation: false
+        # Ignore commands starting with a space to prevent logging sensitive secrets
+        ignore_space_prefixed: true
     }
 
     hooks: {
+        # Auto-page long tables/lists to interactive explore if exceeding terminal height
+        display_output: { ||
+            let result = $in
+            let term_rows = (try { (term size).rows } catch { 25 })
+            if (($result | describe) =~ 'list|table') and (try { ($result | length) > ($term_rows - 4) } catch { false }) {
+                $result | explore
+            } else {
+                $result | table
+            }
+        }
         pre_prompt: [
             # Ported from fish_title.fish: updates terminal window title
             { ||
@@ -119,6 +139,24 @@ $env.config = {
     }
 
     menus: [
+        {
+            name: completion_menu
+            only_buffer_difference: false
+            marker: "| "
+            type: {
+                layout: columnar
+                columns: 4
+                col_width: 20
+                col_padding: 2
+            }
+            style: {
+                text: green
+                selected_text: { attr: r }
+                description_text: yellow
+                match_text: { attr: u }
+                selected_match_text: { attr: ur }
+            }
+        }
         {
             name: history_menu
             only_buffer_difference: true
@@ -150,10 +188,17 @@ $env.config = {
                 ]
             }
         }
-        # Alt+Enter: Insert newline without executing
+        # Alt+Enter / Shift+Enter: Insert newline without executing
         {
-            name: newline_insert
+            name: newline_insert_alt
             modifier: alt
+            keycode: enter
+            mode: [emacs, vi_normal, vi_insert]
+            event: { edit: insertnewline }
+        }
+        {
+            name: newline_insert_shift
+            modifier: shift
             keycode: enter
             mode: [emacs, vi_normal, vi_insert]
             event: { edit: insertnewline }
