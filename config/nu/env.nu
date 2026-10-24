@@ -103,9 +103,6 @@ $env.SKIM_DEFAULT_OPTIONS = "--ansi --layout=reverse --height 40%"
 # bat theme
 $env.BAT_THEME = "base16"
 
-# zoxide fzf preview options
-$env._ZO_FZF_OPTS = "--height 100% --layout=reverse --preview='l {2..}'"
-
 # Locales
 $env.LANG = "en_US.UTF-8"
 $env.LANGUAGE = "en_US.UTF-8"
@@ -121,4 +118,30 @@ $env.GH_BROWSER = "open"
 # Deno & pnpm
 $env.DENO_INSTALL = ($home | path join ".deno")
 $env.PNPM_HOME = ($home | path join "Library" "pnpm")
+
+# -----------------------------------------------------------------------------
+# Tool init scripts (zoxide & mise), sourced from config.nu
+# Generated here because env.nu runs before config.nu is parsed, so a fresh
+# script takes effect on the same startup. Regenerated when the binary found in
+# PATH is newer than its script: the Homebrew symlink is relinked on upgrade and
+# `mise self-update` rewrites the binary (both without spawning the tool).
+# -----------------------------------------------------------------------------
+let nu_cache_dir = ($home | path join ".cache" "nushell")
+mkdir $nu_cache_dir
+
+for tool in [
+    { name: "zoxide", init: {|| ^zoxide init nushell } }
+    { name: "mise", init: {|| ^mise activate nu } }
+] {
+    let bin = (which $tool.name | get 0?.path?)
+    if $bin == null {
+        continue
+    }
+
+    let script = ($nu_cache_dir | path join $"($tool.name).nu")
+    let stale = (not ($script | path exists)) or ((ls $bin | get 0.modified) > (ls $script | get 0.modified))
+    if $stale {
+        try { do $tool.init | save -f $script }
+    }
+}
 

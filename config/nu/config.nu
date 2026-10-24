@@ -4,39 +4,19 @@
 # =============================================================================
 
 # -----------------------------------------------------------------------------
-# 1. Tool Integrations (zoxide & mise)
+# 1. Tool Integrations (zoxide; mise is sourced at the end of this file)
 # -----------------------------------------------------------------------------
-let cache_dir = ($nu.home-dir | path join ".cache" "nushell")
-if not ($cache_dir | path exists) {
-    mkdir $cache_dir
-}
-
-let zoxide_cache_file = ($cache_dir | path join "zoxide.nu")
-if not ($zoxide_cache_file | path exists) {
-    if (which zoxide | is-not-empty) {
-        try { ^zoxide init nushell | save -f $zoxide_cache_file }
-    }
-}
-
-let mise_cache_file = ($cache_dir | path join "mise.nu")
-if not ($mise_cache_file | path exists) {
-    if (which mise | is-not-empty) {
-        try { ^mise activate nu | save -f $mise_cache_file }
-    }
-}
-
-# Sourcing with parse-time constants (null is a safe no-op if file does not exist yet)
+# The init scripts are (re)generated in env.nu, which runs before this file is parsed.
+# Sourcing with parse-time constants (null is a safe no-op if file does not exist)
+# zoxide stays before completions.nu so its custom `z` overrides zoxide's.
 const zoxide_path = if ("~/.cache/nushell/zoxide.nu" | path exists) { "~/.cache/nushell/zoxide.nu" } else { null }
 source $zoxide_path
-
-const mise_path = if ("~/.cache/nushell/mise.nu" | path exists) { "~/.cache/nushell/mise.nu" } else { null }
-source $mise_path
 
 # -----------------------------------------------------------------------------
 # 2. Modular Configurations
 # -----------------------------------------------------------------------------
 use theme.nu get_theme
-use abbr.nu [get_abbreviations, get_subcommand_abbr_menu, get_subcommand_abbr_keybindings]
+use abbr.nu [get_abbr_menu, get_abbr_keybindings]
 use completions.nu [get_fish_completer, z]
 
 source prompt.nu
@@ -51,7 +31,6 @@ $env.config = {
     show_banner: false
     buffer_editor: "vim"
     color_config: (get_theme)
-    abbreviations: (get_abbreviations)
     # Check PATH and highlight valid vs invalid/missing commands in real-time (like fish)
     highlight_resolved_externals: true
     # Enable Kitty keyboard protocol for reliable modifier key handling (e.g. Ghostty)
@@ -173,12 +152,12 @@ $env.config = {
                 description_text: yellow
             }
         }
-        (get_subcommand_abbr_menu)
+        (get_abbr_menu)
     ]
 
     keybindings: [
-        # Space / Enter: expand subcommand abbreviations (e.g. `git st` -> `git status`)
-        ...(get_subcommand_abbr_keybindings)
+        # Space / Enter: expand abbreviations (e.g. `gs` -> `git status --short`, `git st` -> `git status`)
+        ...(get_abbr_keybindings)
         # Up arrow: Filter history by current buffer prefix
         {
             name: history_menu_up
@@ -247,3 +226,11 @@ $env.config = {
         }
     ]
 }
+
+# -----------------------------------------------------------------------------
+# 4. mise
+# -----------------------------------------------------------------------------
+# Sourced after `$env.config` is assigned: its `pre_prompt` hook would otherwise be
+# replaced by the `pre_prompt` list above.
+const mise_path = if ("~/.cache/nushell/mise.nu" | path exists) { "~/.cache/nushell/mise.nu" } else { null }
+source $mise_path
