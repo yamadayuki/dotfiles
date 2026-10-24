@@ -36,6 +36,7 @@ source $mise_path
 # 2. Modular Configurations
 # -----------------------------------------------------------------------------
 use theme.nu get_theme
+use abbr.nu [get_abbreviations, get_subcommand_abbr_menu, get_subcommand_abbr_keybindings]
 use completions.nu [get_fish_completer, z]
 
 source prompt.nu
@@ -50,6 +51,7 @@ $env.config = {
     show_banner: false
     buffer_editor: "vim"
     color_config: (get_theme)
+    abbreviations: (get_abbreviations)
     # Check PATH and highlight valid vs invalid/missing commands in real-time (like fish)
     highlight_resolved_externals: true
     # Enable Kitty keyboard protocol for reliable modifier key handling (e.g. Ghostty)
@@ -171,9 +173,12 @@ $env.config = {
                 description_text: yellow
             }
         }
+        (get_subcommand_abbr_menu)
     ]
 
     keybindings: [
+        # Space / Enter: expand subcommand abbreviations (e.g. `git st` -> `git status`)
+        ...(get_subcommand_abbr_keybindings)
         # Up arrow: Filter history by current buffer prefix
         {
             name: history_menu_up
