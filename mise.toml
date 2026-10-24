@@ -17,8 +17,13 @@ dotfiles.default_mode = "symlink"
 "~/.config/fish/functions" = { source = "config/fish/functions", mode = "symlink-each" }
 "~/.config/fish/conf.d" = { source = "config/fish/conf.d", mode = "symlink-each" }
 "~/.config/fish/completions" = { source = "config/fish/completions", mode = "symlink-each" }
+"~/.config/nushell/config.nu" = "config/nu/config.nu"
+"~/.config/nushell/env.nu" = "config/nu/env.nu"
+"~/Library/Application Support/nushell/config.nu" = "config/nu/config.nu"
+"~/Library/Application Support/nushell/env.nu" = "config/nu/env.nu"
 
 [bootstrap.packages]
+"brew:nushell" = "latest"
 "brew:fish" = "latest"
 "brew:bat" = "latest"
 "brew:fd" = "latest"
@@ -51,4 +56,4 @@ preferred_view_style = "column"
 tap_to_click = true
 
 [bootstrap.user]
-login_shell = "/opt/homebrew/bin/fish"
+login_shell = "/opt/homebrew/bin/nu"
