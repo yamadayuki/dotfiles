@@ -3,7 +3,7 @@
 // layout's tab bar) it's only the button that opens or closes that pane, split to the right in the shown tab.
 import { View, div, svg } from "gpui-kit";
 import { v_flex, h_flex, Scrollbar } from "gpui-base";
-import { spaces, panes, focused, exec, home, theme, props, run } from "herdr";
+import { spaces, panes, focused, exec, home, theme, props, run, notify } from "herdr";
 
 // Where the shown space is now: the focused pane's folder, on its machine (as mods/changes does).
 function location() {
@@ -15,6 +15,16 @@ function location() {
   return { cwd: pane?.cwd || f?.cwd || space?.folder, on };
 }
 const key = () => JSON.stringify(location());
+
+// Where a space is now: its first terminal's live folder, else where it was made (as mods/worktree does).
+function placeOf(s, all = panes()) {
+  const tabs = new Set((s.tabs ?? []).map((c) => c.id));
+  return all.find((p) => tabs.has(p.tab) && p.cwd)?.cwd || s.folder || null;
+}
+// Review checkouts sit with mods/worktree's, so the sidebar nests them and its Remove worktree cleans up.
+const WORKTREES = (home) => `${home}/.herdr/worktrees`;
+const REVIEW_PROMPT = (pr) =>
+  `PR #${pr.number} (${pr.title}) をレビューして。gh pr view ${pr.number} と gh pr diff ${pr.number} で内容を確認して`;
 
 const LIMIT = 50;
 const FIELDS = "number,title,author,isDraft,headRefName,reviewDecision,statusCheckRollup,url,updatedAt,additions,deletions";
@@ -78,6 +88,7 @@ export default class Prs extends View {
   init(_props, cx) {
     if (props()?.button) return;
     this.prs = []; this.state = null; this.detail = null; this.root = null; this.gen = 0; this.ghBin = {};
+    this.hovered = null; this.reviewing = new Set();
     try { this.filter = localStorage.getItem("filter"); } catch { this.filter = null; }
     if (!FILTERS.some(([k]) => k === this.filter)) this.filter = "all";
     this.refresh(cx);
@@ -149,6 +160,61 @@ export default class Prs extends View {
     exec("open", [pr.url]).catch(() => null);
   }
 
+  // Opens a space to review the PR in, with Claude Code asked to review it; a shown one is selected.
+  review(pr, cx) {
+    const { on } = location(), root = this.root;
+    if (!root || this.reviewing.has(pr.number)) return;
+    this.reviewing.add(pr.number);
+    cx.notify();
+    cx.spawn(async (cx) => {
+      try { await this.openReview(pr, root, on); }
+      catch (e) { notify({ title: `Couldn't open #${pr.number} for review`, body: String(e?.message ?? e).split("\n")[0], level: "error" }); }
+      finally { this.reviewing.delete(pr.number); cx.notify(); }
+    });
+  }
+
+  // The PR's head (`gh pr checkout`, forks too) on branch pr-<N> in <worktrees>/<repo>/pr-<N>.
+  async openReview(pr, root, on) {
+    const git = async (cwd, args) => {
+      const r = await exec("git", args, { cwd, on, timeout: 600000 });
+      if (r.code !== 0) throw new Error((r.stderr || r.stdout).trim() || `git ${args[0]} failed`);
+      return r.stdout.trim();
+    };
+    const common = await git(root, ["rev-parse", "--path-format=absolute", "--git-common-dir"]);
+    const main = common.endsWith("/.git") ? common.slice(0, -5) : common;
+    let userHome = home();
+    if (on) userHome = (await exec("sh", ["-c", 'printf %s "$HOME"'], { on })).stdout.trim();
+    if (!userHome) throw new Error("Couldn't find the home folder.");
+    const branch = `pr-${pr.number}`, path = `${WORKTREES(userHome)}/${main.split("/").pop()}/${branch}`;
+
+    const all = panes(), inside = (at) => at === path || Boolean(at?.startsWith(`${path}/`));
+    const shown = spaces().find((s) => (s.machine ?? null) === (on ?? null) && inside(placeOf(s, all)));
+    if (shown) return run("space.select", { id: shown.id });
+
+    const listed = await git(main, ["worktree", "list", "--porcelain"]);
+    if (!listed.split("\n").includes(`worktree ${path}`)) {
+      await git(main, ["worktree", "add", "--detach", path]);
+      const r = await this.gh(["pr", "checkout", String(pr.number), "--branch", branch, "--force"], path, on);
+      if (r.code !== 0) {
+        await exec("git", ["worktree", "remove", "--force", path], { cwd: main, on }).catch(() => null);
+        throw new Error((r.stderr || r.stdout).trim() || "gh pr checkout failed");
+      }
+    }
+    // Unnamed, so the space follows the checkout and nests under its repo.
+    run("space.new", { folder: path, machine: on ?? "", argv: ["claude", REVIEW_PROMPT(pr)] });
+  }
+
+  reviewButton(pr, t) {
+    const busy = this.reviewing.has(pr.number);
+    return h_flex().id(`pr-review-${pr.number}`).flex_none().self_center().h(24).px(8).gap(5).items_center().rounded(6)
+      .border_1().border_color(t.border).bg(t.background).text_size(12).text_color(t.muted)
+      .hover((s) => s.bg(t.hover).text_color(t.foreground))
+      .on_mouse_down("left", (_e, cx) => cx.stop_propagation())
+      .on_click((_e, cx) => { cx.stop_propagation(); this.review(pr, cx); })
+      .when(busy, (e) => e.child(svg("mods/prs/spinner.svg").size(12).spin(900)))
+      .child(busy ? "Opening…" : "Review");
+  }
+
   badge(text, color, t) {
     return div().flex_none().px(5).py(1).rounded(4).border_1().border_color(color === t.muted ? t.border : color + "66")
       .when(color !== t.muted, (e) => e.bg(color + "1a")).text_size(10).text_color(color).child(text);
@@ -165,6 +231,10 @@ export default class Prs extends View {
     const sep = () => div().flex_none().child("·");
     return h_flex().id(`pr-${pr.number}`).flex_none().px(10).py(7).gap(10).items_start().rounded(7).cursor_pointer()
       .hover((s) => s.bg(t.hover)).on_click((_e, _cx) => this.openPr(pr))
+      .on_hover((on, cx) => {
+        if (on) this.hovered = pr.number; else if (this.hovered === pr.number) this.hovered = null;
+        cx.notify();
+      })
       .child(div().flex_none().mt(5).size(8).rounded(4).bg(dot)
         .when(pr.checks === "pending", (e) => e.loop("opacity", { from: 0.35, to: 1, period: 1400 })))
       .child(v_flex().flex_1().min_w(0).gap(3)
@@ -180,7 +250,8 @@ export default class Prs extends View {
           .child(sep())
           .child(div().flex_none().child(ago(pr.updatedAt)))
           .child(div().flex_none().ml(2).text_color(t.ansi2).child(`+${pr.additions ?? 0}`))
-          .child(div().flex_none().text_color(t.ansi1).child(`−${pr.deletions ?? 0}`))));
+          .child(div().flex_none().text_color(t.ansi1).child(`−${pr.deletions ?? 0}`))))
+      .when(this.hovered === pr.number || this.reviewing.has(pr.number), (e) => e.child(this.reviewButton(pr, t)));
   }
 
   setFilter(filter, cx) {
