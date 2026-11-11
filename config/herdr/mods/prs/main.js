@@ -56,6 +56,15 @@ function failure(text) {
   return "error";
 }
 
+// Review filters: a `reviewDecision`, or "all" (also the PRs that need no review).
+const FILTERS = [
+  ["all", "All"],
+  ["REVIEW_REQUIRED", "Review required"],
+  ["CHANGES_REQUESTED", "Changes requested"],
+  ["APPROVED", "Approved"],
+];
+const matches = (pr, filter) => filter === "all" || pr.reviewDecision === filter;
+
 const EMPTY = {
   nofolder: ["No folder", "This space has no folder to look in."],
   nogit: ["Not a git repository", null],
@@ -69,6 +78,8 @@ export default class Prs extends View {
   init(_props, cx) {
     if (props()?.button) return;
     this.prs = []; this.state = null; this.detail = null; this.root = null; this.gen = 0; this.ghBin = {};
+    try { this.filter = localStorage.getItem("filter"); } catch { this.filter = null; }
+    if (!FILTERS.some(([k]) => k === this.filter)) this.filter = "all";
     this.refresh(cx);
     cx.timer.every(60000, (cx) => this.refresh(cx));
   }
@@ -172,9 +183,27 @@ export default class Prs extends View {
           .child(div().flex_none().text_color(t.ansi1).child(`−${pr.deletions ?? 0}`))));
   }
 
+  setFilter(filter, cx) {
+    this.filter = filter;
+    try { localStorage.setItem("filter", filter); } catch {}
+    cx.notify();
+  }
+
+  // One chip per review filter, with how many open PRs it holds.
+  filters(t) {
+    return h_flex().flex_1().min_w(0).flex_wrap().gap(4).children(FILTERS.map(([k, label]) => {
+      const on = this.filter === k, n = this.prs.filter((pr) => matches(pr, k)).length;
+      return h_flex().id(`prs-filter-${k}`).flex_none().h(26).px(8).gap(5).items_center().rounded(6).cursor_pointer()
+        .text_size(12).bg(on ? t.selected : t.background).text_color(on ? t.foreground : t.muted)
+        .hover((s) => s.bg(t.hover)).on_click((_e, cx) => this.setFilter(k, cx))
+        .child(label).child(div().text_size(11).text_color(t.dim).child(String(n)));
+    }));
+  }
+
   empty(t) {
     let title, hint;
-    if (this.state === "ok") [title, hint] = ["No open pull requests", null];
+    if (this.state === "ok" && this.prs.length) [title, hint] = ["No matching pull requests", null];
+    else if (this.state === "ok") [title, hint] = ["No open pull requests", null];
     else if (!this.state) [title, hint] = ["Loading pull requests…", null];
     else [title, hint] = EMPTY[this.state];
     if (!hint && this.state !== "ok") hint = this.detail;
@@ -206,11 +235,13 @@ export default class Prs extends View {
   render(cx) {
     if (props()?.button) return this.button(theme());
     if (key() !== this.context) this.refresh(cx, false);
-    const t = theme(), list = this.state === "ok" && this.prs.length > 0;
-    // The pane header already names it: only the refresh button sits above the list.
+    const t = theme(), any = this.state === "ok" && this.prs.length > 0;
+    const shown = any ? this.prs.filter((pr) => matches(pr, this.filter)) : [], list = shown.length > 0;
+    // The pane header already names it: above the list sit only the review filters and the refresh button.
     return v_flex().id("prs").size_full().min_h(0).overflow_hidden().bg(t.background)
       .text_color(t.foreground).text_size(13)
-      .child(h_flex().flex_none().pt(6).px(8).justify_end()
+      .child(h_flex().flex_none().pt(6).px(8).gap(6).items_start().justify_end()
+        .when(any, (e) => e.child(this.filters(t)))
         .child(div().id("prs-refresh").flex_none().size(26).flex().items_center().justify_center().rounded(6).cursor_pointer()
           .text_color(t.muted).hover((s) => s.bg(t.hover).text_color(t.foreground))
           .on_click((_e, cx) => this.refresh(cx))
@@ -219,7 +250,7 @@ export default class Prs extends View {
       // overflow_y_scroll() sits absolutely inside a flex child, so the list's height comes from the pane.
       .when(list, (e) => e.child(div().flex_1().min_h(0).relative()
         .child(v_flex().id("prs-list").absolute().inset_0().overflow_y_scroll().p(6).gap(1)
-          .children(this.prs.map((pr) => this.row(pr, t))))
+          .children(shown.map((pr) => this.row(pr, t))))
         .child(Scrollbar.vertical("prs-list").absolute().inset_0())));
   }
 }
