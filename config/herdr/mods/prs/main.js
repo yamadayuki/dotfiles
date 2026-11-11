@@ -207,14 +207,10 @@ export default class Prs extends View {
     if (props()?.button) return this.button(theme());
     if (key() !== this.context) this.refresh(cx, false);
     const t = theme(), list = this.state === "ok" && this.prs.length > 0;
-    const repo = this.root ? this.root.split("/").pop() : "";
-    const count = this.state === "ok" ? (this.prs.length >= LIMIT ? `${LIMIT}+` : String(this.prs.length)) : "–";
+    // The pane header already names it: only the refresh button sits above the list.
     return v_flex().id("prs").size_full().min_h(0).overflow_hidden().bg(t.background)
       .text_color(t.foreground).text_size(13)
-      .child(h_flex().h(42).flex_none().px(14).gap(8).items_center().border_b(1).border_color(t.border)
-        .child(div().flex_none().font_semibold().child("Pull requests"))
-        .child(div().flex_none().px(5).py(1).rounded(4).border_1().border_color(t.border).text_size(10).text_color(t.muted).child(count))
-        .child(div().flex_1().min_w(0).truncate().text_size(11).text_color(t.dim).child(repo))
+      .child(h_flex().flex_none().pt(6).px(8).justify_end()
         .child(div().id("prs-refresh").flex_none().size(26).flex().items_center().justify_center().rounded(6).cursor_pointer()
           .text_color(t.muted).hover((s) => s.bg(t.hover).text_color(t.foreground))
           .on_click((_e, cx) => this.refresh(cx))
