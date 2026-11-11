@@ -1,6 +1,7 @@
-// Pull requests: the open GitHub PRs of the shown space's repository (`gh pr list`).
+// Pull requests: the open GitHub PRs of the shown space's repository (`gh pr list`), and the CI of its branch.
 // Shown as a pane (`pane.split {direction, mod: "prs"}`). With `props: {button: true}` (the main-prs
-// layout's tab bar) it's only the button that opens or closes that pane, split to the right in the shown tab.
+// layout's tab bar) it's the button that opens or closes that pane, split to the right in the shown tab,
+// and watches CI on every branch a terminal is on.
 import { View, div, svg } from "gpui-kit";
 import { v_flex, h_flex, Scrollbar } from "gpui-base";
 import { spaces, panes, terminals, focused, exec, home, theme, props, run, notify } from "herdr";
@@ -12,7 +13,7 @@ function location() {
   // A mod pane (this panel split beside a shell) has no folder: use its tab's first terminal.
   if (pane && !pane.terminal) pane = panes().find(p => p.tab === pane.tab && p.terminal && p.cwd) ?? pane;
   const on = f?.pane === null ? (f.terminal?.includes("/") ? f.terminal.split("/")[0] : null) : space?.machine ?? null;
-  return { cwd: pane?.cwd || f?.cwd || space?.folder, on };
+  return { cwd: pane?.cwd || f?.cwd || space?.folder, on, branch: pane?.branch ?? null };
 }
 const key = () => JSON.stringify(location());
 
@@ -66,6 +67,23 @@ function ago(iso) {
   return `${Math.floor(s / (86400 * 365))}y ago`;
 }
 
+// CI: the GitHub Actions runs on a branch's newest commit, the latest per workflow. Scheduled runs are
+// left out: they follow the clock on the default branch, not what was pushed.
+const RUN_FIELDS = "databaseId,workflowName,status,conclusion,url,headSha,event,updatedAt";
+const CI_EVERY = 120000;
+const runState = (r) => r.status !== "completed" ? "pending" : FAILED.has(String(r.conclusion).toUpperCase()) ? "failure" : "success";
+function ciOf(all) {
+  const runs = all.filter((r) => r.event !== "schedule"), sha = runs[0]?.headSha ?? null, latest = [], seen = new Set();
+  for (const r of runs) {
+    if (r.headSha !== sha || seen.has(r.workflowName)) continue;
+    seen.add(r.workflowName);
+    latest.push({ ...r, state: runState(r) });
+  }
+  const has = (state) => latest.some((r) => r.state === state);
+  return { sha, runs: latest, state: !latest.length ? "none" : has("failure") ? "failure" : has("pending") ? "pending" : "success" };
+}
+const ciKey = (on, top, branch) => JSON.stringify([on ?? null, top, branch]);
+
 // Turns gh's failure into something the panel can explain.
 function failure(text) {
   if (/auth login|not logged in|authenticat|HTTP 401|bad credentials/i.test(text)) return "auth";
@@ -93,7 +111,15 @@ const EMPTY = {
 
 export default class Prs extends View {
   init(_props, cx) {
-    if (props()?.button) return;
+    if (props()?.button) {
+      // tops: checkout folder of each terminal folder; ci: ciKey → ciOf; told: failing commits already toasted.
+      // asked: shown folder + branch pairs that started a watch at once (a new space or branch).
+      this.ghBin = {}; this.tops = new Map(); this.ci = new Map(); this.told = new Set(); this.since = Date.now();
+      this.asked = new Set();
+      this.watch(cx);
+      cx.timer.every(CI_EVERY, (cx) => this.watch(cx));
+      return;
+    }
     this.prs = []; this.state = null; this.detail = null; this.root = null; this.gen = 0; this.ghBin = {};
     // reviews: this repo's review checkouts (PR number → folder); busy: PR number → what it's doing.
     this.hovered = null; this.reviews = new Map(); this.busy = new Map();
@@ -108,7 +134,7 @@ export default class Prs extends View {
     const { cwd, on } = location(), context = key();
     if (context !== this.context) {
       this.context = context; this.prs = []; this.state = null; this.detail = null; this.root = null; this.loading = false;
-      this.reviews = new Map();
+      this.reviews = new Map(); this.branch = null; this.runs = null;
     }
     if (this.loading) return;
     if (!cwd) { this.state = "nofolder"; if (notify) cx.notify(); return; }
@@ -143,6 +169,11 @@ export default class Prs extends View {
         this.prs = JSON.parse(r.stdout || "[]").map((p) => ({ ...p, checks: checks(p.statusCheckRollup) }));
         this.state = "ok"; this.detail = null;
         cx.notify();
+        const branch = (await exec("git", ["rev-parse", "--abbrev-ref", "HEAD"], { cwd: root, on })).stdout.trim();
+        const runs = branch && branch !== "HEAD" ? await this.ciOn(root, branch, on).catch(() => null) : null;
+        if (!current()) return;
+        this.branch = branch; this.runs = runs;
+        cx.notify();
         await this.syncReviews(root, on, current, cx).catch((e) => console.log(`prs: reviews: ${e}`));
       } catch (e) {
         if (current()) { this.prs = []; this.state = "error"; this.detail = String(e); }
@@ -165,6 +196,62 @@ export default class Prs extends View {
       } catch (e) { last = e; }
     }
     throw last;
+  }
+
+  // A branch's CI, asked from its checkout. Runs carry the pushed branch's name, so a local branch that
+  // tracks another (pr-<N> from gh pr checkout) is looked up by the one it tracks.
+  async ciOn(top, branch, on) {
+    const merge = await exec("git", ["config", "--get", `branch.${branch}.merge`], { cwd: top, on }).catch(() => null);
+    const pushed = merge?.code === 0 && merge.stdout.trim().replace(/^refs\/heads\//, "") || branch;
+    const r = await this.gh(["run", "list", "--branch", pushed, "--limit", "20", "--json", RUN_FIELDS], top, on);
+    if (r.code !== 0) throw new Error((r.stderr || r.stdout).trim() || "gh run list failed");
+    return ciOf(JSON.parse(r.stdout || "[]"));
+  }
+
+  // The checkout a terminal folder is in (null outside git), remembered.
+  async top(cwd, on) {
+    const k = `${on ?? ""}|${cwd}`;
+    if (!this.tops.has(k)) {
+      const r = await exec("git", ["rev-parse", "--show-toplevel"], { cwd, on }).catch(() => null);
+      this.tops.set(k, r?.code === 0 ? r.stdout.trim() : null);
+    }
+    return this.tops.get(k);
+  }
+
+  // The button's watch: CI on every branch a terminal is on (agents' in other spaces too).
+  watch(cx) {
+    if (this.watching) return;
+    this.watching = true;
+    cx.spawn(async (cx) => {
+      try {
+        const machine = new Map(spaces().flatMap((s) => (s.tabs ?? []).map((c) => [c.id, s.machine ?? null])));
+        const branches = new Map();
+        for (const p of panes()) {
+          if (!p.terminal || !p.cwd || !p.branch || p.branch === "HEAD") continue;
+          const on = machine.get(p.tab) ?? null, top = await this.top(p.cwd, on);
+          if (top) branches.set(ciKey(on, top, p.branch), { on, top, branch: p.branch });
+        }
+        for (const k of [...this.ci.keys()]) if (!branches.has(k)) this.ci.delete(k);
+        for (const [k, b] of branches) {
+          try {
+            const ci = await this.ciOn(b.top, b.branch, b.on);
+            this.ci.set(k, ci);
+            this.tell(b, k, ci);
+            cx.notify();
+          } catch (e) { console.log(`prs: ci ${b.branch}: ${e}`); }
+        }
+      } finally { this.watching = false; cx.notify(); }
+    });
+  }
+
+  // A toast once per failing commit, and only for one that failed after Herdr started: older failures
+  // show as the button's dot.
+  tell(b, k, ci) {
+    if (ci.state !== "failure" || this.told.has(`${k}|${ci.sha}`)) return;
+    this.told.add(`${k}|${ci.sha}`);
+    const failed = ci.runs.filter((r) => r.state === "failure");
+    if (!failed.some((r) => Date.parse(r.updatedAt) >= this.since)) return;
+    notify({ title: `CI failed on ${b.branch}`, body: `${b.top.split("/").pop()}: ${failed.map((r) => r.workflowName).join(", ")}`, level: "error" });
   }
 
   openPr(pr) {
@@ -332,13 +419,31 @@ export default class Prs extends View {
       .when(!busy && Boolean(path), (e) => e.child(button("open", "Open", open)).child(button("done", "Done", done)));
   }
 
+  // A checks / CI state as a dot, pulsing while pending.
+  dot(state, t) {
+    return div().flex_none().size(8).rounded(4).bg({ success: t.ansi2, failure: t.blocked, pending: t.working, none: t.dim }[state])
+      .when(state === "pending", (e) => e.loop("opacity", { from: 0.35, to: 1, period: 1400 }));
+  }
+
+  // The shown branch's newest commit: a line per workflow, opening its run.
+  ciSection(t) {
+    const ci = this.runs;
+    return v_flex().flex_none().px(6).pt(4).pb(4).gap(1).border_b(1).border_color(t.border)
+      .child(h_flex().h(20).px(10).gap(6).items_center().text_size(11).text_color(t.dim)
+        .child(div().min_w(0).truncate().child(`CI · ${this.branch}`)).child(div().flex_none().child(ci.sha.slice(0, 7))))
+      .children(ci.runs.map((r) => h_flex().id(`run-${r.databaseId}`).h(28).px(10).gap(10).items_center().rounded(7).cursor_pointer()
+        .hover((s) => s.bg(t.hover)).on_click(() => exec("open", [r.url]).catch(() => null))
+        .child(this.dot(r.state, t))
+        .child(div().flex_1().min_w(0).truncate().child(r.workflowName))
+        .child(div().flex_none().text_size(11).text_color(t.dim).child(`${r.event} · ${ago(r.updatedAt)}`))));
+  }
+
   badge(text, color, t) {
     return div().flex_none().px(5).py(1).rounded(4).border_1().border_color(color === t.muted ? t.border : color + "66")
       .when(color !== t.muted, (e) => e.bg(color + "1a")).text_size(10).text_color(color).child(text);
   }
 
   row(pr, t) {
-    const dot = { success: t.ansi2, failure: t.blocked, pending: t.working, none: t.dim }[pr.checks];
     const review = {
       APPROVED: ["Approved", t.ansi2],
       CHANGES_REQUESTED: ["Changes requested", t.ansi1],
@@ -352,8 +457,7 @@ export default class Prs extends View {
         if (on) this.hovered = pr.number; else if (this.hovered === pr.number) this.hovered = null;
         cx.notify();
       })
-      .child(div().flex_none().mt(5).size(8).rounded(4).bg(dot)
-        .when(pr.checks === "pending", (e) => e.loop("opacity", { from: 0.35, to: 1, period: 1400 })))
+      .child(this.dot(pr.checks, t).mt(5))
       .child(v_flex().flex_1().min_w(0).gap(3)
         .child(h_flex().min_w(0).gap(6).items_center()
           .child(div().flex_none().text_color(t.dim).child(`#${pr.number}`))
@@ -404,7 +508,12 @@ export default class Prs extends View {
 
   // Drawn like the tab bar's Files / Changes buttons, on its chrome and bottom border.
   // Lit while the shown tab has a PR pane; a click closes it, else splits the tab's focused pane.
-  button(t) {
+  // A dot after the label: the CI of the shown branch's newest commit.
+  button(t, cx) {
+    const { cwd, on, branch } = location(), top = cwd && this.tops.get(`${on ?? ""}|${cwd}`);
+    const shownAt = cwd && branch ? `${on ?? ""}|${cwd}|${branch}` : null;
+    if (shownAt && !this.asked.has(shownAt)) { this.asked.add(shownAt); this.watch(cx); }
+    const ci = top && branch ? this.ci.get(ciKey(on, top, branch)) : null;
     const tab = spaces().find((s) => s.active)?.tabs?.find((x) => x.active)?.id;
     const inTab = panes().filter((p) => p.tab === tab);
     const open = inTab.find((p) => p.mod === "prs");
@@ -418,11 +527,12 @@ export default class Prs extends View {
         .text_size(12).bg(open ? t.selected : t.chrome).text_color(open ? t.foreground : t.muted).hover((s) => s.bg(t.hover))
         .on_mouse_down("left", (_e, cx) => cx.stop_propagation())
         .on_click(toggle)
-        .child(svg("mods/prs/pr.svg").size(14)).child("PRs"));
+        .child(svg("mods/prs/pr.svg").size(14)).child("PRs")
+        .when(Boolean(ci) && ci.state !== "none", (e) => e.child(this.dot(ci.state, t).size(6))));
   }
 
   render(cx) {
-    if (props()?.button) return this.button(theme());
+    if (props()?.button) return this.button(theme(), cx);
     if (key() !== this.context) this.refresh(cx, false);
     const t = theme(), any = this.state === "ok" && this.prs.length > 0;
     const shown = any ? this.prs.filter((pr) => matches(pr, this.filter)) : [], list = shown.length > 0;
@@ -435,6 +545,7 @@ export default class Prs extends View {
           .text_color(t.muted).hover((s) => s.bg(t.hover).text_color(t.foreground))
           .on_click((_e, cx) => this.refresh(cx))
           .child(this.loading ? svg("mods/prs/spinner.svg").size(14).spin(900) : svg("mods/prs/refresh.svg").size(14))))
+      .when(Boolean(this.runs?.runs.length), (e) => e.child(this.ciSection(t)))
       .when(!list, (e) => e.child(this.empty(t)))
       // overflow_y_scroll() sits absolutely inside a flex child, so the list's height comes from the pane.
       .when(list, (e) => e.child(div().flex_1().min_h(0).relative()
