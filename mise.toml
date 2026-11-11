@@ -24,6 +24,7 @@ dotfiles.default_mode = "symlink"
 "~/.config/herdr-app/settings.json" = "config/herdr/settings.json"
 "~/.config/herdr-app/themes" = { source = "config/herdr/themes", mode = "symlink-each" }
 "~/.config/herdr-app/keys.json" = "config/herdr/keys.json"
+"~/.config/herdr-app/layouts/main-prs.json" = "config/herdr/layouts/main-prs.json"
 "~/.config/herdr-app/mods/prs" = { source = "config/herdr/mods/prs", mode = "symlink-each" }
 
 [bootstrap.packages]

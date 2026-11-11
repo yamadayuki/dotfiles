@@ -1,8 +1,9 @@
 // Pull requests: the open GitHub PRs of the shown space's repository (`gh pr list`).
-// Opens as a popup (`mod.open:prs`) or as a pane (`pane.split {direction, mod: "prs"}`).
+// Shown as a pane (`pane.split {direction, mod: "prs"}`). With `props: {button: true}` (the main-prs
+// layout's tab bar) it's only the button that opens or closes that pane, split to the right in the shown tab.
 import { View, div, svg } from "gpui-kit";
 import { v_flex, h_flex, Scrollbar } from "gpui-base";
-import { spaces, panes, focused, exec, home, theme, props, closeOverlay } from "herdr";
+import { spaces, panes, focused, exec, home, theme, props, run } from "herdr";
 
 // Where the shown space is now: the focused pane's folder, on its machine (as mods/changes does).
 function location() {
@@ -16,7 +17,6 @@ function location() {
 const key = () => JSON.stringify(location());
 
 const LIMIT = 50;
-const ROW_H = 58;
 const FIELDS = "number,title,author,isDraft,headRefName,reviewDecision,statusCheckRollup,url,updatedAt,additions,deletions";
 // Where gh may live when the app's PATH lacks it (mise, Homebrew); the first that starts is kept.
 const GH_PLACES = (on) => [
@@ -67,6 +67,7 @@ const EMPTY = {
 
 export default class Prs extends View {
   init(_props, cx) {
+    if (props()?.button) return;
     this.prs = []; this.state = null; this.detail = null; this.root = null; this.gen = 0; this.ghBin = {};
     this.refresh(cx);
     cx.timer.every(60000, (cx) => this.refresh(cx));
@@ -135,8 +136,6 @@ export default class Prs extends View {
 
   openPr(pr) {
     exec("open", [pr.url]).catch(() => null);
-    const overlay = props()?.overlay;
-    if (overlay) closeOverlay(overlay);
   }
 
   badge(text, color, t) {
@@ -185,12 +184,32 @@ export default class Prs extends View {
       .when(Boolean(hint), (e) => e.child(div().max_w(420).text_size(12).text_color(t.dim).text_center().child(hint)));
   }
 
+  // Drawn like the tab bar's Files / Changes buttons, on its chrome and bottom border.
+  // Lit while the shown tab has a PR pane; a click closes it, else splits the tab's focused pane.
+  button(t) {
+    const tab = spaces().find((s) => s.active)?.tabs?.find((x) => x.active)?.id;
+    const inTab = panes().filter((p) => p.tab === tab);
+    const open = inTab.find((p) => p.mod === "prs");
+    const toggle = () => {
+      if (open) return run("pane.close", { pane: open.pane });
+      const at = inTab.find((p) => p.focused) ?? inTab[0];
+      if (at) run("pane.split", { direction: "right", pane: at.pane, mod: "prs" });
+    };
+    return h_flex().size_full().pr(10).justify_end().items_center().bg(t.chrome).border_b(1).border_color(t.border)
+      .child(h_flex().id("prs-open").h(26).px(8).gap(5).flex_none().items_center().rounded(6)
+        .text_size(12).bg(open ? t.selected : t.chrome).text_color(open ? t.foreground : t.muted).hover((s) => s.bg(t.hover))
+        .on_mouse_down("left", (_e, cx) => cx.stop_propagation())
+        .on_click(toggle)
+        .child(svg("mods/prs/pr.svg").size(14)).child("PRs"));
+  }
+
   render(cx) {
+    if (props()?.button) return this.button(theme());
     if (key() !== this.context) this.refresh(cx, false);
-    const t = theme(), overlay = props()?.overlay, list = this.state === "ok" && this.prs.length > 0;
+    const t = theme(), list = this.state === "ok" && this.prs.length > 0;
     const repo = this.root ? this.root.split("/").pop() : "";
     const count = this.state === "ok" ? (this.prs.length >= LIMIT ? `${LIMIT}+` : String(this.prs.length)) : "–";
-    return v_flex().id("prs").size_full().min_h(0).overflow_hidden().bg(overlay ? t.popover : t.background)
+    return v_flex().id("prs").size_full().min_h(0).overflow_hidden().bg(t.background)
       .text_color(t.foreground).text_size(13)
       .child(h_flex().h(42).flex_none().px(14).gap(8).items_center().border_b(1).border_color(t.border)
         .child(div().flex_none().font_semibold().child("Pull requests"))
@@ -201,11 +220,8 @@ export default class Prs extends View {
           .on_click((_e, cx) => this.refresh(cx))
           .child(this.loading ? svg("mods/prs/spinner.svg").size(14).spin(900) : svg("mods/prs/refresh.svg").size(14))))
       .when(!list, (e) => e.child(this.empty(t)))
-      // overflow_y_scroll() sits absolutely inside a flex child, so the list's height comes from the panel.
-      // A popup sizes to its content and absolute children add nothing, so there the list gets a height
-      // of its own (about 58px a row, as mods/picker does), capped so long lists scroll.
+      // overflow_y_scroll() sits absolutely inside a flex child, so the list's height comes from the pane.
       .when(list, (e) => e.child(div().flex_1().min_h(0).relative()
-        .when(Boolean(overlay), (el) => el.flex_none().h(Math.min(ROW_H * 10, this.prs.length * ROW_H + 12)))
         .child(v_flex().id("prs-list").absolute().inset_0().overflow_y_scroll().p(6).gap(1)
           .children(this.prs.map((pr) => this.row(pr, t))))
         .child(Scrollbar.vertical("prs-list").absolute().inset_0())));
