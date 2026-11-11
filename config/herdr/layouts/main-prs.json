@@ -98,11 +98,25 @@
               "id": "prs-button",
               "type": "block",
               "size": {
-                "px": 66
+                "px": 70
               },
               "window_drag": true,
               "content": {
                 "mod": "prs",
+                "props": {
+                  "button": true
+                }
+              }
+            },
+            {
+              "id": "tasks-button",
+              "type": "block",
+              "size": {
+                "px": 70
+              },
+              "window_drag": true,
+              "content": {
+                "mod": "tasks",
                 "props": {
                   "button": true
                 }

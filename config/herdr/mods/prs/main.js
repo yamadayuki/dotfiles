@@ -522,7 +522,8 @@ export default class Prs extends View {
       const at = inTab.find((p) => p.focused) ?? inTab[0];
       if (at) run("pane.split", { direction: "right", pane: at.pane, mod: "prs" });
     };
-    return h_flex().size_full().pr(10).justify_end().items_center().bg(t.chrome).border_b(1).border_color(t.border)
+    // Run sits right of it in the main-prs layout, so it keeps the tab bar's gap, not its edge padding.
+    return h_flex().size_full().pr(3).justify_end().items_center().bg(t.chrome).border_b(1).border_color(t.border)
       .child(h_flex().id("prs-open").h(26).px(8).gap(5).flex_none().items_center().rounded(6)
         .text_size(12).bg(open ? t.selected : t.chrome).text_color(open ? t.foreground : t.muted).hover((s) => s.bg(t.hover))
         .on_mouse_down("left", (_e, cx) => cx.stop_propagation())

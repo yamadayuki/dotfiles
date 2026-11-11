@@ -18,8 +18,9 @@ for packages, macOS defaults, and the login shell):
 - **hunk** — theme matched to Ghostty's GitHub Dark
 - **Herdr** — `settings.json`, `keys.json`, GitHub Dark / Light themes (from
   Primer primitives 7.10.0, as used by primer/github-vscode-theme), the `prs`
-  mod (open GitHub PRs of the shown space) and the `main-prs` layout (a clone
-  of `main` with a PRs button at the right end of the tab bar), linked into
+  mod (open GitHub PRs and CI of the shown space, PR review tabs), the `tasks`
+  mod (its mise tasks and listening ports) and the `main-prs` layout (a clone
+  of `main` with PRs and Run buttons at the right end of the tab bar), linked into
   `~/.config/herdr-app`. Pick the layout once with `layout.switch` (it's not
   updated with Herdr's `main`). Herdr doesn't watch symlink targets: after editing a
   mod here, `touch -h ~/.config/herdr-app/mods/<name>/main.js` to hot-reload it

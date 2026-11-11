@@ -26,6 +26,7 @@ dotfiles.default_mode = "symlink"
 "~/.config/herdr-app/keys.json" = "config/herdr/keys.json"
 "~/.config/herdr-app/layouts/main-prs.json" = "config/herdr/layouts/main-prs.json"
 "~/.config/herdr-app/mods/prs" = { source = "config/herdr/mods/prs", mode = "symlink-each" }
+"~/.config/herdr-app/mods/tasks" = { source = "config/herdr/mods/tasks", mode = "symlink-each" }
 
 [bootstrap.packages]
 "brew:nushell" = "latest"
