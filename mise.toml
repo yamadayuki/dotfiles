@@ -21,6 +21,8 @@ dotfiles.default_mode = "symlink"
 "~/.config/nushell/env.nu" = "config/nu/env.nu"
 "~/Library/Application Support/nushell/config.nu" = "config/nu/config.nu"
 "~/Library/Application Support/nushell/env.nu" = "config/nu/env.nu"
+"~/.config/herdr-app/settings.json" = "config/herdr/settings.json"
+"~/.config/herdr-app/themes" = { source = "config/herdr/themes", mode = "symlink-each" }
 
 [bootstrap.packages]
 "brew:nushell" = "latest"

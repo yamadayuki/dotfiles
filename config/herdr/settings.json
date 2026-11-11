@@ -1,0 +1,13 @@
+{
+  "zoom": 1.0,
+  "sounds": {
+    "enabled": true
+  },
+  "font": "MonoLisaCode",
+  "font_ligatures": true,
+  "minimum_contrast": 1.0,
+  "theme": {
+    "light": "github-light",
+    "dark": "github-dark"
+  }
+}

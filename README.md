@@ -16,6 +16,9 @@ for packages, macOS defaults, and the login shell):
   branches handle the few differences
 - **Ghostty** — terminal config (GitHub Dark + transparency)
 - **hunk** — theme matched to Ghostty's GitHub Dark
+- **Herdr** — `settings.json` and GitHub Dark / Light themes (from Primer
+  primitives 7.10.0, as used by primer/github-vscode-theme), linked into
+  `~/.config/herdr-app`
 - **mise** — global `[settings]`/`[tasks]` (e.g. `mise run up` to upgrade
   Homebrew/mise/rustup), merged via `~/.config/mise/conf.d/00-dotfiles.toml`
 
