@@ -33,9 +33,12 @@ dir = "{{cwd}}"
 [tasks.skillsupdate]
 description = "Upgrade global skills"
 run = [
-    "npx skills update --global --yes",
+    "pnpx skills update --global --yes",
 ]
 dir = "{{cwd}}"
+depends = [
+    "miseupgrade",
+]
 
 [tasks.up]
 description = "Upgrade dependencies in my local environment"
