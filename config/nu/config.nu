@@ -17,7 +17,7 @@ source $zoxide_path
 # -----------------------------------------------------------------------------
 use theme.nu get_theme
 use abbr.nu [get_abbr_menu, get_abbr_keybindings]
-use completions.nu [get_fish_completer, z]
+use completions.nu *
 
 source prompt.nu
 source aliases.nu
