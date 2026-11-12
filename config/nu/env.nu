@@ -54,12 +54,10 @@ let append_paths = [
     ($home | path join "google-cloud-sdk" "bin")
     ($home | path join ".local" "bin")
     ($home | path join ".docker" "bin")
-    ($home | path join ".rye" "shims")
     ($home | path join ".deno" "bin")
     ($home | path join "Library" "pnpm")
     ($home | path join ".antigravity-ide" "antigravity-ide" "bin")
     ($home | path join ".vite-plus" "bin")
-    ($home | path join ".moon" "bin")
 ]
 
 # Build sanitized PATH list (only existing paths, preserving order and removing duplicates)

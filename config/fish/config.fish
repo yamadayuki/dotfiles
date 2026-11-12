@@ -38,8 +38,6 @@ set -gx GOPATH $HOME/dev
 # Docker
 fish_add_path --global --append $HOME/.docker/bin
 
-# Python (rye)
-fish_add_path --global --append $HOME/.rye/shims
 
 alias vi vim
 set -gx EDITOR vim
