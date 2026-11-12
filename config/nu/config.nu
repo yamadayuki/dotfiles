@@ -119,113 +119,119 @@ $env.config = {
         ]
     }
 
-    menus: [
-        {
-            name: completion_menu
-            only_buffer_difference: false
-            marker: "| "
-            type: {
-                layout: columnar
-                columns: 4
-                col_width: 20
-                col_padding: 2
-            }
-            style: {
-                text: green
-                selected_text: { attr: r }
-                description_text: yellow
-                match_text: { attr: u }
-                selected_match_text: { attr: ur }
-            }
-        }
-        {
-            name: history_menu
-            only_buffer_difference: true
-            marker: "? "
-            type: {
-                layout: list
-                page_size: 10
-            }
-            style: {
-                text: green
-                selected_text: green_reverse
-                description_text: yellow
-            }
-        }
-        (get_abbr_menu)
-    ]
-
-    keybindings: [
-        # Space / Enter: expand abbreviations (e.g. `gs` -> `git status --short`, `git st` -> `git status`)
-        ...(get_abbr_keybindings)
-        # Up arrow: Filter history by current buffer prefix
-        {
-            name: history_menu_up
-            modifier: none
-            keycode: up
-            mode: [emacs, vi_normal, vi_insert]
-            event: {
-                until: [
-                    { send: menu name: history_menu }
-                    { send: menuup }
-                    { send: up }
-                ]
-            }
-        }
-        # Alt+Enter / Shift+Enter: Insert newline without executing
-        {
-            name: newline_insert_alt
-            modifier: alt
-            keycode: enter
-            mode: [emacs, vi_normal, vi_insert]
-            event: { edit: insertnewline }
-        }
-        {
-            name: newline_insert_shift
-            modifier: shift
-            keycode: enter
-            mode: [emacs, vi_normal, vi_insert]
-            event: { edit: insertnewline }
-        }
-        # Ctrl+Backspace / Alt+Backspace: Delete previous word
-        {
-            name: backward_delete_word_ctrl
-            modifier: control
-            keycode: backspace
-            mode: [emacs, vi_insert]
-            event: { edit: backspaceword }
-        }
-        {
-            name: backward_delete_word_alt
-            modifier: alt
-            keycode: backspace
-            mode: [emacs, vi_insert]
-            event: { edit: backspaceword }
-        }
-        # Ctrl+T: Interactive repo jump using ghq + fzf (zhq)
-        {
-            name: ghq_cd
-            modifier: control
-            keycode: char_t
-            mode: [emacs, vi_normal, vi_insert]
-            event: {
-                send: executehostcommand
-                cmd: "zhq"
-            }
-        }
-        # Ctrl+G: Open repo in VSCode using ghq + fzf (sk-code)
-        {
-            name: ghq_code
-            modifier: control
-            keycode: char_g
-            mode: [emacs, vi_normal, vi_insert]
-            event: {
-                send: executehostcommand
-                cmd: "sk-code"
-            }
-        }
-    ]
 }
+
+# Assigning `menus`/`keybindings` inside `$env.config = {...}` (or via `=`) replaces
+# the whole list, including the defaults that open Tab/Shift+Tab completion, Ctrl+Space,
+# F1 help, Ctrl+X/Ctrl+Z paging, and Ctrl+R history. Use `++=` to add to the defaults
+# instead (same-name menus / same mode+modifier+keycode bindings still override in place).
+# https://github.com/nushell/nushell/pull/19418
+$env.config.menus ++= [
+    {
+        name: completion_menu
+        only_buffer_difference: false
+        marker: "| "
+        type: {
+            layout: columnar
+            columns: 4
+            col_width: 20
+            col_padding: 2
+        }
+        style: {
+            text: green
+            selected_text: { attr: r }
+            description_text: yellow
+            match_text: { attr: u }
+            selected_match_text: { attr: ur }
+        }
+    }
+    {
+        name: history_menu
+        only_buffer_difference: true
+        marker: "? "
+        type: {
+            layout: list
+            page_size: 10
+        }
+        style: {
+            text: green
+            selected_text: green_reverse
+            description_text: yellow
+        }
+    }
+    (get_abbr_menu)
+]
+
+$env.config.keybindings ++= [
+    # Space / Enter: expand abbreviations (e.g. `gs` -> `git status --short`, `git st` -> `git status`)
+    ...(get_abbr_keybindings)
+    # Up arrow: Filter history by current buffer prefix
+    {
+        name: history_menu_up
+        modifier: none
+        keycode: up
+        mode: [emacs, vi_normal, vi_insert]
+        event: {
+            until: [
+                { send: menu name: history_menu }
+                { send: menuup }
+                { send: up }
+            ]
+        }
+    }
+    # Alt+Enter / Shift+Enter: Insert newline without executing
+    {
+        name: newline_insert_alt
+        modifier: alt
+        keycode: enter
+        mode: [emacs, vi_normal, vi_insert]
+        event: { edit: insertnewline }
+    }
+    {
+        name: newline_insert_shift
+        modifier: shift
+        keycode: enter
+        mode: [emacs, vi_normal, vi_insert]
+        event: { edit: insertnewline }
+    }
+    # Ctrl+Backspace / Alt+Backspace: Delete previous word
+    {
+        name: backward_delete_word_ctrl
+        modifier: control
+        keycode: backspace
+        mode: [emacs, vi_insert]
+        event: { edit: backspaceword }
+    }
+    {
+        name: backward_delete_word_alt
+        modifier: alt
+        keycode: backspace
+        mode: [emacs, vi_insert]
+        event: { edit: backspaceword }
+    }
+    # Ctrl+T: Interactive repo jump using ghq + fzf (zhq)
+    {
+        name: ghq_cd
+        modifier: control
+        keycode: char_t
+        mode: [emacs, vi_normal, vi_insert]
+        event: {
+            send: executehostcommand
+            cmd: "zhq"
+        }
+    }
+    # Ctrl+G: Open repo in VSCode using ghq + fzf (sk-code)
+    {
+        name: ghq_code
+        modifier: control
+        keycode: char_g
+        mode: [emacs, vi_normal, vi_insert]
+        event: {
+            send: executehostcommand
+            cmd: "sk-code"
+        }
+    }
+]
 
 # -----------------------------------------------------------------------------
 # 4. mise
