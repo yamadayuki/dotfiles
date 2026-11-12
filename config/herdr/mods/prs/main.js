@@ -349,14 +349,16 @@ export default class Prs extends View {
     // Herdr starts an `argv` through the login shell with an sh script, which fails when that's nu: so the
     // tab opens on its plain shell and Claude Code is typed into it, quoted for that shell.
     const before = new Set((space.tabs ?? []).map((c) => c.id));
+    // tab.new selects what it makes: put the space's own selection straight back so the review opens
+    // behind it, not in front.
+    const wasActive = space.tabs?.find((c) => c.active)?.id;
     run("tab.new", { space: space.id, folder: path, name: `PR #${pr.number}` });
+    if (wasActive) run("tab.select", { id: wasActive });
     const [tab, term] = await this.until(cx, () => {
       const tab = spaces().find((s) => s.id === space.id)?.tabs?.find((c) => !before.has(c.id));
       const t = tab && panes().find((p) => p.tab === tab.id && p.terminal)?.terminal;
       return t && terminals().find((x) => x.address === t && x.state === "live") ? [tab.id, t] : null;
     });
-    run("space.select", { id: space.id });
-    run("tab.select", { id: tab });
     const shell = terminals().find((x) => x.address === term)?.argv?.[0];
     await this.hc(["send", term, claudeLine(shell, REVIEW_PROMPT(pr))]);
   }
