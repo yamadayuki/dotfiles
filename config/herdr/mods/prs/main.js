@@ -343,6 +343,17 @@ export default class Prs extends View {
         await exec("git", ["worktree", "remove", "--force", path], { cwd: base.main, on }).catch(() => null);
         throw new Error((r.stderr || r.stdout).trim() || "gh pr checkout failed");
       }
+      // `gh pr checkout --branch` doesn't always land on that name (seen with forked PRs, depending on
+      // gh's version): rename in place so the worktree's branch always matches its folder, pr-<N>, which
+      // reviewCheckouts/finishReview/ciOn all assume.
+      const head = (await exec("git", ["rev-parse", "--abbrev-ref", "HEAD"], { cwd: path, on })).stdout.trim();
+      if (head && head !== branch) {
+        const mv = await exec("git", ["branch", "-M", head, branch], { cwd: path, on });
+        if (mv.code !== 0) {
+          await exec("git", ["worktree", "remove", "--force", path], { cwd: base.main, on }).catch(() => null);
+          throw new Error(mv.stderr.trim() || "git branch -M failed");
+        }
+      }
     }
     this.reviews.set(pr.number, path);
 
