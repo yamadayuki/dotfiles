@@ -1,2 +1,6 @@
 .DS_Store
 .claude/settings.local.json
+
+# Written once by gpui-shell into each herdr mod's folder for editor support; not meant for VCS.
+config/herdr/mods/*/jsconfig.json
+config/herdr/mods/*/gpui-kit.d.ts
